@@ -4,6 +4,7 @@
   %tr
     %th Name
     %th Slug
+    %th Properties
     %th
     %th
     %th
@@ -12,6 +13,7 @@
     %tr
       %td= classification.name
       %td= classification.slug
+      %td= classification.properties.size
       %td= link_to 'Show', classification
       %td= link_to 'Edit', edit_classification_path(classification)
       %td= link_to 'Destroy', classification, :method => :delete, :data => { :confirm => 'Are you sure?' }

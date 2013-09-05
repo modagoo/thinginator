@@ -1,6 +1,6 @@
 class ClassificationsController < ApplicationController
 
-  before_action :set_classification, only: [:show, :edit, :update, :destroy]
+  before_action :set_classification, only: [:show, :edit, :update, :destroy, :new_property_fields]
 
   # GET /classifications
   # GET /classifications.json
@@ -18,6 +18,13 @@ class ClassificationsController < ApplicationController
     @classification = Classification.new
   end
 
+  def new_property_fields
+    @classification.properties.build
+    respond_to do |format|
+      format.js { render partial: 'property', collection: @classification.properties }
+    end
+  end
+
   # GET /classifications/1/edit
   def edit
   end
@@ -25,6 +32,7 @@ class ClassificationsController < ApplicationController
   # POST /classifications
   # POST /classifications.json
   def create
+    # raise params.inspect
     @classification = Classification.new(classification_params)
 
     respond_to do |format|
@@ -68,7 +76,7 @@ class ClassificationsController < ApplicationController
   end
 
   def classification_params
-    params.require(:classification).permit(:name, :slug)
+    params.require(:classification).permit(:name, :slug, properties_attributes: [:name, :slug])
   end
 
 end

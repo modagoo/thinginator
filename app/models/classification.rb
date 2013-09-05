@@ -1,5 +1,5 @@
 class Classification < ActiveRecord::Base
   include Sluggable
   has_many :properties
-  validates_presence_of :name
+  accepts_nested_attributes_for :properties, allow_destroy: true
 end
