@@ -1,0 +1,21 @@
+%h1 Listing classifications
+
+%table
+  %tr
+    %th Name
+    %th Slug
+    %th
+    %th
+    %th
+
+  - @classifications.each do |classification|
+    %tr
+      %td= classification.name
+      %td= classification.slug
+      %td= link_to 'Show', classification
+      %td= link_to 'Edit', edit_classification_path(classification)
+      %td= link_to 'Destroy', classification, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Classification', new_classification_path

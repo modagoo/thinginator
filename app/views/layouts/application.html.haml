@@ -1,0 +1,16 @@
+!!! 5
+%html
+  %head
+  %title Thinginator
+  = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+  = javascript_include_tag "application", "data-turbolinks-track" => true
+  = csrf_meta_tags
+  %body
+    %header{role: "banner"}
+      %nav{role: "navigation"}
+        %ol
+          = content_tag :li, (link_to "Classifications", classifications_path)
+          = content_tag :li, (link_to "Properties", properties_path)
+          = content_tag :li, (link_to "Data types", data_types_path)
+    %main
+      = yield

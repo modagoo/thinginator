@@ -32,15 +32,12 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+gem 'iserfrontend-rails', github: 'paulgroves/iserfrontend-rails'
 gem 'haml-rails'
-
-
 gem "better_errors"
 gem "binding_of_caller"
 gem 'railroady'
 gem 'capistrano'
-
-
 gem "factory_girl_rails", "~> 4.0"
 gem 'database_cleaner'
 gem 'rspec-rails'
@@ -50,6 +47,3 @@ gem 'autotest-rails'
 gem 'autotest-growl'
 gem 'autotest-fsevent'
 gem 'ZenTest', '~> 4.9.0'
-
-
-

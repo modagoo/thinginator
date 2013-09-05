@@ -1,0 +1,11 @@
+= form_for @data_type do |f|
+  = errors_for(@data_type)
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :slug
+    = f.text_field :slug
+  .actions
+    = f.submit 'Save'

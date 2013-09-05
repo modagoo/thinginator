@@ -1,0 +1,11 @@
+= form_for @property do |f|
+  = errors_for(@property)
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :slug
+    = f.text_field :slug
+  .actions
+    = f.submit 'Save'

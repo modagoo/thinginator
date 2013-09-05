@@ -1,0 +1,11 @@
+= form_for @classification do |f|
+  = errors_for(@classification)
+
+  .field
+    = f.label :name
+    = f.text_area :name
+  .field
+    = f.label :slug
+    = f.text_area :slug
+  .actions
+    = f.submit 'Save'

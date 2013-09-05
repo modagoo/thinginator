@@ -1,0 +1,21 @@
+%h1 Listing data_types
+
+%table
+  %tr
+    %th Name
+    %th Slug
+    %th
+    %th
+    %th
+
+  - @data_types.each do |data_type|
+    %tr
+      %td= data_type.name
+      %td= data_type.slug
+      %td= link_to 'Show', data_type
+      %td= link_to 'Edit', edit_data_type_path(data_type)
+      %td= link_to 'Destroy', data_type, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Data type', new_data_type_path

@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @data_type.name
+%p
+  %b Slug:
+  = @data_type.slug
+
+= link_to 'Edit', edit_data_type_path(@data_type)
+\|
+= link_to 'Back', data_types_path
