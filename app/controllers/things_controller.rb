@@ -16,7 +16,7 @@ class ThingsController < ApplicationController
 
   # GET /things/new
   def new_thing
-    @thing = Thing.new(collection: Collection.find_by_slug(params[:slug]))
+    @thing = Thing.new(collection: Collection.find_by_slug(params[:slug].pluralize))
   end
 
   # GET /things/1/edit
