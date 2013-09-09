@@ -1,8 +1,10 @@
 Thinginator::Application.routes.draw do
 
+  resources :things
   resources :collections
   resources :properties
   resources :data_types
+  get ':slug' => 'things#collection_index', as: :collection_index
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

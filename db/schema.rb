@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130909151929) do
+ActiveRecord::Schema.define(version: 20130909155143) do
 
   create_table "classifications", force: true do |t|
     t.string   "name"
@@ -27,6 +27,27 @@ ActiveRecord::Schema.define(version: 20130909151929) do
     t.datetime "updated_at"
   end
 
+  create_table "content_integers", force: true do |t|
+    t.integer  "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "content_strings", force: true do |t|
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "contents", force: true do |t|
+    t.integer  "thing_id"
+    t.integer  "property_id"
+    t.integer  "contentable_id"
+    t.string   "contentable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "data_types", force: true do |t|
     t.string   "name"
     t.string   "slug"
@@ -38,6 +59,12 @@ ActiveRecord::Schema.define(version: 20130909151929) do
     t.string   "name"
     t.string   "slug"
     t.integer  "data_type_id"
+    t.integer  "collection_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "things", force: true do |t|
     t.integer  "collection_id"
     t.datetime "created_at"
     t.datetime "updated_at"

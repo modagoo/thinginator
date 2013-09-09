@@ -1,10 +1,10 @@
 class CreateProperties < ActiveRecord::Migration
   def change
     create_table :properties do |t|
-      t.string 		:name
-      t.string 		:slug
-      t.references :data_type
-      t.references :collection
+      t.string 		     :name
+      t.string 		     :slug
+      t.references     :data_type
+      t.references     :collection
       t.timestamps
     end
   end

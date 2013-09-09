@@ -9,8 +9,8 @@
     %header{role: "banner"}
       %nav{role: "navigation"}
         %ol
+          = content_tag :li, (link_to "Things", things_path)
           = content_tag :li, (link_to "Collections", collections_path)
-          = content_tag :li, (link_to "Properties", properties_path)
           = content_tag :li, (link_to "Data types", data_types_path)
     %main{class: "app"}
       = yield

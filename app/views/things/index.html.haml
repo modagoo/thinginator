@@ -1,0 +1,4 @@
+%h1 Things
+
+- @collections.each do |collection|
+  = link_to collection.name, collection_index_path(collection.slug)
