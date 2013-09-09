@@ -1,5 +1,5 @@
-= form_for @classification do |f|
-  = errors_for(@classification)
+= form_for @collection do |f|
+  = errors_for(@collection)
 
   %fieldset
     .field
@@ -15,7 +15,8 @@
     #properties
       = f.fields_for :properties do |builder|
         = render 'property_fields', f: builder
-      = link_to_add_fields "Add property", f, :properties
+
+      = link_to_add_fields "Add property", f, :properties, 'btn'
 
   .actions
-    = f.submit 'Save'
+    = btn("Save")

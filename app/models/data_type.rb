@@ -1,5 +1,5 @@
 class DataType < ActiveRecord::Base
   include Sluggable
-  belongs_to :property
+  has_many :properties
   validates_presence_of :name
 end

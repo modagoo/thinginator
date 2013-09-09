@@ -1,4 +1,6 @@
-%h1 Listing data_types
+%h1 Listing Data types
+
+= link_to 'New Data type', new_data_type_path, class: "btn prime-action"
 
 %table
   %tr
@@ -6,16 +8,9 @@
     %th Slug
     %th
     %th
-    %th
 
   - @data_types.each do |data_type|
     %tr
-      %td= data_type.name
+      %td= link_to data_type.name, edit_data_type_path(data_type)
       %td= data_type.slug
-      %td= link_to 'Show', data_type
-      %td= link_to 'Edit', edit_data_type_path(data_type)
       %td= link_to 'Destroy', data_type, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Data type', new_data_type_path

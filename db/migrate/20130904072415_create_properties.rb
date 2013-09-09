@@ -3,7 +3,8 @@ class CreateProperties < ActiveRecord::Migration
     create_table :properties do |t|
       t.string 		:name
       t.string 		:slug
-      t.references :classification
+      t.references :data_type
+      t.references :collection
       t.timestamps
     end
   end

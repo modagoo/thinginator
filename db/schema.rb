@@ -11,12 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130905094337) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20130909151929) do
 
   create_table "classifications", force: true do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "collections", force: true do |t|
     t.string   "name"
     t.string   "slug"
     t.datetime "created_at"
@@ -26,7 +30,6 @@ ActiveRecord::Schema.define(version: 20130905094337) do
   create_table "data_types", force: true do |t|
     t.string   "name"
     t.string   "slug"
-    t.integer  "property_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -34,7 +37,8 @@ ActiveRecord::Schema.define(version: 20130905094337) do
   create_table "properties", force: true do |t|
     t.string   "name"
     t.string   "slug"
-    t.integer  "classification_id"
+    t.integer  "data_type_id"
+    t.integer  "collection_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

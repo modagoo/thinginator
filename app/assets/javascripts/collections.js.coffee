@@ -5,4 +5,7 @@ $(document).on 'ready page:change', ->
     $(this).before($(this).data('fields').replace(regexp, time))
     event.preventDefault()
 
-
+  $('form').on 'click', '.remove_fields', (event) ->
+    $(this).prev("input[type=hidden]").val("1");
+    $(this).closest("fieldset.property").slideUp('fast');
+    event.preventDefault()

@@ -1,6 +1,6 @@
 Thinginator::Application.routes.draw do
 
-  resources :classifications
+  resources :collections
   resources :properties
   resources :data_types
 

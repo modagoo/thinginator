@@ -1,0 +1,22 @@
+%h1 Collection
+
+%p#notice= notice
+
+%p
+  %b Name:
+  = @collection.name
+%p
+  %b Slug:
+  = @collection.slug
+
+- if @collection.properties.any?
+  %h2 Properties
+  %ol
+    - @collection.properties.each do |property|
+      %li
+        = property.name
+
+
+= link_to 'Edit', edit_collection_path(@collection)
+\|
+= link_to 'Back', collections_path

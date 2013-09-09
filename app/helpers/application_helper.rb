@@ -15,13 +15,30 @@ module ApplicationHelper
     end
   end
 
-  def link_to_add_fields(name, f, association)
+  # Returns HTML button element
+  def btn(text="Submit",type="submit",id="",css_class="btn",icon="")
+    ret =  "<button type=\"#{type}\" class=\"#{css_class}\""
+    ret +=  " id=\"#{id}\"" unless id.blank?
+    ret += ">#{text}"
+    ret += " <i class=\"#{icon}\"></i>" if icon.present?
+    ret += "</button>"
+    ret.html_safe
+  end
+
+  def link_to_add_fields(name, f, association, css="")
     new_object = f.object.send(association).klass.new
     id = new_object.object_id
     fields = f.fields_for(association, new_object, child_index: id) do |builder|
       render(association.to_s.singularize + "_fields", f: builder)
     end
-    link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
+    link_to(name, '#', class: "add_fields #{css}", data: {id: id, fields: fields.gsub("\n", "")})
+  end
+
+  def link_to_remove_fields(label, f, css="")
+    ret = ""
+    ret += f.hidden_field :_destroy , class: 'remove_fields'
+    ret += link_to(label, '#', class: "remove_fields #{css}")
+    ret.html_safe
   end
 
 end

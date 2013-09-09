@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/paulgroves/iserfrontend-rails.git
-  revision: 60d85866ae098b3d98031e8ca53f06ff2da1b8db
+  revision: e28ad74934cec7616a87afed93c7bc7751ff425d
   specs:
     iserfrontend-rails (0.0.1)
       railties (~> 4.0)
