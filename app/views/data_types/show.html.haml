@@ -1,11 +1,14 @@
 %p#notice= notice
 
 %p
+  %b Friendly name:
+  = @data_type.friendly_name
+%p
   %b Name:
   = @data_type.name
 %p
-  %b Slug:
-  = @data_type.slug
+  %b Help:
+  = @data_type.help
 
 = link_to 'Edit', edit_data_type_path(@data_type)
 \|

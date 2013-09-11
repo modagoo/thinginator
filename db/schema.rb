@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20130909155143) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "classifications", force: true do |t|
     t.string   "name"
     t.string   "slug"
@@ -52,8 +49,9 @@ ActiveRecord::Schema.define(version: 20130909155143) do
   end
 
   create_table "data_types", force: true do |t|
+    t.string   "friendly_name"
     t.string   "name"
-    t.string   "slug"
+    t.text     "help"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

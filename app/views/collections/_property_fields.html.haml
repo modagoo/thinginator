@@ -5,6 +5,6 @@
 
   .field
     = f.label :data_type_id
-    = f.collection_select :data_type_id, DataType.all, :id, :name, prompt: true
+    = f.collection_select :data_type_id, DataType.all, :id, :friendly_name, prompt: true
 
   = link_to_remove_fields "remove", f, 'btn'

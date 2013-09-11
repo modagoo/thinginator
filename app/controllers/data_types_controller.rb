@@ -69,6 +69,6 @@ class DataTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def data_type_params
-      params.require(:data_type).permit(:name, :slug)
+      params.require(:data_type).permit(:name, :friendly_name, :help)
     end
 end

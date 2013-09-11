@@ -1,6 +1,6 @@
 = form_for @thing do |f|
   = errors_for(@thing)
-
-  = @thing.my_attributes
+  = f.hidden_field :collection_id
+  = render_form_fields(f, @thing.my_attributes)
   .actions
     = btn('Save')

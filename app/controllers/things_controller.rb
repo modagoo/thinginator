@@ -70,7 +70,7 @@ class ThingsController < ApplicationController
   end
 
   def thing_params
-    params.require(:thing).permit(:slug)
+    params.require(:thing).permit(:slug, :collection_id, Property.all)
   end
 
 end

@@ -2,10 +2,13 @@
   = errors_for(@data_type)
 
   .field
+    = f.label :friendly_name
+    = f.text_field :friendly_name
+  .field
     = f.label :name
     = f.text_field :name
   .field
-    = f.label :slug
-    = f.text_field :slug
+    = f.label :help
+    = f.text_area :help, rows: 4
   .actions
     = btn('Save')
