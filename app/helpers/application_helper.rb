@@ -4,7 +4,7 @@ module ApplicationHelper
     ret = ""
     if object.errors.any?
       ret += "<div id=\"error_explanation\">"
-      ret += "<h2>#{pluralize(object.errors.count, 'error')} prohibited this record from being saved:</h2>"
+      ret += "<h2>Please check #{pluralize(object.errors.count, 'error')}:</h2>"
       ret +=  "<ul>"
       object.errors.full_messages.each do |msg|
         ret += "<li>#{msg}</li>"

@@ -7,4 +7,4 @@
     = f.label :data_type_id
     = f.collection_select :data_type_id, DataType.all, :id, :friendly_name, prompt: true
 
-  = link_to_remove_fields "remove", f, 'btn'
+  = link_to_remove_fields "remove", f, 'btn btn-small btn-danger prime-action'

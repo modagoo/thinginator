@@ -1,4 +1,6 @@
 %h1 Things
 
+%p Select a type to view and create things:
+
 - @collections.each do |collection|
-  = link_to collection.name, collection_index_path(collection.slug), class: 'btn'
+  = link_to "#{collection.name} (#{Thing.where(collection: collection).size})", collection_index_path(collection.slug), class: 'btn'

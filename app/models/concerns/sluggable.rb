@@ -7,9 +7,9 @@ module Sluggable
 
   def create_slug
     if slug.blank?
-       clean_path = name.downcase.gsub(/[^a-z0-9]+/i, '-')
-       my_url = clean_path.gsub(/(-)\z/, '')
-       my_url = my_url.gsub(/^(-)/, '')
+       clean_path = name.downcase.gsub(/[^a-z0-9]+/i, '_')
+       my_url = clean_path.gsub(/(_)\z/, '')
+       my_url = my_url.gsub(/^(_)/, '')
        self.slug = my_url
     end
   end

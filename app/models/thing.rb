@@ -47,7 +47,6 @@ class Thing < ActiveRecord::Base
   end
 
   def create_new_value(value, datatype)
-    return if value.blank?
     case datatype
     when "String"
       ret = ContentString.new(value: value)

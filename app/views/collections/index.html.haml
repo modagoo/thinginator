@@ -1,5 +1,7 @@
 %h1 Listing collections
 
+= link_to 'New Collection', new_collection_path, class: "btn prime-action"
+
 %table
   %tr
     %th Name
@@ -13,7 +15,3 @@
       %td= collection.slug
       %td= collection.properties.size
       %td= link_to 'Destroy', collection, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Collection', new_collection_path, class: "btn"

@@ -7,13 +7,13 @@
   = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
   = javascript_include_tag "application", "data-turbolinks-track" => true
   = csrf_meta_tags
-  %body
+  %body{class: "app"}
     %header{role: "banner"}
       %nav{role: "navigation"}
         %ol
           = content_tag :li, (link_to "Things", things_path)
           = content_tag :li, (link_to "Collections", collections_path)
           = content_tag :li, (link_to "Data types", data_types_path)
-    %main{class: "app"}
+    %main
       = flash.notice
       = yield

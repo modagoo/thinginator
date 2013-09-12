@@ -1,25 +1,23 @@
-= content_tag :h1, @collection.name
+%h1
+  = @collection.name
+  %span
+    = @collection.things.size
 
-= link_to "New #{@collection.name.singularize}", new_thing_in_collection_path(@collection.slug.singularize), class: 'btn'
-
-= @collection.things.size
+= link_to "New #{@collection.name.singularize}", new_thing_in_collection_path(@collection.slug.singularize), class: 'btn prime-action'
 
 %table
   %tr
-    - @collection.properties.each do |property|
+    - @collection.properties[0..5].each do |property|
       %th
         = property.name
     %th
-    %th
   - @collection.things.each do |thing|
     %tr
-    - @collection.properties.each do |property|
+    - @collection.properties[0..5].each_with_index do |property, i|
       %td
-        = thing.send(property.slug.to_sym)
+        - if i == 0
+          = link_to thing.send(property.slug.to_sym), edit_thing_path(thing)
+        - else
+          = thing.send(property.slug.to_sym)
     %td
-      = link_to 'Edit', edit_thing_path(thing)
-    %td
-      = link_to 'Destroy', thing, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-
-
+      = link_to 'Destroy', thing, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'

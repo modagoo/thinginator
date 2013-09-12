@@ -44,10 +44,7 @@ module ThingsHelper
   def render_boolean(f, name)
     ret = "<div class=\"field\">"
     ret += f.label name.to_sym
-    ret += "No"
-    ret += f.radio_button name.to_sym, "0"
-    ret += "Yes"
-    ret += f.radio_button name.to_sym, "1"
+    ret += f.select name.to_sym, [['Yes', true], ['No', false]], prompt: true
     ret += "</div>"
     return ret
   end
