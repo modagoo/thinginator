@@ -16,6 +16,10 @@ module ThingsHelper
       render_text_field(f, name)
     when "Text"
       render_text_area(f, name)
+    when "Boolean"
+      render_boolean(f, name)
+    when "Datetime"
+      render_datetime(f, name)
     else
       return "ERROR: field could not be rendered #{name} #{data_type}"
     end
@@ -37,7 +41,23 @@ module ThingsHelper
     return ret
   end
 
+  def render_boolean(f, name)
+    ret = "<div class=\"field\">"
+    ret += f.label name.to_sym
+    ret += "No"
+    ret += f.radio_button name.to_sym, "0"
+    ret += "Yes"
+    ret += f.radio_button name.to_sym, "1"
+    ret += "</div>"
+    return ret
+  end
 
-
+  def render_datetime(f, name)
+    ret = "<div class=\"field\">"
+    ret += f.label name.to_sym
+    ret += f.date_select name.to_sym
+    ret += "</div>"
+    return ret
+  end
 
 end

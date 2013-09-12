@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130909155143) do
+ActiveRecord::Schema.define(version: 20130912093225) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "classifications", force: true do |t|
     t.string   "name"
@@ -27,6 +30,24 @@ ActiveRecord::Schema.define(version: 20130909155143) do
     t.datetime "updated_at"
   end
 
+  create_table "content_booleans", force: true do |t|
+    t.boolean  "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "content_datetimes", force: true do |t|
+    t.datetime "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "content_fixnums", force: true do |t|
+    t.integer  "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "content_integers", force: true do |t|
     t.integer  "value"
     t.datetime "created_at"
@@ -35,6 +56,12 @@ ActiveRecord::Schema.define(version: 20130909155143) do
 
   create_table "content_strings", force: true do |t|
     t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "content_texts", force: true do |t|
+    t.text     "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

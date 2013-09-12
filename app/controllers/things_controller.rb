@@ -16,7 +16,11 @@ class ThingsController < ApplicationController
 
   # GET /things/new
   def new_thing
-    @thing = Thing.new(collection: Collection.find_by_slug(params[:slug].pluralize))
+    if collection = Collection.find_by_slug(params[:slug].pluralize)
+      @thing = Thing.new(collection: collection)
+    else
+      render text: "No collection"
+    end
   end
 
   # GET /things/1/edit
@@ -26,8 +30,8 @@ class ThingsController < ApplicationController
   # POST /things
   # POST /things.json
   def create
-    # raise params.inspect
-    @thing = Thing.new(thing_params)
+
+    @thing = Thing.new(params[:thing])
 
     respond_to do |format|
       if @thing.save
@@ -70,7 +74,8 @@ class ThingsController < ApplicationController
   end
 
   def thing_params
-    params.require(:thing).permit(:slug, :collection_id, Property.all)
+    # params.require(:thing).permit(:slug, :collection_id, :laces, Property.all)
+    params
   end
 
 end
