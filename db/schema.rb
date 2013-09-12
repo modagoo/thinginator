@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 20130912093225) do
   create_table "properties", force: true do |t|
     t.string   "name"
     t.string   "slug"
+    t.text     "help"
     t.integer  "data_type_id"
     t.integer  "collection_id"
     t.datetime "created_at"

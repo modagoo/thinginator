@@ -1,58 +1,62 @@
 module ThingsHelper
 
-  def render_form_fields(f, attrs)
+  def render_form_fields(f, properties)
     ret = ""
-    attrs.each do |a|
-      ret << render_field(f, a[:name], a[:data_type])
+    properties.each do |p|
+      ret << render_field(f, p)
     end
     ret.html_safe
   end
 
-  def render_field(f, name, data_type)
-    case data_type
+  def render_field(f, p)
+    case p.data_type.name
     when "Fixnum"
-      render_text_field(f, name)
+      render_text_field(f, p)
     when "String"
-      render_text_field(f, name)
+      render_text_field(f, p)
     when "Text"
-      render_text_area(f, name)
+      render_text_area(f, p)
     when "Boolean"
-      render_boolean(f, name)
+      render_boolean(f, p)
     when "Datetime"
-      render_datetime(f, name)
+      render_datetime(f, p)
     else
       return "ERROR: field could not be rendered #{name} #{data_type}"
     end
   end
 
-  def render_text_field(f, name)
+  def render_text_field(f, p)
     ret = "<div class=\"field\">"
-    ret += f.label name.to_sym
-    ret += f.text_field name.to_sym
+    ret += f.label p.slug.to_sym
+    ret += f.text_field p.slug.to_sym
+    ret += content_tag :p, p.help, class: "help"
     ret += "</div>"
     return ret
   end
 
-  def render_text_area(f, name)
+  def render_text_area(f, p)
     ret = "<div class=\"field\">"
-    ret += f.label name.to_sym
-    ret += f.text_area name.to_sym, rows: 4
+    ret += f.label p.slug.to_sym
+    ret += f.text_area p.slug.to_sym, rows: 4
+    ret += content_tag :p, p.help, class: "help"
     ret += "</div>"
     return ret
   end
 
-  def render_boolean(f, name)
+  def render_boolean(f, p)
     ret = "<div class=\"field\">"
-    ret += f.label name.to_sym
-    ret += f.select name.to_sym, [['Yes', true], ['No', false]], prompt: true
+    ret += f.label p.slug.to_sym
+    ret += f.select p.slug.to_sym, [['Yes', true], ['No', false]], prompt: true
+    ret += content_tag :p, p.help, class: "help"
     ret += "</div>"
     return ret
   end
 
-  def render_datetime(f, name)
+  def render_datetime(f, p)
     ret = "<div class=\"field\">"
-    ret += f.label name.to_sym
-    ret += f.date_select name.to_sym
+    ret += f.label p.slug.to_sym
+    ret += f.date_select p.slug.to_sym
+    ret += content_tag :p, p.help, class: "help"
     ret += "</div>"
     return ret
   end

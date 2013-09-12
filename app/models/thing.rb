@@ -17,7 +17,6 @@ class Thing < ActiveRecord::Base
       self.collection.properties.each do |property|
         # self.class.__send__(:attr_accessor, property.slug.to_sym)
         self.send("#{property.slug}=", get_value(property))
-        self.my_attributes << { data_type: property.data_type.name, name: property.slug, property_id: property.id, value: self.send(property.slug.to_sym) }
       end
     end
   end

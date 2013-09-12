@@ -1,7 +1,11 @@
 %fieldset{class: "property"}
   .field
     = f.label :name
-    = f.text_area :name
+    = f.text_field :name
+
+  .field
+    = f.label :help
+    = f.text_area :help
 
   .field
     = f.label :data_type_id

@@ -1,7 +1,7 @@
 = form_for @thing do |f|
   = errors_for(@thing)
   = f.hidden_field :collection_id
-  = render_form_fields(f, @thing.my_attributes)
+  = render_form_fields(f, @thing.collection.properties)
   .actions
     = btn('Save')
     = link_to 'cancel', collection_index_path(@thing.collection.slug)
