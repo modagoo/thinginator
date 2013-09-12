@@ -30,12 +30,12 @@ class ThingsController < ApplicationController
   # POST /things
   # POST /things.json
   def create
-
-    @thing = Thing.new(params[:thing])
+    # TODO: not calling after_intialize here so does not get attributes from collection??
+    @thing = Thing.new(thing_params)
 
     respond_to do |format|
       if @thing.save
-        format.html { redirect_to things_path, notice: 'Thing was successfully created.' }
+        format.html { redirect_to collection_index_path(@thing.collection.slug), notice: 'Thing was successfully created.' }
         format.json { render action: 'show', status: :created, location: @thing }
       else
         format.html { render action: 'new' }
@@ -74,8 +74,8 @@ class ThingsController < ApplicationController
   end
 
   def thing_params
-    # params.require(:thing).permit(:slug, :collection_id, :laces, Property.all)
-    params
+    # params.require(:thing).permit(:slug, :collection_id, :size, Property.all)
+    params.require(:thing).permit!
   end
 
 end

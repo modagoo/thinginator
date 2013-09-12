@@ -1,3 +1,19 @@
-= @collection.name
+= content_tag :h1, @collection.name
 
-= link_to "New #{@collection_name}", new_thing_in_collection_path(@collection.slug.singularize)
+= link_to "New #{@collection.name.singularize}", new_thing_in_collection_path(@collection.slug.singularize), class: 'btn'
+
+= @collection.things.size
+
+%table
+  %tr
+    - @collection.properties.each do |property|
+      %th
+        = property.name
+  - @collection.things.each do |thing|
+    %tr
+    - @collection.properties.each do |property|
+      %td
+        = thing.send(property.slug.to_sym)
+
+
+
