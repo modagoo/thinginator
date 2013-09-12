@@ -2,10 +2,12 @@ class Thing < ActiveRecord::Base
   has_many :content, :dependent => :destroy
   belongs_to :collection
 
+  # TODO add after_save to Property to rebuild this!
   attr_accessor :my_attributes, *Property.pluck(:slug).collect{|p| p.to_sym}
 
   after_initialize :build_content_attributes
   after_create :save_collection_attributes
+  after_update :update_collection_attributes
 
   private
 
@@ -26,6 +28,12 @@ class Thing < ActiveRecord::Base
       c.property = self.collection.properties.find_by_slug(p.slug)
       c.contentable = create_new_value(self.send(p.slug.to_sym), p.data_type.name)
       c.save
+    end
+  end
+
+  def update_collection_attributes
+    self.collection.properties.each do |p|
+      self.content.find_by_property_id(p.id).contentable.update_attribute(:value, self.send(p.slug.to_sym))
     end
   end
 

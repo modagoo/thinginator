@@ -32,9 +32,6 @@ class ThingsController < ApplicationController
   def create
     # TODO: not calling after_intialize here so does not get attributes from collection??
     @thing = Thing.new(thing_params)
-
-
-
     respond_to do |format|
       if @thing.save
         format.html { redirect_to collection_index_path(@thing.collection.slug), notice: 'Thing was successfully created.' }
@@ -51,7 +48,7 @@ class ThingsController < ApplicationController
   def update
     respond_to do |format|
       if @thing.update(thing_params)
-        format.html { redirect_to things_path, notice: 'Thing was successfully updated.' }
+        format.html { redirect_to collection_index_path(@thing.collection.slug), notice: 'Thing was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -63,9 +60,10 @@ class ThingsController < ApplicationController
   # DELETE /things/1
   # DELETE /things/1.json
   def destroy
+    collection = @thing.collection
     @thing.destroy
     respond_to do |format|
-      format.html { redirect_to things_url }
+      format.html { redirect_to collection_index_path(collection.slug) }
       format.json { head :no_content }
     end
   end
@@ -76,8 +74,8 @@ class ThingsController < ApplicationController
   end
 
   def thing_params
-    params.require(:thing).permit(:slug, :collection_id, :size, :colour, :description)
-    # params.require(:thing).permit!
+    # params.require(:thing).permit(:slug, :collection_id, :size, :colour, :description)
+    params.require(:thing).permit!
   end
 
 end

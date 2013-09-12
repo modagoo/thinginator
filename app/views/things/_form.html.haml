@@ -4,3 +4,4 @@
   = render_form_fields(f, @thing.my_attributes)
   .actions
     = btn('Save')
+    = link_to 'cancel', collection_index_path(@thing.collection.slug)

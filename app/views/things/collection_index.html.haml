@@ -9,11 +9,17 @@
     - @collection.properties.each do |property|
       %th
         = property.name
+    %th
+    %th
   - @collection.things.each do |thing|
     %tr
     - @collection.properties.each do |property|
       %td
         = thing.send(property.slug.to_sym)
+    %td
+      = link_to 'Edit', edit_thing_path(thing)
+    %td
+      = link_to 'Destroy', thing, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 
 
