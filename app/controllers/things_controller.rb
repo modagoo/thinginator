@@ -33,6 +33,8 @@ class ThingsController < ApplicationController
     # TODO: not calling after_intialize here so does not get attributes from collection??
     @thing = Thing.new(thing_params)
 
+
+
     respond_to do |format|
       if @thing.save
         format.html { redirect_to collection_index_path(@thing.collection.slug), notice: 'Thing was successfully created.' }
@@ -74,8 +76,8 @@ class ThingsController < ApplicationController
   end
 
   def thing_params
-    # params.require(:thing).permit(:slug, :collection_id, :size, Property.all)
-    params.require(:thing).permit!
+    params.require(:thing).permit(:slug, :collection_id, :size, :colour, :description)
+    # params.require(:thing).permit!
   end
 
 end
