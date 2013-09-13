@@ -3,3 +3,4 @@ DataType.create( friendly_name: 'Long Text', name: 'Text', help: 'for entries th
 DataType.create( friendly_name: 'Number', name: 'Fixnum', help: 'numeric entry e.g. Age' )
 DataType.create( friendly_name: 'True or false', name: 'Boolean', help: 'simple yes or no' )
 DataType.create( friendly_name: 'Time and date', name: 'Datetime' )
+DataType.create( friendly_name: 'File', name: 'File', help: 'attach a file' )

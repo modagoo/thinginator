@@ -5,19 +5,24 @@
 
 = link_to "New #{@collection.name.singularize}", new_thing_in_collection_path(@collection.slug.singularize), class: 'btn prime-action'
 
-%table
-  %tr
-    - @collection.properties[0..5].each do |property|
-      %th
-        = property.name
-    %th
-  - @collection.things.each do |thing|
+- if @collection.things.empty?
+  %p.info
+    \- no things yet
+    = link_to "create one", new_thing_in_collection_path(@collection.slug.singularize)
+- else
+  %table
     %tr
-    - @collection.properties[0..5].each_with_index do |property, i|
+      - @collection.properties[0..5].each do |property|
+        %th
+          = property.name
+      %th
+    - @collection.things.each do |thing|
+      %tr
+      - @collection.properties[0..5].each_with_index do |property, i|
+        %td
+          - if i == 0
+            = link_to thing.send(property.slug.to_sym), edit_thing_path(thing)
+          - else
+            = render_thing(thing, property)
       %td
-        - if i == 0
-          = link_to thing.send(property.slug.to_sym), edit_thing_path(thing)
-        - else
-          = thing.send(property.slug.to_sym)
-    %td
-      = link_to 'Destroy', thing, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'
+        = link_to 'Destroy', thing, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'

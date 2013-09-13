@@ -27,13 +27,15 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
+gem "paperclip", "~> 3.0"
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
 
 # gem 'iserfrontend-rails', github: 'paulgroves/iserfrontend-rails'
-gem 'iserfrontend-rails', path: '/Users/pmgroves/github/iserfrontend-rails'
+gem 'iserfrontend-rails', path: '~/github/iserfrontend-rails'
 gem 'haml-rails'
 gem "better_errors"
 gem "binding_of_caller"

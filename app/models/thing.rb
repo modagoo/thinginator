@@ -1,5 +1,5 @@
 class Thing < ActiveRecord::Base
-  has_many :content, :dependent => :destroy
+  has_many :content
   belongs_to :collection
 
   # TODO add after_save to Property to rebuild this!
@@ -8,6 +8,8 @@ class Thing < ActiveRecord::Base
   after_initialize :build_content_attributes
   after_create :save_collection_attributes
   after_update :update_collection_attributes
+
+  before_destroy :delete_content_and_contentable
 
   def thing_attributes
     self.collection.properties.pluck(:slug)
@@ -61,8 +63,19 @@ class Thing < ActiveRecord::Base
       ret = ContentDatetime.new(value: value)
     when "Boolean"
       ret = ContentBoolean.new(value: value)
+    when "File"
+      ret = ContentFile.new(value: value)
     else
       nil
+    end
+  end
+
+  private
+
+  def delete_content_and_contentable
+    self.content.each do |content|
+      content.contentable.try(:destroy)
+      content.delete
     end
   end
 

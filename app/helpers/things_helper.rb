@@ -20,8 +20,10 @@ module ThingsHelper
       render_boolean(f, p)
     when "Datetime"
       render_datetime(f, p)
+    when "File"
+      render_file_field(f, p)
     else
-      return "ERROR: field could not be rendered #{name} #{data_type}"
+      return "ERROR: field could not be rendered #{p.slug} #{p.data_type.name}"
     end
   end
 
@@ -59,6 +61,25 @@ module ThingsHelper
     ret += content_tag :p, p.help, class: "help"
     ret += "</div>"
     return ret
+  end
+
+  def render_file_field(f, p)
+    ret = "<div class=\"field\">"
+    ret += f.label p.slug.to_sym
+    ret += f.file_field p.slug.to_sym
+    ret += content_tag :p, p.help, class: "help"
+    ret += "</div>"
+    return ret
+  end
+
+  def render_thing(thing, p)
+    case p.data_type.name
+    when "File"
+      fpath = thing.send(p.slug.to_sym).to_s
+      link_to File.basename(fpath.gsub(/\?.*\z/,"")), fpath, class: 'btn btn-small' unless fpath.blank?
+    else
+      thing.send(p.slug.to_sym)
+    end
   end
 
 end

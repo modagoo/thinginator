@@ -55,10 +55,14 @@ class CollectionsController < ApplicationController
   # DELETE /collections/1
   # DELETE /collections/1.json
   def destroy
-    @collection.destroy
-    respond_to do |format|
-      format.html { redirect_to collections_url }
-      format.json { head :no_content }
+    if @collection.things.any?
+      redirect_to collections_path, alert: 'ERROR: cannot delete collection unless it is empty'
+    else
+      @collection.destroy
+      respond_to do |format|
+        format.html { redirect_to collections_url }
+        format.json { head :no_content }
+      end
     end
   end
 
