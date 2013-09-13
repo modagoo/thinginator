@@ -2,7 +2,6 @@ class Thing < ActiveRecord::Base
   has_many :content
   belongs_to :collection
 
-  # TODO add after_save to Property to rebuild this!
   attr_accessor :my_attributes, *Property.pluck(:slug).collect{|p| p.to_sym}
 
   after_initialize :build_content_attributes
@@ -21,7 +20,6 @@ class Thing < ActiveRecord::Base
     if collection.present?
       self.my_attributes = []
       self.collection.properties.each do |property|
-        # self.class.__send__(:attr_accessor, property.slug.to_sym)
         self.send("#{property.slug}=", get_value(property))
       end
     end
@@ -52,21 +50,10 @@ class Thing < ActiveRecord::Base
   end
 
   def create_new_value(value, datatype)
-    case datatype
-    when "String"
-      ret = ContentString.new(value: value)
-    when "Fixnum"
-      ret = ContentInteger.new(value: value)
-    when "Text"
-      ret = ContentText.new(value: value)
-    when "Datetime"
-      ret = ContentDatetime.new(value: value)
-    when "Boolean"
-      ret = ContentBoolean.new(value: value)
-    when "File"
-      ret = ContentFile.new(value: value)
+    if DataType.find_by_name(datatype).nil?
+      return nil
     else
-      nil
+      "Content#{datatype}".constantize.new(value: value)
     end
   end
 
