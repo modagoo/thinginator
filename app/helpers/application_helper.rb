@@ -15,7 +15,7 @@ module ApplicationHelper
     end
   end
 
-  def dev
+  def dev?
     return true if Rails.env == "development"
     return false
   end

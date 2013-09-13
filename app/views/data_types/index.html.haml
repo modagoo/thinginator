@@ -1,4 +1,4 @@
-%h1 Listing Data types
+%h1 Listing data types
 
 = link_to 'New Data type', new_data_type_path, class: "btn prime-action"
 
@@ -14,4 +14,4 @@
       %td= link_to data_type.friendly_name, edit_data_type_path(data_type)
       %td= data_type.name
       %td= data_type.help
-      %td= link_to 'Destroy', data_type, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td= link_to 'Destroy', data_type, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'

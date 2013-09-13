@@ -1,5 +1,5 @@
 PATH
-  remote: /Users/paul/github/iserfrontend-rails
+  remote: /Users/pmgroves/github/iserfrontend-rails
   specs:
     iserfrontend-rails (0.0.1)
       railties (~> 4.0)

@@ -4,3 +4,8 @@
 
 - @collections.each do |collection|
   = link_to "#{collection.name} (#{Thing.where(collection: collection).size})", collection_index_path(collection.slug), class: 'btn'
+
+- if @collections.empty?
+  %p.info
+    \- no collections yet
+    = link_to "create one", new_collection_path

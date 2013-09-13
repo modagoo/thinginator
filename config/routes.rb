@@ -1,5 +1,6 @@
 Thinginator::Application.routes.draw do
 
+  get '/styleguide' => 'styleguides#index', :as => :style
   resources :things
   resources :collections
   resources :properties

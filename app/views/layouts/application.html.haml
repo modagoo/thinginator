@@ -3,7 +3,7 @@
   %head
   %title
     Thinginator
-    = " (#{controller.controller_name}##{controller.action_name})" if dev
+    = " (#{controller.controller_name}##{controller.action_name})" if dev?
   = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
   = javascript_include_tag "application", "data-turbolinks-track" => true
   = csrf_meta_tags
@@ -17,3 +17,4 @@
     %main
       = flash.notice
       = yield
+    #loading

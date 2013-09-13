@@ -9,6 +9,10 @@ class Thing < ActiveRecord::Base
   after_create :save_collection_attributes
   after_update :update_collection_attributes
 
+  def thing_attributes
+    self.collection.properties.pluck(:slug)
+  end
+
   private
 
   def build_content_attributes

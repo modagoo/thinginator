@@ -33,7 +33,7 @@ group :doc do
 end
 
 # gem 'iserfrontend-rails', github: 'paulgroves/iserfrontend-rails'
-gem 'iserfrontend-rails', path: '/Users/paul/github/iserfrontend-rails'
+gem 'iserfrontend-rails', path: '/Users/pmgroves/github/iserfrontend-rails'
 gem 'haml-rails'
 gem "better_errors"
 gem "binding_of_caller"
