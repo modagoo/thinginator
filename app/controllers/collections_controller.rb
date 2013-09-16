@@ -41,6 +41,7 @@ class CollectionsController < ApplicationController
   # PATCH/PUT /collections/1
   # PATCH/PUT /collections/1.json
   def update
+    # raise params.inspect
     respond_to do |format|
       if @collection.update(collection_params)
         format.html { redirect_to collections_path, notice: 'Collection was successfully updated.' }
@@ -72,6 +73,6 @@ class CollectionsController < ApplicationController
   end
 
   def collection_params
-    params.require(:collection).permit(:name, :slug, properties_attributes: [:id, :name, :slug, :data_type_id, :help, :_destroy, property_validation_attributes: [:value, :validation_type_id]])
+    params.require(:collection).permit(:name, :slug, properties_attributes: [:id, :name, :slug, :data_type_id, :help, :_destroy, property_validations_attributes: [:value, :validation_type_id, :id]])
   end
 end
