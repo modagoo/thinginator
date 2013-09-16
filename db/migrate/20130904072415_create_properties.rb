@@ -6,6 +6,7 @@ class CreateProperties < ActiveRecord::Migration
       t.text 		       :help
       t.references     :data_type
       t.references     :collection
+      t.references     :property_validation
       t.timestamps
     end
   end

@@ -72,6 +72,6 @@ class CollectionsController < ApplicationController
   end
 
   def collection_params
-    params.require(:collection).permit(:name, :slug, properties_attributes: [:id, :name, :slug, :data_type_id, :help, :_destroy])
+    params.require(:collection).permit(:name, :slug, properties_attributes: [:id, :name, :slug, :data_type_id, :help, :_destroy, property_validation_attributes: [:value, :validation_type_id]])
   end
 end

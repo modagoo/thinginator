@@ -5,6 +5,7 @@ Thinginator::Application.routes.draw do
   resources :collections
   resources :properties
   resources :data_types
+  resources :validation_types
   get ':slug' => 'things#collection_index', as: :collection_index
   get 'new/:slug' => 'things#new_thing', as: :new_thing_in_collection
 

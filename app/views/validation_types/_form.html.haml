@@ -1,0 +1,18 @@
+= form_for @validation_type do |f|
+  = errors_for(@validation_type)
+
+  .field
+    = f.label :friendly_name
+    = f.text_field :friendly_name
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :help
+    = f.text_area :help, rows: 4
+  .field
+    = f.label :requires_value
+    = f.check_box :requires_value
+  .actions
+    = btn('Save')
+    = link_to 'Cancel', validation_types_path
