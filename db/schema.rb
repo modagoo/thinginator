@@ -11,17 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130913190657) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
-  create_table "classifications", force: true do |t|
-    t.string   "name"
-    t.string   "slug"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(version: 20130916135233) do
 
   create_table "collections", force: true do |t|
     t.string   "name"
@@ -102,8 +92,25 @@ ActiveRecord::Schema.define(version: 20130913190657) do
     t.datetime "updated_at"
   end
 
+  create_table "property_validations", force: true do |t|
+    t.integer  "validation_type_id"
+    t.integer  "property_id"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "things", force: true do |t|
     t.integer  "collection_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "validation_types", force: true do |t|
+    t.string   "friendly_name"
+    t.string   "name"
+    t.text     "help"
+    t.boolean  "requires_value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

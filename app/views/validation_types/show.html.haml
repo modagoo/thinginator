@@ -1,0 +1,13 @@
+%p
+  %b Friendly name:
+  = @validation_type.friendly_name
+%p
+  %b Name:
+  = @validation_type.name
+%p
+  %b Help:
+  = @validation_type.help
+
+= link_to 'Edit', edit_validation_type_path(@validation_type)
+\|
+= link_to 'Back', validation_types_path
