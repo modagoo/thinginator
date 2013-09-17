@@ -1,5 +1,24 @@
 module ApplicationHelper
 
+  def active?(str)
+    if controller.controller_name == str
+      return { class: 'active'}
+    end
+  end
+
+  def render_flash(flash)
+    ret = ""
+    if flash.present?
+      if flash.notice.present?
+        ret += content_tag :p, flash.notice, class: 'notice'
+      end
+      if flash.alert.present?
+        ret += content_tag :p, flash.alert, class: 'alert'
+      end
+    end
+    ret.html_safe
+  end
+
   def errors_for(object)
     # return object.errors.inspect
     ret = ""

@@ -9,19 +9,19 @@
   = csrf_meta_tags
   %body{class: "app"}
     %header{role: "banner"}
-      - if superuser? or admin?
-        %nav{role: "navigation"}
-          %ol
-            = content_tag :li, (link_to "Things", things_path)
-            = content_tag :li, (link_to "Collections", collections_path) if admin?
-            = content_tag :li, (link_to "Data types", data_types_path) if superuser?
-            = content_tag :li, (link_to "Validation types", validation_types_path) if superuser?
-            = content_tag :li, (link_to "Users", users_path) if superuser?
+      %nav{role: "navigation"}
+        %ol
+          = content_tag :li, (link_to "Things", things_path, active?('things')) if admin?
+          = content_tag :li, (link_to "Collections", collections_path, active?('collections')) if admin?
+          = content_tag :li, (link_to "Data types", data_types_path, active?('data_types')) if superuser?
+          = content_tag :li, (link_to "Validation types", validation_types_path, active?('validation_types')) if superuser?
+          = content_tag :li, (link_to "Users", users_path, active?('users')) if superuser?
+          - if current_user
+            = content_tag :li, class: "user" do
+              = current_user.username
+              = link_to "sign out", sign_out_path, method: :delete
     %main
-      - if current_user
-        = current_user.username
-        = link_to "sign out", sign_out_path, method: :delete
-      = flash.notice
-      = flash.alert
+
+      = render_flash(flash)
       = yield
     #loading

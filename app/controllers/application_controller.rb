@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin?
-    current_user.try(:admin?)
+    superuser? or current_user.try(:admin?)
   end
 
 end

@@ -1,4 +1,4 @@
-if DataType.all.empty?
+unless DataType.any?
   DataType.create( friendly_name: 'Text', name: 'String', help: 'Max of 255 characters' )
   DataType.create( friendly_name: 'Long plain text', name: 'Text', help: 'for entries that are or might be over 255 characters' )
   DataType.create( friendly_name: 'Whole number', name: 'Fixnum', help: 'numeric entry e.g. Age' )
@@ -9,7 +9,7 @@ if DataType.all.empty?
 end
 
 ValidationType.destroy_all
-if ValidationType.all.empty?
+unless ValidationType.any?
   ValidationType.create( friendly_name: 'Is present', name: 'presence', help: 'Checks that the value is present (i.e. mandatory)', requires_value: false )
   ValidationType.create( friendly_name: 'Is unique', name: 'uniqueness', help: 'Checks that value has not been used for this property in this collection before', requires_value: false )
   ValidationType.create( friendly_name: 'Acceptance', name: 'acceptance', help: 'Checks that a \'true or false\' value is set to true.', requires_value: false )
@@ -19,4 +19,8 @@ if ValidationType.all.empty?
   ValidationType.create( friendly_name: 'Format with', name: 'format_with', help: 'Checks the value by testing whether it DOES match a given regular expression', requires_value: true )
   ValidationType.create( friendly_name: 'Format without', name: 'format_without', help: 'Checks the value by testing whether it DOES NOT match a given regular expression', requires_value: true )
   ValidationType.create( friendly_name: 'Is a whole number', name: 'numericality', help: 'Checks that the value is a whole number', requires_value: false )
+end
+
+unless User.any?
+  User.create( username: 'pmgroves', firstname: 'Paul', lastname: 'Groves', superuser: true )
 end

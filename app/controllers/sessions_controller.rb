@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       user = User.find_or_create_by_username(session_params[:username])
       session[:user_id] = user.id
       # redirect_to redirect_back_or_default(root_url), :notice => "Logged in"
-      redirect_to root_url, notice: "Signed in"
+      redirect_to root_url
     else
       flash.now[:alert] = "Invalid email or password"
       render "new"
@@ -20,13 +20,13 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    redirect_to root_url, :notice => "Logged out"
+    redirect_to new_session_url, :notice => "Logged out"
   end
 
   private
 
   def session_params
-    params.permit(:username, :password)
+    params.permit(:username, :password, :utf8, :authenticity_token)
   end
 
 end
