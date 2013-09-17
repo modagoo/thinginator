@@ -1,6 +1,7 @@
 module ApplicationHelper
 
   def errors_for(object)
+    # return object.errors.inspect
     ret = ""
     if object.errors.any?
       ret += "<div id=\"error_explanation\">"

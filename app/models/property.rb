@@ -2,9 +2,9 @@ class Property < ActiveRecord::Base
   include Sluggable
   belongs_to :data_type
   belongs_to :collection
-  has_many :property_validations, dependent: :destroy
-  has_many :validation_types, through: :property_validations, dependent: :destroy
-  accepts_nested_attributes_for :property_validations, allow_destroy: true
+  has_many :validations, dependent: :destroy
+  has_many :validation_types, through: :validations, dependent: :destroy
+  accepts_nested_attributes_for :validations, allow_destroy: true
   validates_presence_of :name
   validates_presence_of :data_type
   validates :name, :uniqueness => { scope: :collection }

@@ -37,7 +37,7 @@ class ThingsController < ApplicationController
         format.html { redirect_to collection_index_path(@thing.collection.slug), notice: 'Thing was successfully created.' }
         format.json { render action: 'show', status: :created, location: @thing }
       else
-        format.html { render action: 'new' }
+        format.html { render action: 'new_thing' }
         format.json { render json: @thing.errors, status: :unprocessable_entity }
       end
     end

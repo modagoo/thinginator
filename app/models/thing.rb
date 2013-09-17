@@ -1,14 +1,12 @@
 class Thing < ActiveRecord::Base
+  attr_accessor :my_attributes, *Property.pluck(:slug).collect{|p| p.to_sym}
   has_many :content
   belongs_to :collection
-
-  attr_accessor :my_attributes, *Property.pluck(:slug).collect{|p| p.to_sym}
-
   after_initialize :build_content_attributes
   after_create :save_collection_attributes
   after_update :update_collection_attributes
-
   before_destroy :delete_content_and_contentable
+  validate :thing_validations
 
   def thing_attributes
     self.collection.properties.pluck(:slug)
@@ -57,12 +55,38 @@ class Thing < ActiveRecord::Base
     end
   end
 
-  private
-
   def delete_content_and_contentable
     self.content.each do |content|
       content.contentable.try(:destroy)
       content.delete
+    end
+  end
+
+  def thing_validations
+    self.collection.properties.each do |property|
+      property.validations.each do |validation|
+        run_validation(validation, property, self.collection)
+      end
+    end
+  end
+
+  def run_validation(validation, property, collection)
+    case validation.validation_type.name
+    when "presence"
+      if get_value(property).blank?
+        errors.add(property.slug.to_sym, "can't be blank")
+      end
+    when "uniqueness"
+      unique = true
+      collection.things.each do |t|
+        if t.try(property.slug.to_sym) == get_value(property)
+          unique = false
+        end
+        break if unique == false
+      end
+      if unique == false
+        errors.add(property.slug.to_sym, "has been used already")
+      end
     end
   end
 

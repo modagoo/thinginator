@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe PropertyValidation do
+describe Validation do
   pending "add some examples to (or delete) #{__FILE__}"
 end
