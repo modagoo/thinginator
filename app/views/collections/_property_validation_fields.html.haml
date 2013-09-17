@@ -1,7 +1,10 @@
-.field
-  = f.label :validation_type_id
-  = f.collection_select :validation_type_id, ValidationType.all, :id, :friendly_name, prompt: true
+%fieldset{class: "property"}
+  .field
+    = f.label :validation_type_id
+    = f.collection_select :validation_type_id, ValidationType.all, :id, :friendly_name, prompt: true
 
-.field
-  = f.label :value
-  = f.text_field :value
+  .field
+    = f.label :value
+    = f.text_field :value
+
+  = link_to_remove_fields "remove", f, 'btn btn-small btn-danger'
