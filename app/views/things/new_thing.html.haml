@@ -1,7 +1,7 @@
 = content_tag :h1, "New #{@thing.collection.name.singularize.downcase}"
-- if @thing.collection.properties.empty?
+- if @thing.collection.properties.visible.empty?
   %p.info
-    \- no properties yet
+    \- no visible properties
     = link_to "create one", edit_collection_path(@thing.collection)
 - else
   = render 'form'

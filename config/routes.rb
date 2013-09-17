@@ -1,11 +1,17 @@
 Thinginator::Application.routes.draw do
 
   get '/styleguide' => 'styleguides#index', :as => :style
+
+  delete "sign-out" => "sessions#destroy", :as => "sign_out"
+  # post "sign-in" => "sessions#new", :as => "sign_in"
+  resources :sessions, only: [ :new, :create ]
+
   resources :things
   resources :collections
   resources :properties
   resources :data_types
   resources :validation_types
+  resources :users
   get ':slug' => 'things#collection_index', as: :collection_index
   get 'new/:slug' => 'things#new_thing', as: :new_thing_in_collection
 

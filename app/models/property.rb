@@ -6,10 +6,12 @@ class Property < ActiveRecord::Base
   has_many :validation_types, through: :validations, dependent: :destroy
   accepts_nested_attributes_for :validations, allow_destroy: true
   validates :name, :data_type, presence: true
-  validates :name, uniqueness: { scope: :collection }
+  validates :name, uniqueness: { scope: :collection_id }
   after_save :update_thing_accessors
   before_destroy :destroy_content!
   validate :thing_integrity
+
+  scope :visible, -> { where('hide IS NOT true') }
 
   private
 

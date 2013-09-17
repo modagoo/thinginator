@@ -1,0 +1,19 @@
+%h1 Listing users
+
+- if @users.empty?
+  %p.info
+    \- no users yet, which is basically not possible, how weird.
+- else
+  %table
+    %tr
+      %th Username
+      %th First name
+      %th Last name
+      %th
+
+    - @users.each do |user|
+      %tr
+        %td= link_to user.username, edit_user_path(user)
+        %td= user.firstname
+        %td= user.lastname
+        %td= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'

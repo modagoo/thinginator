@@ -14,6 +14,9 @@ class ThingsController < ApplicationController
     end
   end
 
+  def show
+  end
+
   # GET /things/new
   def new_thing
     if collection = Collection.find_by_slug(params[:slug].pluralize)

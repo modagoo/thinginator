@@ -1,4 +1,5 @@
 class ValidationTypesController < ApplicationController
+  before_action :require_superuser
   before_action :set_validation_type, only: [:show, :edit, :update, :destroy]
 
   # GET /validation_types

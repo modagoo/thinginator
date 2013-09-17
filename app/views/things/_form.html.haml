@@ -1,7 +1,7 @@
 = form_for @thing, html: { multipart: true } do |f|
   = errors_for(@thing)
   = f.hidden_field :collection_id
-  = render_form_fields(f, @thing.collection.properties)
+  = render_form_fields(f, @thing.collection.properties.visible)
   .actions
     = btn('Save')
     = link_to 'cancel', collection_index_path(@thing.collection.slug)

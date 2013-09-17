@@ -1,7 +1,10 @@
+- empty = has_no_data?(@collection, f.object)
 %fieldset{class: "property"}
   .field
     = f.label :name
-    = f.text_field :name, check_for_data(@collection, f.object)
+    = f.text_field :name, is_disabled?(empty)
+    - unless empty
+      = content_tag :p, "Things exists with this property - cannot change name", class: "help"
 
   .field
     = f.label :help
@@ -9,7 +12,9 @@
 
   .field
     = f.label :data_type_id
-    = f.collection_select :data_type_id, DataType.all, :id, :friendly_name, {prompt: true}, check_for_data(@collection, f.object)
+    = f.collection_select :data_type_id, DataType.all, :id, :friendly_name, {prompt: true}, is_disabled?(empty)
+    - unless empty
+      = content_tag :p, "Things exists with this property - cannot change data type", class: "help"
 
   .field
     = f.label :hide

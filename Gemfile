@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+source 'http://iser-wdev.essex.ac.uk:8808'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
@@ -29,6 +30,10 @@ gem 'jbuilder', '~> 1.2'
 
 gem "paperclip", "~> 3.0"
 
+gem 'redcarpet'
+gem 'albino'
+gem 'nokogiri'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -36,6 +41,7 @@ end
 
 # gem 'iserfrontend-rails', github: 'paulgroves/iserfrontend-rails'
 gem 'iserfrontend-rails', path: '~/github/iserfrontend-rails'
+gem 'iser_auth', '0.1.7'
 gem 'haml-rails'
 gem "better_errors"
 gem "binding_of_caller"

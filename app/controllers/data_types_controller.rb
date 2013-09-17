@@ -1,4 +1,5 @@
 class DataTypesController < ApplicationController
+  before_action :require_superuser
   before_action :set_data_type, only: [:show, :edit, :update, :destroy]
 
   # GET /data_types

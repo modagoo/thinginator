@@ -1,0 +1,21 @@
+= form_for @user do |f|
+  = errors_for(@user)
+
+  .field
+    = f.label :username
+    = f.text_field :username
+  .field
+    = f.label :firstname
+    = f.text_field :firstname
+  .field
+    = f.label :lastname
+    = f.text_field :lastname
+  .field
+    = f.label :admin
+    = f.check_box :admin
+  .field
+    = f.label :superuser
+    = f.check_box :superuser
+  .actions
+    = btn('Save')
+    = link_to 'Cancel',users_path

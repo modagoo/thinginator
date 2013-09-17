@@ -1,9 +1,10 @@
 if DataType.all.empty?
-  DataType.create( friendly_name: 'Short Text', name: 'String', help: 'Max of 255 characters' )
-  DataType.create( friendly_name: 'Long Text', name: 'Text', help: 'for entries that are or might be over 255 characters' )
+  DataType.create( friendly_name: 'Text', name: 'String', help: 'Max of 255 characters' )
+  DataType.create( friendly_name: 'Long plain text', name: 'Text', help: 'for entries that are or might be over 255 characters' )
   DataType.create( friendly_name: 'Whole number', name: 'Fixnum', help: 'numeric entry e.g. Age' )
   DataType.create( friendly_name: 'True or false', name: 'Boolean', help: 'simple yes or no' )
   DataType.create( friendly_name: 'Time and date', name: 'Datetime' )
+  DataType.create( friendly_name: 'Markdown', name: 'Markdown' )
   DataType.create( friendly_name: 'File', name: 'File', help: 'attach a file' )
 end
 

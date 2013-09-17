@@ -1,2 +1,9 @@
 = content_tag :h1, "Edit #{@thing.collection.name.singularize.downcase}"
-= render 'form'
+
+- if @thing.collection.properties.visible.empty?
+  %p.info
+    \- no visible properties
+    = link_to "create one", edit_collection_path(@thing.collection)
+    = content_tag :p, (link_to "cancel", collection_index_path(@thing.collection.slug), class: 'btn')
+- else
+  = render 'form'

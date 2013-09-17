@@ -12,17 +12,17 @@
 - else
   %table
     %tr
-      - @collection.properties[0..5].each do |property|
+      - @collection.properties.visible[0..5].each do |property|
         %th
           = property.name
       %th
     - @collection.things.each do |thing|
       %tr
-      - @collection.properties[0..5].each_with_index do |property, i|
+      - @collection.properties.visible[0..5].each_with_index do |property, i|
         %td
           - if i == 0
             = link_to thing.send(property.slug.to_sym), edit_thing_path(thing)
           - else
-            = render_thing(thing, property)
+            = truncate(render_thing(thing, property), length: 255)
       %td
         = link_to 'Destroy', thing, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'

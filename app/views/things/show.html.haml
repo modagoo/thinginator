@@ -1,0 +1,11 @@
+%h1 Thing
+
+= link_to "Edit", edit_thing_path(@thing), class: "btn prime-action"
+
+%hr
+
+- @thing.collection.properties.each do |property|
+  = content_tag :h2, property.name
+  = render_thing(@thing, property)
+  %hr
+
