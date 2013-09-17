@@ -91,7 +91,7 @@ module ThingsHelper
     when "Markdown"
       markdown(thing.send(p.slug.to_sym).to_s)
     else
-      thing.send(p.slug.to_sym)
+      thing.send(p.slug.to_sym).to_s
     end
   end
 

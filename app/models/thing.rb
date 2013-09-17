@@ -2,10 +2,12 @@ class Thing < ActiveRecord::Base
   attr_accessor :my_attributes, *Property.pluck(:slug).collect{|p| p.to_sym}
   has_many :content
   belongs_to :collection
+  belongs_to :user
   after_initialize :build_content_attributes
   after_create :save_collection_attributes
   after_update :update_collection_attributes
   before_destroy :delete_content_and_contentable
+  validates_presence_of :user
   validate :thing_validations
 
   def thing_attributes
@@ -34,7 +36,15 @@ class Thing < ActiveRecord::Base
 
   def update_collection_attributes
     self.collection.properties.each do |p|
-      self.content.find_by_property_id(p.id).contentable.update_attribute(:value, self.send(p.slug.to_sym))
+      existing_content = self.content.find_by_property_id(p.id)
+      if existing_content.nil?
+        c = Content.new(thing_id: self.id)
+        c.property = self.collection.properties.find_by_slug(p.slug)
+        c.contentable = create_new_value(self.send(p.slug.to_sym), p.data_type.name)
+        c.save
+      else
+        existing_content.contentable.update_attribute(:value, self.send(p.slug.to_sym))
+      end
     end
   end
 

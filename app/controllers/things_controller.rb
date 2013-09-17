@@ -8,7 +8,11 @@ class ThingsController < ApplicationController
   def collection_index
     begin
       @collection = Collection.find_by_slug(params[:slug])
-      @things = @collection.things
+      if admin?
+        @things = @collection.things
+      else
+        @things = current_user.things
+      end
     rescue
       render :text => 'no such thing'
     end
@@ -35,9 +39,10 @@ class ThingsController < ApplicationController
   def create
     # TODO: not calling after_intialize here so does not get attributes from collection??
     @thing = Thing.new(thing_params)
+    @thing.user = current_user
     respond_to do |format|
       if @thing.save
-        format.html { redirect_to collection_index_path(@thing.collection.slug), notice: 'Thing was successfully created.' }
+        format.html { redirect_to collection_index_path(@thing.collection.slug), notice: "#{@thing.collection.name} was successfully created." }
         format.json { render action: 'show', status: :created, location: @thing }
       else
         format.html { render action: 'new_thing' }

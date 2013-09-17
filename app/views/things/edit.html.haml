@@ -3,7 +3,7 @@
 - if @thing.collection.properties.visible.empty?
   %p.info
     \- no visible properties
-    = link_to "create one", edit_collection_path(@thing.collection)
+    = link_to "create one", edit_collection_path(@thing.collection) if admin?
     = content_tag :p, (link_to "cancel", collection_index_path(@thing.collection.slug), class: 'btn')
 - else
   = render 'form'

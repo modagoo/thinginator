@@ -13,6 +13,16 @@
 
 ActiveRecord::Schema.define(version: 20130917152540) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "classifications", force: true do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "collections", force: true do |t|
     t.string   "name"
     t.string   "slug"
@@ -110,6 +120,7 @@ ActiveRecord::Schema.define(version: 20130917152540) do
 
   create_table "things", force: true do |t|
     t.integer  "collection_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

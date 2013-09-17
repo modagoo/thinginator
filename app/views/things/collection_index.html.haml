@@ -16,6 +16,8 @@
         %th
           = property.name
       %th
+        Created by
+      %th
     - @collection.things.each do |thing|
       %tr
       - @collection.properties.visible[0..5].each_with_index do |property, i|
@@ -24,5 +26,7 @@
             = link_to thing.send(property.slug.to_sym), edit_thing_path(thing)
           - else
             = truncate(render_thing(thing, property), length: 255)
+      %td
+        = thing.user.username
       %td
         = link_to 'Destroy', thing, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'
