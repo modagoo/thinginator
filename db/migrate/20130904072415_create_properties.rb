@@ -4,6 +4,7 @@ class CreateProperties < ActiveRecord::Migration
       t.string 		     :name
       t.string         :slug
       t.text 		       :help
+      t.boolean        :hide
       t.references     :data_type
       t.references     :collection
       t.references     :validation

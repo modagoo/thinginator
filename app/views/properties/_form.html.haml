@@ -10,5 +10,8 @@
   .field
     = f.label :data_type
     = f.collection_select :data_type, DataType.all, :id, :name
+  .field
+    = f.label :hide
+    = f.check_box :hide
   .actions
     = f.submit 'Save'

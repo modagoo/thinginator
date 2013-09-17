@@ -77,6 +77,10 @@ class Thing < ActiveRecord::Base
         errors.add(property.slug.to_sym, "can't be blank")
       end
     when "uniqueness"
+      # TODO - this is going to get very slow, very quickly!
+      # need a way to search for a thing with specific value, maybe other way round, i.e.
+      # make array of possible matches from content,
+      # then filter to this thing/collection PG 20130917
       unique = true
       collection.things.each do |t|
         if t.try(property.slug.to_sym) == get_value(property)
@@ -86,6 +90,50 @@ class Thing < ActiveRecord::Base
       end
       if unique == false
         errors.add(property.slug.to_sym, "has been used already")
+      end
+    when 'acceptance'
+      unless get_value(property) == "true" # value not saved yet, hence String
+        errors.add(property.slug.to_sym, "must be accepted")
+      end
+    when 'exclusion'
+      if validation.value.present?
+        if validation.value.split(',').is_a?(Array)
+          validation_list = validation.value.split(',').collect!{|a| a.strip!}
+          if validation_list.include?(get_value(property))
+            errors.add(property.slug.to_sym, "is reserved")
+          end
+        end
+      end
+    when 'inclusion'
+      if validation.value.present?
+        if validation.value.split(',').is_a?(Array)
+          validation_list = validation.value.split(',').collect!{|a| a.strip!}
+          unless validation_list.include?(get_value(property))
+            errors.add(property.slug.to_sym, "is not included in the list")
+          end
+        end
+      end
+    when 'format_with'
+      if validation.value.present?
+        regexp = Regexp.new validation.value
+        if get_value(property).to_s !~ regexp
+          errors.add(property.slug.to_sym, "is not formatted correctly")
+        end
+      end
+    when 'format_without'
+      if validation.value.present?
+        regexp = Regexp.new validation.value
+        if get_value(property).to_s =~ regexp
+          errors.add(property.slug.to_sym, "is not formatted correctly")
+        end
+      end
+    when "numericality"
+      if get_value(property).to_s =~ /\A[+-]?\d+\Z/
+        unless get_value(property).to_f.is_a?(Numeric)
+          errors.add(property.slug.to_sym, "is not a number")
+        end
+      else
+          errors.add(property.slug.to_sym, "is not a number")
       end
     end
   end

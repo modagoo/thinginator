@@ -1,4 +1,4 @@
 class DataType < ActiveRecord::Base
   has_many :properties
-  validates_presence_of :friendly_name, :name
+  validates :friendly_name, :name, presence: true
 end

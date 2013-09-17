@@ -1,7 +1,7 @@
 %fieldset{class: "property"}
   .field
     = f.label :name
-    = f.text_field :name
+    = f.text_field :name, check_for_data(@collection, f.object)
 
   .field
     = f.label :help
@@ -9,11 +9,15 @@
 
   .field
     = f.label :data_type_id
-    = f.collection_select :data_type_id, DataType.all, :id, :friendly_name, prompt: true
+    = f.collection_select :data_type_id, DataType.all, :id, :friendly_name, {prompt: true}, check_for_data(@collection, f.object)
+
+  .field
+    = f.label :hide
+    = f.check_box :hide
 
   = f.fields_for :validations do |builder|
     = render 'validation_fields', f: builder
 
   = link_to_add_fields "Add validation", f, :validations, 'btn btn-small'
 
-  = link_to_remove_fields "remove", f, 'btn btn-small btn-danger prime-action'
+  = link_to_remove_fields "remove", f, 'btn btn-small btn-danger prime-action property-warning'

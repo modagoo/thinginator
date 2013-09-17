@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 20130917091334) do
     t.string   "name"
     t.string   "slug"
     t.text     "help"
+    t.boolean  "hide"
     t.integer  "data_type_id"
     t.integer  "collection_id"
     t.integer  "validation_id"

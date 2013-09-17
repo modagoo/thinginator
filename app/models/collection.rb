@@ -6,8 +6,8 @@ class Collection < ActiveRecord::Base
   has_many :things, dependent: :destroy
   has_many :properties, dependent: :destroy
   accepts_nested_attributes_for :properties, allow_destroy: true
-  validates_presence_of :name
-  validates_uniqueness_of :name
+  validates :name, presence: true
+  validates :name, uniqueness: true
   before_validation :pluralize_name
 
   def pluralize_name

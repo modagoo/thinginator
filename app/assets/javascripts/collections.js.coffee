@@ -6,6 +6,11 @@ $(document).on 'ready page:change', ->
     event.preventDefault()
 
   $('form').on 'click', '.remove_fields', (event) ->
-    $(this).prev("input[type=hidden]").val("1");
-    $(this).closest("fieldset.property").hide();
+    if $(this).hasClass("property-warning")
+      if confirm("If you delete this property it will delete all of it's existing data, you might be safer just to 'hide' it, are you sure you want to delete it and all it's data?")
+        $(this).prev("input[type=hidden]").val("1");
+        $(this).closest("fieldset.property").hide();
+    else
+      $(this).prev("input[type=hidden]").val("1");
+      $(this).closest("fieldset.property").hide();
     event.preventDefault()
