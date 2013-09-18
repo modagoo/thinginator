@@ -1,3 +1,2 @@
-#ActionController::Parameters.permit_all_parameters = true
-MASTER_PASSWORD="muppet"
-
+MASTER_PASSWORD = "muppet"
+SEARCH_PAGE_SIZE = 30

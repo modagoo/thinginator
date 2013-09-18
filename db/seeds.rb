@@ -21,6 +21,6 @@ unless ValidationType.any?
   ValidationType.create( friendly_name: 'Is a whole number', name: 'numericality', help: 'Checks that the value is a whole number', requires_value: false )
 end
 
-unless User.any?
-  User.create( username: 'pmgroves', firstname: 'Paul', lastname: 'Groves', superuser: true )
-end
+
+ User.create( username: 'pmgroves', firstname: 'Paul', lastname: 'Groves', superuser: true )
+

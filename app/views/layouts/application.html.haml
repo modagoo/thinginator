@@ -20,6 +20,7 @@
             = content_tag :li, class: "user" do
               = current_user.username
               = link_to "sign out", sign_out_path, method: :delete
+    = render partial: 'shared/search_form'
     %main
 
       = render_flash(flash)

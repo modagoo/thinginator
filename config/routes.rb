@@ -12,6 +12,7 @@ Thinginator::Application.routes.draw do
   resources :data_types
   resources :validation_types
   resources :users
+  get '/search' => 'search#index', :as => :search
   get ':slug' => 'things#collection_index', as: :collection_index
   get 'new/:slug' => 'things#new_thing', as: :new_thing_in_collection
 

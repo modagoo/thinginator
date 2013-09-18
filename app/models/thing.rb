@@ -1,4 +1,6 @@
 class Thing < ActiveRecord::Base
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
   attr_accessor :my_attributes, *Property.pluck(:slug).collect{|p| p.to_sym}
   has_many :content
   belongs_to :collection
@@ -9,6 +11,14 @@ class Thing < ActiveRecord::Base
   before_destroy :delete_content_and_contentable
   validates_presence_of :user
   validate :thing_validations
+
+  def to_indexed_json
+    result = {id: self.id, collection: self.collection_id, user: self.user.username}
+    Property.pluck(:slug).each do |p|
+      result.merge!(p.to_sym => eval(p))
+    end
+    result.to_json
+  end
 
   def thing_attributes
     self.collection.properties.pluck(:slug)

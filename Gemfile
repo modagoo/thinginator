@@ -40,8 +40,10 @@ group :doc do
 end
 
 # gem 'iserfrontend-rails', github: 'paulgroves/iserfrontend-rails'
+gem 'activeresource', require: 'active_resource'
 gem 'iserfrontend-rails', path: '~/github/iserfrontend-rails'
 gem 'iser_auth', '0.1.7'
+gem 'tire', '~> 0.6.0'
 gem 'haml-rails'
 gem "better_errors"
 gem "binding_of_caller"
