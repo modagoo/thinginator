@@ -1,9 +1,11 @@
-%h1
+%h1{class: 'inline'}
   = @collection.name
   %span
-    = @collection.things.size
+    = "(#{@collection.things.size})"
 
 = link_to "New #{@collection.name.singularize}", new_thing_in_collection_path(@collection.slug.singularize), class: 'btn prime-action'
+
+= link_to "<i class=\"icon-download-alt\"></i> download for Excel".html_safe, collection_index_path(@collection.slug, format: :xls), class: "btn btn-small btn-secondary"
 
 - if @collection.things.empty?
   %p.info
@@ -29,4 +31,4 @@
       %td
         = thing.user.username
       %td
-        = link_to 'Destroy', thing, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'
+        = link_to 'Delete', thing, method: :delete, data: { confirm: 'Are you sure? There is no \'undo\'' }, class: 'btn btn-small btn-danger'

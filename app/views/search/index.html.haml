@@ -1,5 +1,19 @@
 %h1 Search results
 
-- if @results.present?
-  - @results.results.each do |r|
-    = debug(r)
+- if @results.nil?
+  %p.info
+    \- no results - enter a search query or try * for everything
+- elsif @results.total == 0
+  %p.info
+    = "- no results for your search for '#{params[:q]}'"
+- else
+  %p.info
+    = @results.total_entries
+    = pluralize_without_count(@results.total_entries, 'result')
+    = "for your search for '#{params[:q]}'"
+  - @results.results.each do |thing|
+    %article{class: 'result'}
+      = link_to thing_path(thing.id) do
+        = content_tag :h6, thing.collection_name.try(:singularize)
+        = content_tag :p, truncate(thing_attributes_list(thing), length: 255)
+

@@ -1,6 +1,6 @@
 %h1 Thing
 
-= link_to "Edit", edit_thing_path(@thing), class: "btn prime-action"
+= link_to "Edit", edit_thing_path(@thing), class: "btn prime-action" if superuser? or @thing.user == current_user
 
 %hr
 
@@ -8,4 +8,11 @@
   = content_tag :h2, property.name
   = render_thing(@thing, property)
   %hr
+
+= content_tag :h2, "Created"
+
+%p
+  = @thing.user.fullname
+  = @thing.created_at.to_s(:long)
+
 

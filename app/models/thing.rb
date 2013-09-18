@@ -13,8 +13,9 @@ class Thing < ActiveRecord::Base
   validate :thing_validations
 
   def to_indexed_json
-    result = {id: self.id, collection: self.collection_id, user: self.user.username}
-    Property.pluck(:slug).each do |p|
+    result = {id: self.id, collection: self.collection_id, collection_name: self.collection.name, user: self.user.username}
+    # Property.pluck(:slug).each do |p|
+    self.collection.properties.pluck(:slug).each do |p|
       result.merge!(p.to_sym => eval(p))
     end
     result.to_json
@@ -85,7 +86,7 @@ class Thing < ActiveRecord::Base
   def thing_validations
     self.collection.properties.each do |property|
       property.validations.each do |validation|
-        run_validation(validation, property, self.collection)
+        run_validation(validation, property, self.collection) unless property.hide?
       end
     end
   end

@@ -18,11 +18,12 @@
           = content_tag :li, (link_to "Users", users_path, active?('users')) if superuser?
           - if current_user
             = content_tag :li, class: "user" do
+              %div{'data-no-turbolink' => ''}
+                = link_to "<i class=\"icon-search\"></i>".html_safe, "/search", class: "search-toggle"
               = current_user.username
               = link_to "sign out", sign_out_path, method: :delete
-    = render partial: 'shared/search_form'
+    = render partial: 'shared/search_form' if current_user
     %main
-
       = render_flash(flash)
       = yield
     #loading

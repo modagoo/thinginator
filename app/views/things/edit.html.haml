@@ -7,3 +7,5 @@
     = content_tag :p, (link_to "cancel", collection_index_path(@thing.collection.slug), class: 'btn')
 - else
   = render 'form'
+  %p{class: 'info'}
+    = "Created by #{@thing.user.fullname} - #{@thing.created_at.to_s(:long)}"

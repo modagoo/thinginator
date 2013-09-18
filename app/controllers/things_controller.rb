@@ -16,6 +16,11 @@ class ThingsController < ApplicationController
     rescue
       render :text => 'no such thing'
     end
+    respond_to do |format|
+      format.html { }
+      format.json { render json: @things }
+      format.xls  { }
+    end
   end
 
   def show
