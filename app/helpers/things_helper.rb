@@ -59,7 +59,7 @@ module ThingsHelper
   def render_datetime(f, p)
     ret = "<div class=\"field\">"
     ret += f.label p.slug.to_sym
-    ret += f.date_select p.slug.to_sym
+    ret += f.datetime_select p.slug.to_sym
     ret += content_tag :p, p.help, class: "help"
     ret += "</div>"
     return ret

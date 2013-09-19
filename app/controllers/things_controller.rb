@@ -1,6 +1,9 @@
 class ThingsController < ApplicationController
   before_action :set_thing, only: [:show, :edit, :update, :destroy]
 
+  def test
+  end
+
   def index
     @collections = Collection.all
   end

@@ -17,7 +17,7 @@ module ApplicationHelper
       if flash.notice.present?
         return content_tag :p, class: 'notice' do
           concat(content_tag :span, flash.notice)
-          concat(content_tag :button, class: 'close', 'data-dismiss' => 'alert')
+          concat(content_tag :button, "", class: 'close', 'data-dismiss' => 'alert')
         end
       end
       if flash.alert.present?

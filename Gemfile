@@ -39,6 +39,10 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+
+gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails',
+                              :github => 'anjlab/bootstrap-rails'
+
 # gem 'iserfrontend-rails', github: 'paulgroves/iserfrontend-rails'
 gem 'activeresource', require: 'active_resource'
 gem 'iserfrontend-rails', path: '~/github/iserfrontend-rails'

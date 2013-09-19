@@ -6,7 +6,11 @@ Thinginator::Application.routes.draw do
   # post "sign-in" => "sessions#new", :as => "sign_in"
   resources :sessions, only: [ :new, :create ]
 
-  resources :things
+  resources :things do
+    collection do
+      get 'test'
+    end
+  end
   resources :collections
   resources :properties
   resources :data_types
