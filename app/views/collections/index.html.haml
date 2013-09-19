@@ -1,6 +1,7 @@
-%h1 Listing collections
+%div{class: 'heading'}
+  %h1 Listing collections
 
-= link_to 'New Collection', new_collection_path, class: "btn prime-action"
+  = link_to "<i class=\"icon-plus\"></i> New Collection".html_safe, new_collection_path, class: "btn prime-action"
 
 - if @collections.empty?
   %p.info
@@ -21,4 +22,4 @@
         %td= collection.slug
         %td= collection.properties.size
         %td= link_to collection.things.size, collection_index_path(collection.slug)
-        %td= link_to 'Destroy', collection, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'
+        %td= link_to "<i class=\"icon-remove\"></i> Delete".html_safe, collection, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'

@@ -13,16 +13,20 @@ module ApplicationHelper
   end
 
   def render_flash(flash)
-    ret = ""
     if flash.present?
       if flash.notice.present?
-        ret += content_tag :p, flash.notice, class: 'notice'
+        return content_tag :p, class: 'notice' do
+          concat(content_tag :span, flash.notice)
+          concat(content_tag :button, class: 'close', 'data-dismiss' => 'alert')
+        end
       end
       if flash.alert.present?
-        ret += content_tag :p, flash.alert, class: 'alert'
+        return content_tag :p, class: 'alert' do
+          concat(content_tag :span, flash.alert)
+          concat(content_tag :button, class: 'close', 'data-dismiss' => 'alert')
+        end
       end
     end
-    ret.html_safe
   end
 
   def errors_for(object)

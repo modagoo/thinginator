@@ -1,6 +1,7 @@
-%h1 Listing validation types
+%div{class: 'heading'}
+  %h1 Listing validation types
 
-= link_to 'New validation type', new_validation_type_path, class: "btn prime-action"
+  = link_to "<i class=\"icon-plus\"></i> New validation type".html_safe, new_validation_type_path, class: "btn prime-action"
 
 - if @validation_types.empty?
   %p.info
@@ -19,4 +20,4 @@
         %td= link_to validation_type.friendly_name, edit_validation_type_path(validation_type)
         %td= validation_type.name
         %td= validation_type.help
-        %td= link_to 'Destroy', validation_type, method: :delete, validation: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'
+        %td= link_to "<i class=\"icon-remove\"></i> Delete".html_safe, validation_type, method: :delete, validation: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'

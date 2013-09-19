@@ -14,8 +14,8 @@
       %td= property.slug
       %td= link_to 'Show', property
       %td= link_to 'Edit', edit_property_path(property)
-      %td= link_to 'Destroy', property, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td= link_to "<i class=\"icon-remove\"></i> Delete".html_safe, property, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
 
-= link_to 'New Property', new_property_path
+= link_to "<i class=\"icon-plus\"></i> New Property".html_safe, new_property_path

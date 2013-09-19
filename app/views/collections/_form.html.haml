@@ -17,7 +17,7 @@
       = f.fields_for :properties do |builder|
         = render 'property_fields', f: builder
 
-      = link_to_add_fields "Add property", f, :properties, 'btn btn-small'
+      = link_to_add_fields "<i class=\"icon-plus\"></i> Add property".html_safe, f, :properties, 'btn btn-small'
 
   .actions
     = btn("Save")

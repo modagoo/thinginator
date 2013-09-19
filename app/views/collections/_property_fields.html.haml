@@ -23,6 +23,6 @@
   = f.fields_for :validations do |builder|
     = render 'validation_fields', f: builder
 
-  = link_to_add_fields "Add validation", f, :validations, 'btn btn-small'
+  = link_to_add_fields "<i class=\"icon-plus\"></i> Add validation".html_safe, f, :validations, 'btn btn-small'
 
-  = link_to_remove_fields "remove", f, 'btn btn-small btn-danger prime-action property-warning'
+  = link_to_remove_fields "<i class=\"icon-remove\"></i> remove".html_safe, f, 'btn btn-small btn-danger prime-action property-warning'

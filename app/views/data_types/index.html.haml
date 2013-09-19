@@ -1,6 +1,7 @@
-%h1 Listing data types
+%div{class: 'heading'}
+  %h1 Listing data types
 
-= link_to 'New data type', new_data_type_path, class: "btn prime-action"
+  = link_to "<i class=\"icon-plus\"></i> New data type".html_safe, new_data_type_path, class: "btn prime-action"
 
 - if @data_types.empty?
   %p.info
@@ -19,4 +20,4 @@
         %td= link_to data_type.friendly_name, edit_data_type_path(data_type)
         %td= data_type.name
         %td= data_type.help
-        %td= link_to 'Destroy', data_type, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'
+        %td= link_to "<i class=\"icon-remove\"></i> Delete".html_safe, data_type, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'
