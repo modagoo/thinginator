@@ -1,6 +1,6 @@
 %h1 Thing
 
-= link_to "Edit", edit_thing_path(@thing), class: "btn prime-action" if superuser? or @thing.user == current_user
+= link_to "Edit", edit_thing_path(@thing), class: "btn prime-action" if superuser? or (@thing.user == current_user)
 
 %hr
 
@@ -15,4 +15,6 @@
   = @thing.user.fullname
   = @thing.created_at.to_s(:long)
 
+%hr
 
+= link_to "New #{@thing.collection.name.singularize}", new_thing_in_collection_path(@thing.collection.slug.singularize), class: 'btn'
