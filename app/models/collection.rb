@@ -8,11 +8,18 @@ class Collection < ActiveRecord::Base
   validates :name, presence: true
   validates :name, uniqueness: true
   validates :name, exclusion: { in: %w(__FILE__ __LINE__ BEGIN END alias and begin break case class def defined? do else elsif end ensure false for if in module next nil not or redo rescue retry return self super then true undef unless until when while yield) }
+  validate :must_have_at_least_one_property
   before_validation :pluralize_name
   include Sluggable
 
   def pluralize_name
     self.name = name.pluralize
+  end
+
+  private
+
+  def must_have_at_least_one_property
+    errors.add :base, "Must have at least one property" unless properties.any?
   end
 
 end

@@ -2,6 +2,8 @@ Thinginator::Application.routes.draw do
 
   get '/styleguide' => 'styleguides#index', :as => :style
 
+  get '/file/:id' => 'things#download_file', :as => :download_file
+
   delete "sign-out" => "sessions#destroy", :as => "sign_out"
   # post "sign-in" => "sessions#new", :as => "sign_in"
   resources :sessions, only: [ :new, :create ]

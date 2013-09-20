@@ -10,7 +10,6 @@ class SearchController < ApplicationController
       else
         offset = pagesize * (p.to_i - 1)
       end
-      # r = Tire.search 'ukhls' do
       r = Thing.search do
         query do
           string q

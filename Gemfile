@@ -44,6 +44,7 @@ end
 #                               :github => 'anjlab/bootstrap-rails'
 
 # gem 'iserfrontend-rails', github: 'paulgroves/iserfrontend-rails'
+gem 'chronic'
 gem 'activeresource', require: 'active_resource'
 gem 'iserfrontend-rails', path: '~/github/iserfrontend-rails'
 gem 'iser_auth', '0.1.7'

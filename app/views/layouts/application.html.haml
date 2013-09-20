@@ -21,7 +21,7 @@
               = content_tag :li, class: "user" do
                 %div{'data-no-turbolink' => ''}
                   = link_to "<i class=\"icon-search\"></i>".html_safe, "/search", class: "search-toggle"
-                = current_user.username
+                = content_tag :span, current_user.username
                 = link_to "sign out", sign_out_path, method: :delete
     = render partial: 'shared/search_form' if current_user
     %main

@@ -1,3 +1,5 @@
+require 'chronic'
+
 class Thing < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
@@ -13,10 +15,14 @@ class Thing < ActiveRecord::Base
   validate :thing_validations
 
   def to_indexed_json
-    result = {id: self.id, collection: self.collection_id, collection_name: self.collection.name, user: self.user.username}
-    # Property.pluck(:slug).each do |p|
-    self.collection.properties.pluck(:slug).each do |p|
-      result.merge!(p.to_sym => eval(p))
+    result = {id: self.id, collection: self.collection_id, collection_name: self.collection.name, username: self.user.username, name: self.user.fullname}
+    self.collection.properties.each do |p|
+      if p.data_type.name == "File"
+        fname = self.send(p.slug).send(:original_filename)
+        result.merge!(p.slug.to_sym => fname)
+      else
+        result.merge!(p.slug.to_sym => eval(p.slug))
+      end
     end
     result.to_json
   end
@@ -85,6 +91,14 @@ class Thing < ActiveRecord::Base
 
   def thing_validations
     self.collection.properties.each do |property|
+
+      if property.data_type.name == "Datetime"
+        # TODO - find a more robust way to do this
+        if Chronic.parse(get_value(property)).nil?
+           errors.add(property.slug.to_sym, "is not a valid date and time")
+        end
+      end
+
       property.validations.each do |validation|
         run_validation(validation, property, self.collection) unless property.hide?
       end

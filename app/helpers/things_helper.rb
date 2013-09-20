@@ -31,7 +31,7 @@ module ThingsHelper
 
   def render_text_field(f, p)
     ret = "<div class=\"field\">"
-    ret += f.label p.slug.to_sym
+    ret += f.label p.slug.to_sym, p.name
     ret += f.text_field p.slug.to_sym
     ret += content_tag :p, p.help, class: "help"
     ret += "</div>"
@@ -40,7 +40,7 @@ module ThingsHelper
 
   def render_text_area(f, p)
     ret = "<div class=\"field\">"
-    ret += f.label p.slug.to_sym
+    ret += f.label p.slug.to_sym, p.name
     ret += f.text_area p.slug.to_sym, rows: 4
     ret += content_tag :p, p.help, class: "help"
     ret += "</div>"
@@ -49,7 +49,7 @@ module ThingsHelper
 
   def render_boolean(f, p)
     ret = "<div class=\"field\">"
-    ret += f.label p.slug.to_sym
+    ret += f.label p.slug.to_sym, p.name
     ret += f.select p.slug.to_sym, [['Yes', true], ['No', false]], prompt: true
     ret += content_tag :p, p.help, class: "help"
     ret += "</div>"
@@ -58,7 +58,7 @@ module ThingsHelper
 
   def render_datetime(f, p)
     ret = "<div class=\"field datetimepicker input-append date\" >"
-    ret += f.label p.slug.to_sym
+    ret += f.label p.slug.to_sym, p.name
     ret += f.text_field p.slug.to_sym, :'data-format' => "dd/MM/yyyy hh:mm", readonly: 'readonly'
     ret += "<span class=\"add-on\">"
     ret += "<i data-date-icon=\"icon-calendar\" data-time-icon=\"icon-time\" class=\"icon-time\"></i>"
@@ -70,7 +70,7 @@ module ThingsHelper
 
   def render_file_field(f, p)
     ret = "<div class=\"field\">"
-    ret += f.label p.slug.to_sym
+    ret += f.label p.slug.to_sym, p.name
     ret += f.file_field p.slug.to_sym
     ret += content_tag :p, p.help, class: "help"
     ret += "</div>"
@@ -79,7 +79,7 @@ module ThingsHelper
 
   def render_markdown_field(f, p)
     ret = "<div class=\"field\">"
-    ret += f.label p.slug.to_sym
+    ret += f.label p.slug.to_sym, p.name
     ret += f.text_area p.slug.to_sym
     ret += content_tag :p, p.help, class: "help"
     ret += "</div>"
@@ -90,8 +90,15 @@ module ThingsHelper
     case p.data_type.name
     when "File"
       if thing.send(p.slug.to_sym).exists?
-        fpath = thing.send(p.slug.to_sym).to_s
-        link_to "<i class=\"icon-download-alt\"></i> #{File.basename(fpath.gsub(/\?.*\z/,""))}".html_safe, fpath, class: 'btn btn-small' unless fpath.blank?
+        fpath = thing.send(p.slug.to_sym)
+        oname = fpath.send(:original_filename)
+        fprint = fpath.send(:fingerprint)
+        unless fpath.blank?
+          content_tag :p, class: 'no-margin' do
+            concat(link_to "<i class=\"icon-download-alt\"></i> #{oname}".html_safe, fpath.to_s, class: 'btn btn-small')
+            concat(content_tag :span, "md5: #{fprint}", class: 'info no-margin')
+          end
+        end
       else
         content_tag :p, "No file", class: 'info'
       end

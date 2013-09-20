@@ -5,11 +5,11 @@ module SearchHelper
     ignore_attributes = [:collection, :collection_name, :id, :_index, :_version, :_score, :sort, :highlight, :_type, :_explanation]
     ret = []
     thing.to_hash.each do |k,v|
-      if v.to_s.start_with?('{:tempfile=>')
-        ret << "#{k}: <strong><em>file attachment</em></strong>" unless ignore_attributes.include?(k)
-      else
+      # if v.to_s.start_with?('{:tempfile=>')
+      #   ret << "#{k}: <strong><em>file attachment</em></strong>" unless ignore_attributes.include?(k)
+      # else
         ret << "#{k}: <strong>#{v}</strong>" unless ignore_attributes.include?(k)
-      end
+      # end
     end
     ret.join(", ").html_safe
   end

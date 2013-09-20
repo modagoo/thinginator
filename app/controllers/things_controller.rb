@@ -1,7 +1,14 @@
 class ThingsController < ApplicationController
   before_action :set_thing, only: [:show, :edit, :update, :destroy]
 
-  def test
+  def download_file
+    content_file = ContentFile.find(params[:id])
+    # filepath = "#{Rails.root}/files/#{params[:path]}.#{params[:format]}"
+    if File.exists?(content_file.value.path)
+      send_file content_file.value.path, type: content_file.value_content_type
+    else
+      redirect_to things_path, alert: "ERROR: file does not exist"
+    end
   end
 
   def index
@@ -17,7 +24,7 @@ class ThingsController < ApplicationController
         @things = @collection.things.where(user: current_user)
       end
     rescue
-      render :text => 'no such collection'
+      render text: 'no such collection', status: 404
     end
     respond_to do |format|
       format.html { }
@@ -86,7 +93,11 @@ class ThingsController < ApplicationController
 
   private
   def set_thing
-    @thing = Thing.find(params[:id])
+    begin
+      @thing = Thing.find(params[:id])
+    rescue
+      render text: "no such thing", status: 404
+    end
   end
 
   def thing_params
