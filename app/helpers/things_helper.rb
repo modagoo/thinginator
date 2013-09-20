@@ -57,9 +57,12 @@ module ThingsHelper
   end
 
   def render_datetime(f, p)
-    ret = "<div class=\"field\">"
+    ret = "<div class=\"field datetimepicker input-append date\" >"
     ret += f.label p.slug.to_sym
-    ret += f.datetime_select p.slug.to_sym
+    ret += f.text_field p.slug.to_sym, :'data-format' => "dd/MM/yyyy hh:mm"
+    ret += "<span class=\"add-on\">"
+    ret += "<i data-date-icon=\"icon-calendar\" data-time-icon=\"icon-time\" class=\"icon-time\"></i>"
+    ret += "</span>"
     ret += content_tag :p, p.help, class: "help"
     ret += "</div>"
     return ret

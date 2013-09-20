@@ -14,3 +14,7 @@ $(document).on 'ready page:change', ->
       $(this).prev("input[type=hidden]").val("1");
       $(this).closest("fieldset.property").hide();
     event.preventDefault()
+
+  $(".datetimepicker").each (i, e) =>
+    $(e).datetimepicker language: "pt-BR"
+

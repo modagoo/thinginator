@@ -45,7 +45,7 @@ class ThingsController < ApplicationController
   # POST /things
   # POST /things.json
   def create
-    # TODO: not calling after_intialize here so does not get attributes from collection??
+    # raise params.inspect
     @thing = Thing.new(thing_params)
     @thing.user = current_user
     respond_to do |format|

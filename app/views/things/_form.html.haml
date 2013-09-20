@@ -1,4 +1,4 @@
-= form_for @thing, html: { multipart: true } do |f|
+= form_for @thing, html: { class: 'focus-first', multipart: true } do |f|
   = errors_for(@thing)
   = f.hidden_field :collection_id
   = render_form_fields(f, @thing.collection.properties.visible)
