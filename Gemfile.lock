@@ -1,11 +1,3 @@
-GIT
-  remote: git://github.com/anjlab/bootstrap-rails.git
-  revision: 1344ca5c264a84a1b05c4feb872232df711820cd
-  specs:
-    anjlab-bootstrap-rails (3.0.0.3)
-      railties (>= 3.0)
-      sass (>= 3.2)
-
 PATH
   remote: ~/github/iserfrontend-rails
   specs:
@@ -229,7 +221,6 @@ DEPENDENCIES
   ZenTest (~> 4.9.0)
   activeresource
   albino
-  anjlab-bootstrap-rails!
   autotest
   autotest-fsevent
   autotest-growl

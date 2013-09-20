@@ -40,8 +40,8 @@ group :doc do
 end
 
 
-gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails',
-                              :github => 'anjlab/bootstrap-rails'
+# gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails',
+#                               :github => 'anjlab/bootstrap-rails'
 
 # gem 'iserfrontend-rails', github: 'paulgroves/iserfrontend-rails'
 gem 'activeresource', require: 'active_resource'
