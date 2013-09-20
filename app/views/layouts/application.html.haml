@@ -9,19 +9,20 @@
   = csrf_meta_tags
   %body{class: "app"}
     %header{role: "banner"}
-      %nav{role: "navigation"}
-        %ol
-          = content_tag :li, (link_to "Things", things_path, active?('things')) if admin?
-          = content_tag :li, (link_to "Collections", collections_path, active?('collections')) if admin?
-          = content_tag :li, (link_to "Data types", data_types_path, active?('data_types')) if superuser?
-          = content_tag :li, (link_to "Validation types", validation_types_path, active?('validation_types')) if superuser?
-          = content_tag :li, (link_to "Users", users_path, active?('users')) if superuser?
-          - if current_user
-            = content_tag :li, class: "user" do
-              %div{'data-no-turbolink' => ''}
-                = link_to "<i class=\"icon-search\"></i>".html_safe, "/search", class: "search-toggle"
-              = current_user.username
-              = link_to "sign out", sign_out_path, method: :delete
+      - if current_user
+        %nav{role: "navigation"}
+          %ol
+            = content_tag :li, (link_to "Things", things_path, active?('things'))
+            = content_tag :li, (link_to "Collections", collections_path, active?('collections')) if admin?
+            = content_tag :li, (link_to "Data types", data_types_path, active?('data_types')) if superuser?
+            = content_tag :li, (link_to "Validation types", validation_types_path, active?('validation_types')) if superuser?
+            = content_tag :li, (link_to "Users", users_path, active?('users')) if superuser?
+            - if current_user
+              = content_tag :li, class: "user" do
+                %div{'data-no-turbolink' => ''}
+                  = link_to "<i class=\"icon-search\"></i>".html_safe, "/search", class: "search-toggle"
+                = current_user.username
+                = link_to "sign out", sign_out_path, method: :delete
     = render partial: 'shared/search_form' if current_user
     %main
       = render_flash(flash)

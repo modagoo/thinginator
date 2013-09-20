@@ -4,7 +4,10 @@
 
 - @collections.each do |collection|
   = content_tag :ol, class: 'tag-list' do
-    = content_tag :li, (link_to "#{collection.name} (#{Thing.where(collection: collection).size})", collection_index_path(collection.slug), class: 'btn')
+    - if admin?
+      = content_tag :li, (link_to "#{collection.name} (#{Thing.where(collection: collection).size})", collection_index_path(collection.slug), class: 'btn')
+    - else
+      = content_tag :li, (link_to "#{collection.name} (#{Thing.where(collection: collection, user: current_user).size})", collection_index_path(collection.slug), class: 'btn')
 
 - if @collections.empty?
   %p.info

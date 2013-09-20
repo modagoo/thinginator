@@ -14,10 +14,10 @@ class ThingsController < ApplicationController
       if admin?
         @things = @collection.things
       else
-        @things = current_user.things
+        @things = @collection.things.where(user: current_user)
       end
     rescue
-      render :text => 'no such thing'
+      render :text => 'no such collection'
     end
     respond_to do |format|
       format.html { }

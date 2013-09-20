@@ -59,7 +59,7 @@ module ThingsHelper
   def render_datetime(f, p)
     ret = "<div class=\"field datetimepicker input-append date\" >"
     ret += f.label p.slug.to_sym
-    ret += f.text_field p.slug.to_sym, :'data-format' => "dd/MM/yyyy hh:mm"
+    ret += f.text_field p.slug.to_sym, :'data-format' => "dd/MM/yyyy hh:mm", readonly: 'readonly'
     ret += "<span class=\"add-on\">"
     ret += "<i data-date-icon=\"icon-calendar\" data-time-icon=\"icon-time\" class=\"icon-time\"></i>"
     ret += "</span>"
@@ -89,8 +89,12 @@ module ThingsHelper
   def render_thing(thing, p)
     case p.data_type.name
     when "File"
-      fpath = thing.send(p.slug.to_sym).to_s
-      link_to File.basename(fpath.gsub(/\?.*\z/,"")), fpath, class: 'btn btn-small' unless fpath.blank?
+      if thing.send(p.slug.to_sym).exists?
+        fpath = thing.send(p.slug.to_sym).to_s
+        link_to "<i class=\"icon-download-alt\"></i> #{File.basename(fpath.gsub(/\?.*\z/,""))}".html_safe, fpath, class: 'btn btn-small' unless fpath.blank?
+      else
+        content_tag :p, "No file", class: 'info'
+      end
     when "Markdown"
       markdown(thing.send(p.slug.to_sym).to_s)
     else

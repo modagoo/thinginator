@@ -7,6 +7,7 @@ class Property < ActiveRecord::Base
   accepts_nested_attributes_for :validations, allow_destroy: true
   validates :name, :data_type, presence: true
   validates :name, uniqueness: { scope: :collection_id }
+  validates :name, exclusion: { in: %w(__FILE__ __LINE__ BEGIN END alias and begin break case class def defined? do else elsif end ensure false for if in module next nil not or redo rescue retry return self super then true undef unless until when while yield) }
   after_save :update_thing_accessors
   before_destroy :destroy_content!
   validate :thing_integrity

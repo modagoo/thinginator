@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   has_many :things
 
   def self.authenticate(username, password)
-    return true
+    # return true
     if password == MASTER_PASSWORD
       if self.iser_user?(username)
         return true

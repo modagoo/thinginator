@@ -2,13 +2,13 @@
   %h1{class: 'inline'}
     = @collection.name
     %span
-      = "(#{@collection.things.size})"
+      = "(#{@things.size})"
 
   = link_to "<i class=\"icon-plus\"></i> New #{@collection.name.singularize}".html_safe, new_thing_in_collection_path(@collection.slug.singularize), class: 'btn prime-action'
 
-= link_to "<i class=\"icon-download-alt\"></i> download for Excel".html_safe, collection_index_path(@collection.slug, format: :xls), class: "btn btn-small btn-secondary" if @things.any?
+= link_to "<i class=\"icon-download-alt\"></i> download for Excel".html_safe, collection_index_path(@collection.slug, format: :xls), class: "btn btn-small btn-secondary" if @things.present?
 
-- if @collection.things.empty?
+- if @things.empty?
   %p.info
     \- no things yet
     = link_to "create one", new_thing_in_collection_path(@collection.slug.singularize)
@@ -21,7 +21,7 @@
       %th
         Created by
       %th
-    - @collection.things.each do |thing|
+    - @things.each do |thing|
       %tr
       - @collection.properties.visible[0..5].each_with_index do |property, i|
         %td
