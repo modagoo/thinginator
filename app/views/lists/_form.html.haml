@@ -1,0 +1,19 @@
+= form_for @list do |f|
+  = errors_for(@list)
+
+  .field
+    = f.label :name
+    = f.text_field :name
+
+  %fieldset
+    %legend Values
+
+    #list_values
+      = f.fields_for :list_values do |builder|
+        = render 'list_value_fields', f: builder
+
+      = link_to_add_fields "<i class=\"icon-plus\"></i> Add value".html_safe, f, :list_values, 'btn btn-small'
+
+  .actions
+    = btn('Save')
+    = link_to 'Cancel', lists_path

@@ -11,10 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130917152540) do
+ActiveRecord::Schema.define(version: 20130924132842) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  create_table "classifications", force: true do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "collections", force: true do |t|
     t.string   "name"
@@ -51,6 +55,12 @@ ActiveRecord::Schema.define(version: 20130917152540) do
     t.datetime "updated_at"
   end
 
+  create_table "content_integers", force: true do |t|
+    t.integer  "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "content_markdowns", force: true do |t|
     t.text     "value"
     t.datetime "created_at"
@@ -78,10 +88,33 @@ ActiveRecord::Schema.define(version: 20130917152540) do
     t.datetime "updated_at"
   end
 
+  create_table "data_lists", force: true do |t|
+    t.integer  "list_id"
+    t.integer  "property_id"
+    t.boolean  "multiple"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "data_types", force: true do |t|
     t.string   "friendly_name"
     t.string   "name"
     t.text     "help"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "list_values", force: true do |t|
+    t.text     "value"
+    t.integer  "list_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "lists", force: true do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -94,6 +127,14 @@ ActiveRecord::Schema.define(version: 20130917152540) do
     t.integer  "data_type_id"
     t.integer  "collection_id"
     t.integer  "validation_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "property_validations", force: true do |t|
+    t.integer  "validation_type_id"
+    t.integer  "property_id"
+    t.string   "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

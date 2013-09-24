@@ -3,7 +3,7 @@ class CreateValidations < ActiveRecord::Migration
     create_table :validations do |t|
       t.references  :validation_type
       t.references  :property
-      t.string      :value
+      t.text        :value
       t.timestamps
     end
   end

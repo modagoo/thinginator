@@ -1,0 +1,7 @@
+.field
+  = f.label :list_id
+  = f.collection_select :list_id, List.all, :id, :name, { prompt: true }
+
+.field
+  = f.label :multiple
+  = f.check_box :multiple

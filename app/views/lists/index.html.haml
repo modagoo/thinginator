@@ -1,0 +1,23 @@
+%div{class: 'heading'}
+  %h1 Listing lists
+
+  = link_to "<i class=\"icon-plus\"></i> New list".html_safe, new_list_path, class: "btn prime-action"
+
+- if @lists.empty?
+  %p.info
+    \- no lists yet
+    = link_to "create one", new_list_path
+- else
+  %table
+    %tr
+      %th Name
+      %th Creator
+      %th Values
+      %th
+
+    - @lists.each do |list|
+      %tr
+        %td= link_to list.name, edit_list_path(list)
+        %td= list.user.fullname
+        %td= list.list_values.size
+        %td= link_to "<i class=\"icon-remove\"></i>&nbsp;Delete".html_safe, list, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'

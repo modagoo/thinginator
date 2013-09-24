@@ -89,7 +89,7 @@ module ThingsHelper
   def render_thing(thing, p)
     case p.data_type.name
     when "File"
-      if thing.send(p.slug.to_sym).exists?
+      if thing.send(p.slug.to_sym).present?
         fpath = thing.send(p.slug.to_sym)
         oname = fpath.send(:original_filename)
         fprint = fpath.send(:fingerprint)

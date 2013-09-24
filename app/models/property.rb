@@ -4,10 +4,15 @@ class Property < ActiveRecord::Base
   belongs_to :collection
   has_many :validations, dependent: :destroy
   has_many :validation_types, through: :validations, dependent: :destroy
+
+  has_many :data_lists
+  has_many :lists, through: :data_lists
+
+
   accepts_nested_attributes_for :validations, allow_destroy: true
-  validates :name, :data_type, presence: true
-  validates :name, uniqueness: { scope: :collection_id }
-  validates :name, exclusion: { in: %w(__FILE__ __LINE__ BEGIN END alias and begin break case class def defined? do else elsif end ensure false for if in module next nil not or redo rescue retry return self super then true undef unless until when while yield) }
+  accepts_nested_attributes_for :data_lists, allow_destroy: true
+  validates :name, presence: true, uniqueness: { scope: :collection }, exclusion: { in: %w(__FILE__ __LINE__ BEGIN END alias and begin break case class def defined? do else elsif end ensure false for if in module next nil not or redo rescue retry return self super then true undef unless until when while yield) }
+  validates :data_type, presence: true
   after_save :update_thing_accessors
   before_destroy :destroy_content!
   validate :thing_integrity

@@ -14,12 +14,18 @@ module CollectionsHelper
     end
   end
 
-  def is_disabled?(bool)
+  def is_disabled?(bool, css=nil, data=nil)
+    ret = {}
     if bool == false
-      { disabled: "disabled" }
-    else
-      {}
+      ret.merge!({ disabled: "disabled" })
     end
+    if css.present?
+      ret.merge!({ class: css })
+    end
+    if data.present?
+      ret.merge!({ data: data})
+    end
+    ret
   end
 
 end

@@ -12,9 +12,12 @@
 
   .field
     = f.label :data_type_id
-    = f.collection_select :data_type_id, DataType.all, :id, :friendly_name, {prompt: true}, is_disabled?(empty)
+    = f.collection_select :data_type_id, DataType.all, :id, :friendly_name, { prompt: true }, is_disabled?(empty, 'data_type_select', build_data_fields(f, :data_lists))
     - unless empty
       = content_tag :p, "Things exists with this property - cannot change data type", class: "help"
+
+  = f.fields_for :data_lists do |builder|
+    = render 'data_list_fields', f: builder
 
   .field
     = f.label :hide

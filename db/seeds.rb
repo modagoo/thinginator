@@ -6,6 +6,7 @@ unless DataType.any?
   DataType.create( friendly_name: 'Time and date', name: 'Datetime' )
   DataType.create( friendly_name: 'Markdown', name: 'Markdown' )
   DataType.create( friendly_name: 'File', name: 'File', help: 'attach a file' )
+  DataType.create( friendly_name: 'List', name: 'List', help: 'select from a predefined list of choices' )
 end
 
 ValidationType.destroy_all
