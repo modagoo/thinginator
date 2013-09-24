@@ -9,12 +9,18 @@ $(document).on 'ready page:change', ->
     data_type = $(this).find('option:selected').text()
     if data_type == "List"
       console.log("show fields")
-      time = new Date().getTime()
-      regexp = new RegExp($(this).data('id'), 'g')
-      $(this).closest(".field").after($(this).data('fields').replace(regexp, time))
-      event.preventDefault()
+      if $(this).parent().find('.list-fields').length > 0
+        $('.list-fields').show()
+        $(".list-fields input[type=hidden]:first-of-type").val(false)
+      else
+        time = new Date().getTime()
+        regexp = new RegExp($(this).data('id'), 'g')
+        $(this).closest(".field").after($(this).data('fields').replace(regexp, time))
     else
       console.log("hide fields")
+      $(".list-fields input[type=hidden]:first-of-type").val("1")
+      $(".list-fields").hide()
+    event.preventDefault()
 
   $('form').on 'click', '.remove_fields', (event) ->
     if $(this).hasClass("property-warning")

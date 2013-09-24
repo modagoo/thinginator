@@ -1,7 +1,9 @@
-.field
-  = f.label :list_id
-  = f.collection_select :list_id, List.all, :id, :name, { prompt: true }
+.list-fields
+  .field
+    = f.hidden_field :_destroy , class: 'remove_fields'
+    = f.label :list_id
+    = f.collection_select :list_id, List.all, :id, :name, { prompt: true }
 
-.field
-  = f.label :multiple
-  = f.check_box :multiple
+  .field
+    = f.label :multiple, "Allow multiple?"
+    = f.check_box :multiple

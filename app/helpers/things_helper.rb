@@ -24,6 +24,8 @@ module ThingsHelper
       render_file_field(f, p)
     when "Markdown"
       render_markdown_field(f, p)
+    when "List"
+      render_list_field(f, p)
     else
       return "ERROR: field could not be rendered #{p.slug} #{p.data_type.name}"
     end
@@ -85,6 +87,36 @@ module ThingsHelper
     ret += "</div>"
     return ret
   end
+
+  def render_list_field(f, p)
+    ret = "<div class=\"field\">"
+    ret += f.label p.slug.to_sym, p.name
+    if p.data_lists.first.multiple?
+      ret += render_multi_checkboxes(f,p)
+    else
+      ret += render_select(f,p)
+    end
+    ret += "</div>"
+    return ret
+  end
+
+  def render_multi_checkboxes(f,p)
+    ret = "<ol>"
+    list = p.data_lists.first.list
+    list.list_values.each do |list_item|
+      ret += content_tag :li do
+        concat(list_item.value)
+        concat(f.check_box(p.slug.to_sym, { :multiple => true }, list_item.id, nil))
+      end
+    end
+    ret += "</ol>"
+  end
+
+  def render_select(f,p)
+    list = p.data_lists.first.list
+    select('thing', p.slug.to_sym, options_from_collection_for_select(list.list_values, :id, :value), prompt: true)
+  end
+
 
   def render_thing(thing, p)
     case p.data_type.name

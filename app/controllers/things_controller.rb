@@ -52,7 +52,7 @@ class ThingsController < ApplicationController
   # POST /things
   # POST /things.json
   def create
-    # raise params.inspect
+    raise params.inspect
     @thing = Thing.new(thing_params)
     @thing.user = current_user
     respond_to do |format|
