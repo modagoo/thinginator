@@ -101,20 +101,21 @@ module ThingsHelper
   end
 
   def render_multi_checkboxes(f,p)
-    ret = "<ol>"
-    list = p.data_lists.first.list
-    list.list_values.each do |list_item|
+    ret = "<ol class=\"multi\">"
+    p.data_lists.first.list.list_values.each do |list_item|
       ret += content_tag :li do
-        concat(list_item.value)
-        concat(f.check_box(p.slug.to_sym, { :multiple => true }, list_item.id, nil))
+        concat("<label>#{list_item.value}".html_safe)
+        concat(f.check_box(p.slug.to_sym, { :multiple => true }, list_item.id.to_s, nil))
+        concat("</label>".html_safe)
       end
     end
     ret += "</ol>"
+    ret
   end
 
+  # TODO : Oh golly gosh, this don't look nice
   def render_select(f,p)
-    list = p.data_lists.first.list
-    select('thing', p.slug.to_sym, options_from_collection_for_select(list.list_values, :id, :value), prompt: true)
+    f.collection_select(p.slug.to_sym, ListValue.find(p.data_lists.first.list.list_values.collect{|v| v.id}), :id, :value, prompt: true)
   end
 
 
@@ -136,6 +137,15 @@ module ThingsHelper
       end
     when "Markdown"
       markdown(thing.send(p.slug.to_sym).to_s)
+    when "List"
+      v = thing.send(p.slug.to_sym)
+      if v.present?
+        if v.is_a?(String)
+          ListValue.find(v).value
+        elsif v.is_a?(Array)
+          v.collect{ |l| ListValue.find(l).value }.join(", ")
+        end
+      end
     else
       thing.send(p.slug.to_sym).to_s
     end

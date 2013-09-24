@@ -3,7 +3,6 @@ class ThingsController < ApplicationController
 
   def download_file
     content_file = ContentFile.find(params[:id])
-    # filepath = "#{Rails.root}/files/#{params[:path]}.#{params[:format]}"
     if File.exists?(content_file.value.path)
       send_file content_file.value.path, type: content_file.value_content_type
     else
@@ -52,7 +51,7 @@ class ThingsController < ApplicationController
   # POST /things
   # POST /things.json
   def create
-    raise params.inspect
+    # raise params.inspect
     @thing = Thing.new(thing_params)
     @thing.user = current_user
     respond_to do |format|
