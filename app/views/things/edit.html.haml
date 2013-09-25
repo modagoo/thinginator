@@ -8,4 +8,4 @@
 - else
   = render 'form'
   %p{class: 'info'}
-    = "Created by #{@thing.user.fullname} - #{@thing.created_at.to_s(:long)}"
+    = "Created by #{@thing.user.fullname} - #{@thing.created_at.to_s(:display)}"

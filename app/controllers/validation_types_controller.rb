@@ -26,7 +26,7 @@ class ValidationTypesController < ApplicationController
   # POST /validation_types.json
   def create
     @validation_type = ValidationType.new(validation_type_params)
-
+    @validation_type.user = current_user
     respond_to do |format|
       if @validation_type.save
         format.html { redirect_to @validation_type, notice: 'Validation type was successfully created.' }

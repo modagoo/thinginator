@@ -18,7 +18,11 @@ class Thing < ActiveRecord::Base
     result = {id: self.id, collection: self.collection_id, collection_name: self.collection.name, username: self.user.username, name: self.user.fullname}
     self.collection.properties.each do |p|
       if p.data_type.name == "File"
-        fname = self.send(p.slug).send(:original_filename)
+        if self.send(p.slug.to_sym).present?
+          fname = self.send(p.slug.to_sym).send(:original_filename)
+        else
+          fname = ""
+        end
         result.merge!(p.slug.to_sym => fname)
       else
         result.merge!(p.slug.to_sym => eval(p.slug))
@@ -92,12 +96,14 @@ class Thing < ActiveRecord::Base
   def thing_validations
     self.collection.properties.each do |property|
 
-      if property.data_type.name == "Datetime"
-        # TODO - find a more robust way to do this
-        if Chronic.parse(get_value(property)).nil?
-           errors.add(property.slug.to_sym, "is not a valid date and time")
-        end
-      end
+      # if property.data_type.name == "Datetime"
+      #   # TODO - find a more robust way to do this
+      #   if get_value(property).present?
+      #     if Chronic.parse(get_value(property)).nil?
+      #        errors.add(property.slug.to_sym, "is not a valid date and time")
+      #     end
+      #   end
+      # end
 
       property.validations.each do |validation|
         run_validation(validation, property, self.collection) unless property.hide?

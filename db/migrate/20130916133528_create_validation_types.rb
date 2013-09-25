@@ -5,6 +5,7 @@ class CreateValidationTypes < ActiveRecord::Migration
       t.string         :name
       t.text           :help
       t.boolean        :requires_value
+      t.references     :user
       t.timestamps
     end
   end

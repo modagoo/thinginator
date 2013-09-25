@@ -11,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130924165713) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20130925111127) do
 
   create_table "classifications", force: true do |t|
     t.string   "name"
@@ -24,14 +21,22 @@ ActiveRecord::Schema.define(version: 20130924165713) do
   end
 
   create_table "collections", force: true do |t|
-    t.string   "name"
-    t.string   "slug"
+    t.text     "name"
+    t.text     "slug"
+    t.text     "introduction"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "content_booleans", force: true do |t|
     t.boolean  "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "content_dates", force: true do |t|
+    t.date     "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -88,6 +93,12 @@ ActiveRecord::Schema.define(version: 20130924165713) do
     t.datetime "updated_at"
   end
 
+  create_table "content_times", force: true do |t|
+    t.time     "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "contents", force: true do |t|
     t.integer  "thing_id"
     t.integer  "property_id"
@@ -106,32 +117,35 @@ ActiveRecord::Schema.define(version: 20130924165713) do
   end
 
   create_table "data_types", force: true do |t|
-    t.string   "friendly_name"
-    t.string   "name"
+    t.text     "friendly_name"
+    t.text     "name"
     t.text     "help"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "list_values", force: true do |t|
     t.text     "value"
+    t.integer  "sort"
     t.integer  "list_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "lists", force: true do |t|
-    t.string   "name"
-    t.string   "slug"
+    t.text     "name"
+    t.text     "slug"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "properties", force: true do |t|
-    t.string   "name"
-    t.string   "slug"
+    t.text     "name"
+    t.text     "slug"
     t.text     "help"
+    t.integer  "sort"
     t.boolean  "hide"
     t.integer  "data_type_id"
     t.integer  "collection_id"
@@ -156,9 +170,9 @@ ActiveRecord::Schema.define(version: 20130924165713) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "username"
-    t.string   "firstname"
-    t.string   "lastname"
+    t.text     "username"
+    t.text     "firstname"
+    t.text     "lastname"
     t.boolean  "admin",      default: false
     t.boolean  "superuser",  default: false
     t.datetime "created_at"
@@ -170,6 +184,7 @@ ActiveRecord::Schema.define(version: 20130924165713) do
     t.string   "name"
     t.text     "help"
     t.boolean  "requires_value"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -177,7 +192,7 @@ ActiveRecord::Schema.define(version: 20130924165713) do
   create_table "validations", force: true do |t|
     t.integer  "validation_type_id"
     t.integer  "property_id"
-    t.string   "value"
+    t.text     "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

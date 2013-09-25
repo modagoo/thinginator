@@ -85,4 +85,19 @@ module ApplicationHelper
     ret.html_safe
   end
 
+  def markdown(text)
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, filter_html: true, no_intraempahais: true, fenced_code_blocks: true, disable_indented_code_blocks: true, autolink: true, space_after_headers: true)
+    markdown.render(text).html_safe
+    # syntax_highlighter(markdown.render(text)).html_safe
+  end
+
+  def syntax_highlighter(html)
+    doc = Nokogiri::HTML(html)
+    # doc.search("//pre[@lang]").each do |pre|
+    doc.search("//pre/code[@class]").each do |pre|
+      pre.replace Albino.colorize(pre.text.rstrip, pre[:class])
+    end
+    doc.to_s
+  end
+
 end

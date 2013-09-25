@@ -11,6 +11,7 @@ Thinginator::Application.routes.draw do
   resources :things do
     collection do
       get 'test'
+      get 'all_the_things'
     end
   end
   resources :collections

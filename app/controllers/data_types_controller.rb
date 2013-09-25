@@ -26,7 +26,7 @@ class DataTypesController < ApplicationController
   # POST /data_types.json
   def create
     @data_type = DataType.new(data_type_params)
-
+    @data_type.user = current_user
     respond_to do |format|
       if @data_type.save
         format.html { redirect_to @data_type, notice: 'Data type was successfully created.' }

@@ -70,6 +70,6 @@ class ListsController < ApplicationController
   end
 
   def list_params
-    params.require(:list).permit(:name, :slug, list_values_attributes: [:id, :value, :_destroy])
+    params.require(:list).permit(:name, :slug, list_values_attributes: [:id, :value, :sort, :_destroy])
   end
 end

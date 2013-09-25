@@ -1,5 +1,13 @@
 class ThingsController < ApplicationController
   before_action :set_thing, only: [:show, :edit, :update, :destroy]
+  before_action :require_admin, only: [:all_the_things]
+
+  def all_the_things
+    @collections = Collection.all
+    respond_to do |format|
+      format.xls  { }
+    end
+  end
 
   def download_file
     content_file = ContentFile.find(params[:id])
@@ -18,9 +26,9 @@ class ThingsController < ApplicationController
     begin
       @collection = Collection.find_by_slug(params[:slug])
       if admin?
-        @things = @collection.things
+        @things = @collection.things.paginate(:page => params[:page])
       else
-        @things = @collection.things.where(user: current_user)
+        @things = @collection.things.where(user: current_user).paginate(:page => params[:page])
       end
     rescue
       render text: 'no such collection', status: 404
@@ -28,7 +36,13 @@ class ThingsController < ApplicationController
     respond_to do |format|
       format.html { }
       format.json { render json: @things }
-      format.xls  { }
+      format.xls  {
+        if admin?
+          @things = @collection.things
+        else
+          @things = @collection.things
+        end
+      }
     end
   end
 

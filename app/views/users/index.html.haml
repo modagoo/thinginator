@@ -9,6 +9,7 @@
       %th Username
       %th First name
       %th Last name
+      %th Things
       %th
 
     - @users.each do |user|
@@ -16,4 +17,5 @@
         %td= link_to user.username, edit_user_path(user)
         %td= user.firstname
         %td= user.lastname
+        %td= user.things.size
         %td= link_to "<i class=\"icon-remove\"></i>&nbsp;Delete".html_safe, user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'

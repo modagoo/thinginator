@@ -5,7 +5,7 @@ class CollectionsController < ApplicationController
   # GET /collections
   # GET /collections.json
   def index
-    @collections = Collection.all
+    @collections = Collection.paginate(:page => params[:page])
   end
 
   # GET /collections/1
@@ -27,7 +27,7 @@ class CollectionsController < ApplicationController
   def create
     # raise params.inspect
     @collection = Collection.new(collection_params)
-
+    @collection.user = current_user
     respond_to do |format|
       if @collection.save
         format.html { redirect_to collections_path, notice: 'Collection was successfully created.' }
@@ -74,6 +74,6 @@ class CollectionsController < ApplicationController
   end
 
   def collection_params
-    params.require(:collection).permit(:name, :slug, properties_attributes: [:id, :name, :slug, :data_type_id, :help, :hide, :_destroy, validations_attributes: [:value, :validation_type_id, :id, :_destroy], data_lists_attributes: [:id, :list_id, :multiple, :_destroy]])
+    params.require(:collection).permit(:name, :introduction, :slug, properties_attributes: [:id, :name, :slug, :data_type_id, :help, :hide, :_destroy, validations_attributes: [:value, :validation_type_id, :id, :_destroy], data_lists_attributes: [:id, :list_id, :multiple, :_destroy]])
   end
 end

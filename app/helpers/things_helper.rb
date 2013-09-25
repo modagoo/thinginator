@@ -20,6 +20,10 @@ module ThingsHelper
       render_boolean(f, p)
     when "Datetime"
       render_datetime(f, p)
+    when "Date"
+      render_date(f, p)
+    when "Time"
+      render_time(f, p)
     when "File"
       render_file_field(f, p)
     when "Markdown"
@@ -70,11 +74,36 @@ module ThingsHelper
     return ret
   end
 
+  def render_date(f, p)
+    ret = "<div class=\"field datepicker input-append date\" >"
+    ret += f.label p.slug.to_sym, p.name
+    ret += f.text_field p.slug.to_sym, :'data-format' => "dd/MM/yyyy", readonly: 'readonly'
+    ret += "<span class=\"add-on\">"
+    ret += "<i data-date-icon=\"icon-calendar\" data-time-icon=\"icon-time\" class=\"icon-time\"></i>"
+    ret += "</span>"
+    ret += content_tag :p, p.help, class: "help"
+    ret += "</div>"
+    return ret
+  end
+
+  def render_time(f, p)
+    ret = "<div class=\"field timepicker input-append date\" >"
+    ret += f.label p.slug.to_sym, p.name
+    ret += f.text_field p.slug.to_sym, :'data-format' => "hh:mm", readonly: 'readonly'
+    ret += "<span class=\"add-on\">"
+    ret += "<i data-date-icon=\"icon-calendar\" data-time-icon=\"icon-time\" class=\"icon-time\"></i>"
+    ret += "</span>"
+    ret += content_tag :p, p.help, class: "help"
+    ret += "</div>"
+    return ret
+  end
+
   def render_file_field(f, p)
     ret = "<div class=\"field\">"
     ret += f.label p.slug.to_sym, p.name
     ret += f.file_field p.slug.to_sym
     ret += content_tag :p, p.help, class: "help"
+    ret += content_tag :p, (link_to "<i class=\"icon-download-alt\"></i> #{f.object.send(p.slug.to_sym).send(:original_filename)}".html_safe, f.object.send(p.slug.to_sym).to_s, class: 'btn btn-small'), class: "help" if f.object.send(p.slug.to_sym).present?
     ret += "</div>"
     return ret
   end
@@ -149,21 +178,6 @@ module ThingsHelper
     else
       thing.send(p.slug.to_sym).to_s
     end
-  end
-
-  def markdown(text)
-    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, filter_html: true, no_intraempahais: true, fenced_code_blocks: true, disable_indented_code_blocks: true, autolink: true, space_after_headers: true)
-    markdown.render(text).html_safe
-    # syntax_highlighter(markdown.render(text)).html_safe
-  end
-
-  def syntax_highlighter(html)
-    doc = Nokogiri::HTML(html)
-    # doc.search("//pre[@lang]").each do |pre|
-    doc.search("//pre/code[@class]").each do |pre|
-      pre.replace Albino.colorize(pre.text.rstrip, pre[:class])
-    end
-    doc.to_s
   end
 
 end

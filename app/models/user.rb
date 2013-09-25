@@ -8,6 +8,9 @@ class User < ActiveRecord::Base
   before_create :find_name_from_square
 
   has_many :things
+  has_many :collections
+  has_many :data_types
+  has_many :validation_types
 
   def self.authenticate(username, password)
     return true

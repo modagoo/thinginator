@@ -1,3 +1,5 @@
+= markdown(@thing.collection.introduction) if @thing.collection.introduction.present?
+
 = form_for @thing, html: { class: 'focus-first', multipart: true } do |f|
   = errors_for(@thing)
   = f.hidden_field :collection_id

@@ -4,11 +4,13 @@ class Collection < ActiveRecord::Base
 
   has_many :things, dependent: :destroy
   has_many :properties, dependent: :destroy
+  belongs_to :user
   accepts_nested_attributes_for :properties, allow_destroy: true
   validates :name, presence: true
   validates :name, uniqueness: true
   validates :name, exclusion: { in: %w(__FILE__ __LINE__ BEGIN END alias and begin break case class def defined? do else elsif end ensure false for if in module next nil not or redo rescue retry return self super then true undef unless until when while yield) }
   validate :must_have_at_least_one_property
+  validate :user, presence: true
   before_validation :pluralize_name
   include Sluggable
 

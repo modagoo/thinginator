@@ -5,6 +5,10 @@
     .field
       = f.label :name
       = f.text_field :name
+    .field
+      = f.label :introduction
+      = f.text_area :introduction, rows: 8
+      = content_tag :p, "will be displayed above the form for this collection, accepts <a href=\"https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet\">Markdown</a>".html_safe, class: "help"
     - if superuser?
       .field
         = f.label :slug

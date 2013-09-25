@@ -32,8 +32,11 @@ $(document).on 'ready page:change', ->
       $(this).closest("fieldset.property").hide();
     event.preventDefault()
 
-  $(".datetimepicker").each (i, e) =>
-    $(e).datetimepicker language: "pt-BR"
+  $ ->
+    $(".datepicker").datetimepicker pickTime: false, language: "EN"
+    $(".timepicker").datetimepicker pickDate: false, language: "EN"
+    $(".datetimepicker").datetimepicker language: "EN"
+
 
 
 
