@@ -14,15 +14,22 @@ end
 
 ValidationType.destroy_all
 unless ValidationType.any?
-  ValidationType.create( friendly_name: 'Is present', name: 'presence', help: 'Checks that the value is present (i.e. mandatory)', requires_value: false )
-  ValidationType.create( friendly_name: 'Is unique', name: 'uniqueness', help: 'Checks that value has not been used for this property in this collection before', requires_value: false )
-  ValidationType.create( friendly_name: 'Acceptance', name: 'acceptance', help: 'Checks that a \'true or false\' value is set to true.', requires_value: false )
+  ValidationType.create( friendly_name: 'Is present', name: 'presence', help: 'Checks that the value is present (i.e. mandatory)', requires_value: false, data_type_ids: [DataType.find_by_name('String').id, DataType.find_by_name('Text').id, DataType.find_by_name('Fixnum').id, DataType.find_by_name('Boolean').id, DataType.find_by_name('Datetime').id, DataType.find_by_name('Date').id, DataType.find_by_name('Time').id, DataType.find_by_name('Markdown').id, DataType.find_by_name('File').id, DataType.find_by_name('List').id] )
+
+  ValidationType.create( friendly_name: 'Is unique', name: 'uniqueness', help: 'Checks that value has not been used for this property in this collection before', requires_value: false, data_type_ids: [DataType.find_by_name('String').id, DataType.find_by_name('Text').id, DataType.find_by_name('Fixnum').id, DataType.find_by_name('Datetime').id, DataType.find_by_name('Date').id, DataType.find_by_name('Time').id, DataType.find_by_name('Markdown').id])
+
+  ValidationType.create( friendly_name: 'Acceptance', name: 'acceptance', help: 'Checks that a \'true or false\' value is set to true.', requires_value: false, data_type_ids: [DataType.find_by_name('Boolean').id])
+
   # ValidationType.create( friendly_name: 'Confirmation', name: 'confirmation', help: 'Checks that two text fields have exactly the same content.', requires_value: false )
-  ValidationType.create( friendly_name: 'Exclusion', name: 'exclusion', help: 'Checks that the value is EXCLUDED from the given set.', requires_value: true )
-  ValidationType.create( friendly_name: 'Inclusion', name: 'inclusion', help: 'Checks that the value is INCLUDED from the given set.', requires_value: true )
-  ValidationType.create( friendly_name: 'Format with', name: 'format_with', help: 'Checks the value by testing whether it DOES match a given regular expression', requires_value: true )
-  ValidationType.create( friendly_name: 'Format without', name: 'format_without', help: 'Checks the value by testing whether it DOES NOT match a given regular expression', requires_value: true )
-  ValidationType.create( friendly_name: 'Is a whole number', name: 'numericality', help: 'Checks that the value is a whole number', requires_value: false )
+  ValidationType.create( friendly_name: 'Exclusion', name: 'exclusion', help: 'Checks that the value is EXCLUDED from the given set.', requires_value: true, data_type_ids: [DataType.find_by_name('String').id, DataType.find_by_name('Text').id] )
+
+  ValidationType.create( friendly_name: 'Inclusion', name: 'inclusion', help: 'Checks that the value is INCLUDED from the given set.', requires_value: true, data_type_ids: [DataType.find_by_name('String').id, DataType.find_by_name('Text').id] )
+
+  ValidationType.create( friendly_name: 'Format with', name: 'format_with', help: 'Checks the value by testing whether it DOES match a given regular expression', requires_value: true, data_type_ids: [DataType.find_by_name('String').id, DataType.find_by_name('Text').id] )
+
+  ValidationType.create( friendly_name: 'Format without', name: 'format_without', help: 'Checks the value by testing whether it DOES NOT match a given regular expression', requires_value: true, data_type_ids: [DataType.find_by_name('String').id, DataType.find_by_name('Text').id] )
+
+  ValidationType.create( friendly_name: 'Is a whole number', name: 'numericality', help: 'Checks that the value is a whole number', requires_value: false, data_type_ids: [DataType.find_by_name('Fixnum').id] )
 end
 
 # User.delete_all
@@ -36,6 +43,11 @@ ListValue.create( value: 'Green', list: l)
 ListValue.create( value: 'Yellow', list: l)
 ListValue.create( value: 'Orange', list: l)
 
+l1 = List.create( name: 'Speed', user: u)
+ListValue.create( value: 'Fast', list: l1)
+ListValue.create( value: 'Medium', list: l1)
+ListValue.create( value: 'Slow', list: l1)
+
 Collection.destroy_all
 Property.destroy_all
 c = Collection.new( name: 'Bicycles', user: u )
@@ -44,12 +56,17 @@ c.properties << Property.new( name: 'Make', data_type: DataType.find_by_name('St
 c.properties << Property.new( name: 'Description', data_type: DataType.find_by_name('Text'))
 c.properties << Property.new( name: 'Size', data_type: DataType.find_by_name('Fixnum'))
 c.properties << Property.new( name: 'In stock', data_type: DataType.find_by_name('Boolean'))
-c.properties << Property.new( name: 'Release date', data_type: DataType.find_by_name('Datetime'))
+c.properties << Property.new( name: 'Release time and date', data_type: DataType.find_by_name('Datetime'))
+c.properties << Property.new( name: 'Best time to ride', data_type: DataType.find_by_name('Time'))
+c.properties << Property.new( name: 'Expires', data_type: DataType.find_by_name('Date'))
 c.properties << Property.new( name: 'Web copy', data_type: DataType.find_by_name('Markdown'))
 c.properties << Property.new( name: 'Tech spec', data_type: DataType.find_by_name('File'))
 lst = Property.new( name: 'Colour', data_type: DataType.find_by_name('List'))
 lst.data_lists << DataList.new(list: l, multiple: true)
+lst1 = Property.new( name: 'Speed', data_type: DataType.find_by_name('List'))
+lst1.data_lists << DataList.new(list: l1, multiple: false)
 c.properties << lst
+c.properties << lst1
 
 c.save
 
@@ -64,3 +81,6 @@ Thing.create( user: u, collection: c, make: "Scott", description: "2010 SL Trail
 Thing.create( user: u, collection: c, make: "Cube", description: "2010 SL Trail", size: 18, )
 Thing.create( user: u, collection: c, make: "Marin", description: "2010 SL Trail", size: 18, )
 Thing.create( user: u, collection: c, make: "Mongoose", description: "2010 SL Trail", size: 18, )
+
+c = Collection.first
+c.save

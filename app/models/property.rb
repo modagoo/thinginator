@@ -16,10 +16,19 @@ class Property < ActiveRecord::Base
   after_save :update_thing_accessors
   before_destroy :destroy_content!
   validate :thing_integrity
+  validate :suitable_for_datatype
 
   scope :visible, -> { where('hide IS NOT true') }
 
   private
+
+  def suitable_for_datatype
+    self.validations.each do |v|
+      unless self.data_type.validation_types.pluck(:id).include?(v.validation_type.id)
+        errors.add :base, "validation is not suitable for this data type"
+      end
+    end
+  end
 
   def update_thing_accessors
     Property.all.each do |property|
