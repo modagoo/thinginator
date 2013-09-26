@@ -29,7 +29,7 @@ class ValidationTypesController < ApplicationController
     @validation_type.user = current_user
     respond_to do |format|
       if @validation_type.save
-        format.html { redirect_to @validation_type, notice: 'Validation type was successfully created.' }
+        format.html { redirect_to validation_types_path, notice: 'Validation type was successfully created.' }
         format.json { render action: 'show', status: :created, location: @validation_type }
       else
         format.html { render action: 'new' }
@@ -41,9 +41,10 @@ class ValidationTypesController < ApplicationController
   # PATCH/PUT /validation_types/1
   # PATCH/PUT /validation_types/1.json
   def update
+    params[:validation_type][:data_type_ids] ||= []
     respond_to do |format|
       if @validation_type.update(validation_type_params)
-        format.html { redirect_to @validation_type, notice: 'Validation type was successfully updated.' }
+        format.html { redirect_to validation_types_path, notice: 'Validation type was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -70,6 +71,6 @@ class ValidationTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def validation_type_params
-      params.require(:validation_type).permit(:name, :friendly_name, :help)
+      params.require(:validation_type).permit(:name, :friendly_name, :help, data_type_ids: [])
     end
 end

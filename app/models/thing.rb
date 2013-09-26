@@ -96,14 +96,9 @@ class Thing < ActiveRecord::Base
   def thing_validations
     self.collection.properties.each do |property|
 
-      # if property.data_type.name == "Datetime"
-      #   # TODO - find a more robust way to do this
-      #   if get_value(property).present?
-      #     if Chronic.parse(get_value(property)).nil?
-      #        errors.add(property.slug.to_sym, "is not a valid date and time")
-      #     end
-      #   end
-      # end
+      if %w(__FILE__ __LINE__ BEGIN END alias and begin break case class def defined? do else elsif end ensure false for if in module next nil not or redo rescue retry return self super then true undef unless until when while yield).include?(get_value(property))
+        errors.add(property.slug.to_sym, "is reserved")
+      end
 
       property.validations.each do |validation|
         run_validation(validation, property, self.collection) unless property.hide?
