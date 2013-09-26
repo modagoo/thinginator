@@ -15,6 +15,7 @@ Thinginator::Application.routes.draw do
     end
   end
   resources :collections
+  resources :logs, only: [:index]
   resources :properties
   resources :data_types
   resources :validation_types

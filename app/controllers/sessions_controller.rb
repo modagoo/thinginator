@@ -3,6 +3,7 @@ class SessionsController < ApplicationController
   skip_before_action :require_user, only: [:new, :create]
 
   def new
+    log("Rendered sign-in form")
   end
 
   def create
@@ -12,13 +13,16 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       # redirect_to redirect_back_or_default(root_url), :notice => "Logged in"
       redirect_to root_url
+      log("Successful sign in '#{user.username}'")
     else
+      log("Invalid sign in attempt from '#{params[:username]}'")
       flash.now[:alert] = "Invalid email or password"
       render "new"
     end
   end
 
   def destroy
+    log("Sign out '#{current_user.username}'")
     session[:user_id] = nil
     redirect_to new_session_url, :notice => "Logged out"
   end

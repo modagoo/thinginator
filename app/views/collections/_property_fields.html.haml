@@ -1,31 +1,37 @@
 - empty = has_no_data?(@collection, f.object)
 %fieldset{class: "property"}
-  .field
-    = f.label :name
-    = f.text_field :name, is_disabled?(empty)
-    - unless empty
-      = content_tag :p, "Things exists with this property - cannot change name", class: "help"
+  = content_tag :h6, f.object.name, class: 'inline'
+  = content_tag :button, "show", class: 'btn btn-small btn-inline', 'data-collapse' => 'collapse'
+  %div.collapse
+    = f.hidden_field :sort, { class: 'sort'}
+    .field
+      = f.label :name
+      = f.text_field :name, is_disabled?(empty)
+      - unless empty
+        = content_tag :p, "Things exists with this property - cannot change name", class: "help"
 
-  .field
-    = f.label :help
-    = f.text_area :help
+    .field
+      = f.label :help
+      = f.text_area :help
+      = content_tag :p, "Add some instructions to help users fill in this field correctly", class: "help"
 
-  .field
-    = f.label :data_type_id
-    = f.collection_select :data_type_id, DataType.all, :id, :friendly_name, { prompt: true }, is_disabled?(empty, 'data_type_select', build_data_fields(f, :data_lists))
-    - unless empty
-      = content_tag :p, "Things exists with this property - cannot change data type", class: "help"
+    .field
+      = f.label :data_type_id
+      = f.collection_select :data_type_id, DataType.all, :id, :friendly_name, { prompt: true }, is_disabled?(empty, 'data_type_select', build_data_fields(f, :data_lists))
+      - unless empty
+        = content_tag :p, "Things exists with this property - cannot change data type", class: "help"
 
-  = f.fields_for :data_lists do |builder|
-    = render 'data_list_fields', f: builder
+    = f.fields_for :data_lists do |builder|
+      = render 'data_list_fields', f: builder
 
-  .field
-    = f.label :hide
-    = f.check_box :hide
+    .field
+      = f.label :hide
+      = f.check_box :hide
+      = content_tag :p, "Hidden fields are not shown on forms", class: "help"
 
-  = f.fields_for :validations do |builder|
-    = render 'validation_fields', f: builder
+    = f.fields_for :validations do |builder|
+      = render 'validation_fields', f: builder
 
-  = link_to_add_fields "<i class=\"icon-plus\"></i> Add validation".html_safe, f, :validations, 'btn btn-small'
+    = link_to_add_fields "<i class=\"icon-plus\"></i> Add validation".html_safe, f, :validations, 'btn btn-small'
 
   = link_to_remove_fields "<i class=\"icon-remove\"></i> remove".html_safe, f, 'btn btn-small btn-danger prime-action property-warning'

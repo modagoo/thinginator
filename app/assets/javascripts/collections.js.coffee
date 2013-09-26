@@ -3,6 +3,8 @@ $(document).on 'ready page:change', ->
     time = new Date().getTime()
     regexp = new RegExp($(this).data('id'), 'g')
     $(this).before($(this).data('fields').replace(regexp, time))
+    $(this).prev().find($('div.collapse')).removeClass('collapse').addClass('in')
+    $(this).prev().find($('*[data-collapse]')).text('hide')
     event.preventDefault()
 
   $('form').on 'change', '.data_type_select', (event) ->
@@ -36,6 +38,25 @@ $(document).on 'ready page:change', ->
     $(".datepicker").datetimepicker pickTime: false, language: "EN"
     $(".timepicker").datetimepicker pickDate: false, language: "EN"
     $(".datetimepicker").datetimepicker language: "EN"
+
+  $("#properties").sortable
+    cursor: "move"
+    update: (event, ui) ->
+      $("input.sort").each (index) ->
+        $(this).val index + 1
+
+  $('form').on 'click', '*[data-collapse]', (e) =>
+    if $(e.target).next().hasClass("collapse")
+      $(e.target).next().slideDown('fast')
+      $(e.target).next().removeClass("collapse")
+      $(e.target).next().addClass("in")
+      $(e.target).text("hide")
+    else if $(e.target).next().hasClass("in")
+      $(e.target).next().slideUp('fast')
+      $(e.target).next().removeClass("in")
+      $(e.target).next().addClass("collapse")
+      $(e.target).text("show")
+    e.preventDefault()
 
 
 

@@ -44,4 +44,12 @@ class ApplicationController < ActionController::Base
     superuser? or current_user.try(:admin?)
   end
 
+  def log(message=nil)
+    unless request.remote_ip == "155.245.50.50" # Don't log me!  PG - 2013-09-26
+       log = Log.new(message: message, controller: self.class.controller_name, action: action_name, ip: request.remote_ip)
+       log.user = current_user unless current_user.nil?
+       log.save
+     end
+  end
+
 end

@@ -1,0 +1,25 @@
+%div{class: 'heading'}
+  %h1 Log
+
+- if @logs.empty?
+  %p.info
+    \- no log entries yet
+- else
+  %table
+    %tr
+      %th User
+      %th Message
+      %th Method
+      %th IP
+      %th When
+      %th
+
+    - @logs.each do |log|
+      %tr
+        %td= log.user.try(:username)
+        %td= log.message
+        %td= "#{log.controller}##{log.action}"
+        %td= log.ip
+        %td= log.created_at.to_s(:display)
+
+= will_paginate @logs

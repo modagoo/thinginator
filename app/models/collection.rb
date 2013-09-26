@@ -3,7 +3,7 @@ require 'active_support/inflector'
 class Collection < ActiveRecord::Base
 
   has_many :things, dependent: :destroy
-  has_many :properties, dependent: :destroy
+  has_many :properties, dependent: :destroy, order: 'sort asc'
   belongs_to :user
   accepts_nested_attributes_for :properties, allow_destroy: true
   validates :name, presence: true
