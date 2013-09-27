@@ -1,5 +1,13 @@
 require 'spec_helper'
 
 describe Property do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  before(:each) do
+    @property = FactoryGirl.build(:property)
+  end
+
+  it "should be valid" do
+    @property.should be_valid
+  end
+
 end

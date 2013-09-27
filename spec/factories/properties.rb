@@ -2,7 +2,8 @@
 
 FactoryGirl.define do
   factory :property do
-    name "MyString"
-    slug "MyString"
+    name "Make"
+    data_type
+    collection
   end
 end

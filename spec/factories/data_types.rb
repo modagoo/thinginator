@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :data_type do
-    name "MyString"
-    slug "MyString"
+    name "String"
+    friendly_name "Short text"
   end
 end
