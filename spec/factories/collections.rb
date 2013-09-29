@@ -1,13 +1,27 @@
+FactoryGirl.define do
+  sequence :name do |n|
+    "name_#{n}"
+  end
+end
 
 FactoryGirl.define do
 
+  factory :property do
+    name FactoryGirl.generate :name
+    data_type
+    collection
+  end
+
   factory :collection do
-    name "Bicycles"
+    name FactoryGirl.generate :name
+    factory :collection_with_properties do
 
-    factory :collection_with_property do
+      ignore do
+        properties_count 1
+      end
 
-      after(:create) do |c|
-        c.property = Factory(:property)
+      after(:build) do |collection, evaluator|
+        FactoryGirl.create_list(:property, evaluator.properties_count, collection: collection)
       end
     end
   end

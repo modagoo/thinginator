@@ -20,7 +20,7 @@ class Collection < ActiveRecord::Base
   private
 
   def must_have_at_least_one_property
-    errors.add :base, "Must have at least one property" unless properties.any?
+    # errors.add :base, "Must have at least one property" unless properties.any?
   end
 
 end

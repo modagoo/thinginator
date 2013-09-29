@@ -33,7 +33,7 @@ unless ValidationType.any?
 end
 
 # User.delete_all
-u = User.find_or_create_by_username( username: 'pmgroves', firstname: 'Paul', lastname: 'Groves', superuser: true )
+u = User.find_or_create_by( username: 'pmgroves', firstname: 'Paul', lastname: 'Groves', superuser: true )
 
 List.destroy_all
 l = List.create( name: 'Colours', user: u)
