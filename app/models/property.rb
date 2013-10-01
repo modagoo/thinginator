@@ -46,7 +46,8 @@ class Property < ActiveRecord::Base
   end
 
   def destroy_content!
-    Content.find_all_by_property_id(id).each do |content|
+    Content.where(property_id: id).each do |content|
+    # Content.find_all_by_property_id(id).each do |content|
       content.contentable.try(:destroy)
       content.delete
     end
