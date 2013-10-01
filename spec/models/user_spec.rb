@@ -53,8 +53,8 @@ require 'spec_helper'
 
   it "should not allow creation of non-ISER user" do
     user = FactoryGirl.build(:user, username: "notaniserusername")
-    expect(non_unique_user).to have(1).errors_on(:username)
-    expect(non_unique_user.errors_on(:username)).to include("is not an ISER member")
+    expect(user).to have(1).errors_on(:username)
+    expect(user.errors_on(:username)).to include("is not an ISER member")
   end
 
 end
