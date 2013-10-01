@@ -2,7 +2,7 @@ require 'spec_helper'
 
   describe Collection do
     before(:each) do
-    @collection = FactoryGirl.build(:collection_with_properties)
+    @collection = FactoryGirl.build(:collection)
   end
 
   it "should be valid" do

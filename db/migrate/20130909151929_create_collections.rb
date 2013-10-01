@@ -4,7 +4,7 @@ class CreateCollections < ActiveRecord::Migration
       t.text        :name
       t.text        :slug
       t.text        :introduction
-      t.references  :user
+      t.references  :user, null: false
       t.timestamps
     end
   end
