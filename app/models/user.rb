@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :username
   before_destroy :do_not_delete_superuser
   before_create :find_name_from_square
-  validates :is_iser?
+  validate :is_iser?
 
   has_many :things
   has_many :collections
