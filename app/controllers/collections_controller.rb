@@ -42,7 +42,6 @@ class CollectionsController < ApplicationController
   # PATCH/PUT /collections/1
   # PATCH/PUT /collections/1.json
   def update
-    # raise params.inspect
     respond_to do |format|
       if @collection.update(collection_params)
         format.html { redirect_to collections_path, notice: 'Collection was successfully updated.' }

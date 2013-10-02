@@ -10,18 +10,16 @@ $(document).on 'ready page:change', ->
   $('form').on 'change', '.data_type_select', (event) ->
     data_type = $(this).find('option:selected').text()
     if data_type == "List"
-      console.log("show fields")
-      if $(this).parent().find('.list-fields').length > 0
-        $('.list-fields').show()
-        $(".list-fields input[type=hidden]:first-of-type").val(false)
+      if $(this).parent().next('.list-fields').length > 0
+        $(this).parent().next('.list-fields').show()
+        $(this).parent().next(".list-fields input[type=hidden]:first-of-type").val(false)
       else
         time = new Date().getTime()
         regexp = new RegExp($(this).data('id'), 'g')
         $(this).closest(".field").after($(this).data('fields').replace(regexp, time))
     else
-      console.log("hide fields")
-      $(".list-fields input[type=hidden]:first-of-type").val("1")
-      $(".list-fields").hide()
+      $(this).parent().next(".list-fields input[type=hidden]:first-of-type").val("1")
+      $(this).parent().next(".list-fields").hide()
     event.preventDefault()
 
   $('form').on 'click', '.remove_fields', (event) ->

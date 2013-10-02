@@ -15,6 +15,7 @@ class Property < ActiveRecord::Base
   validates :data_type, presence: true
   after_save :update_thing_accessors
   before_destroy :destroy_content!
+  after_destroy: update_thing_search_index
   validate :thing_integrity
   validate :suitable_for_datatype
 
@@ -47,9 +48,15 @@ class Property < ActiveRecord::Base
 
   def destroy_content!
     Content.where(property_id: id).each do |content|
-    # Content.find_all_by_property_id(id).each do |content|
       content.contentable.try(:destroy)
       content.delete
+    end
+  end
+
+  # TODO - this could get slow! PG 02-10-13
+  def update_thing_search_index
+    Thing.all.each do |t|
+      t.update_index
     end
   end
 

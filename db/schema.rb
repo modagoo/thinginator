@@ -13,8 +13,12 @@
 
 ActiveRecord::Schema.define(version: 20130926132223) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  create_table "classifications", force: true do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "collections", force: true do |t|
     t.text     "name"
@@ -54,6 +58,12 @@ ActiveRecord::Schema.define(version: 20130926132223) do
   end
 
   create_table "content_fixnums", force: true do |t|
+    t.integer  "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "content_integers", force: true do |t|
     t.integer  "value"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -155,6 +165,14 @@ ActiveRecord::Schema.define(version: 20130926132223) do
     t.integer  "data_type_id"
     t.integer  "collection_id"
     t.integer  "validation_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "property_validations", force: true do |t|
+    t.integer  "validation_type_id"
+    t.integer  "property_id"
+    t.string   "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

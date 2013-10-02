@@ -9,10 +9,12 @@ class ContentTime < ActiveRecord::Base
   private
 
   def value_parses_at_time
-    begin
-      Time.parse(value)
-    rescue
-      errors.add :base, "is not a valid time"
+    if value.present?
+      begin
+        Time.parse(value)
+      rescue
+        errors.add :base, "is not a valid time"
+      end
     end
   end
 

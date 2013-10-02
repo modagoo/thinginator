@@ -47,7 +47,7 @@ require 'spec_helper'
 
   it "should check presence of username" do
     user = FactoryGirl.build(:user, username: nil)
-    expect(user).to have(1).errors_on(:username)
+    expect(user).to have(2).errors_on(:username)
     expect(user.errors_on(:username)).to include("can't be blank")
   end
 

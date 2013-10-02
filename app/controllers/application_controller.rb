@@ -9,8 +9,12 @@ class ApplicationController < ActionController::Base
     session[:return_to] = request.fullpath if request.fullpath.match(/(\.js)/).nil?
   end
 
-  def redirect_back_or_default(default)
-    redirect_to(session[:return_to] || default)
+  def redirect_back_or_default(default, notice=nil)
+    if notice.present?
+      redirect_to(session[:return_to] || default, notice: notice) and return
+    else
+      redirect_to(session[:return_to] || default) and return
+    end
     session[:return_to] = nil
   end
 

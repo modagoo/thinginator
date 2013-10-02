@@ -11,9 +11,9 @@ class SessionsController < ApplicationController
     if u
       user = User.find_or_create_by_username(session_params[:username])
       session[:user_id] = user.id
-      # redirect_to redirect_back_or_default(root_url), :notice => "Logged in"
-      redirect_to root_url
       log("Successful sign in '#{user.username}'")
+      redirect_back_or_default(root_url, "Logged in")
+      # redirect_to root_url
     else
       log("Invalid sign in attempt from '#{params[:username]}'")
       flash.now[:alert] = "Invalid email or password"
