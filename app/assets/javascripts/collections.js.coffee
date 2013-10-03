@@ -1,4 +1,9 @@
 $(document).on 'ready page:change', ->
+
+  $('div.field_with_errors').closest('div.collapse').each () ->
+    $(this).removeClass('collapse').addClass('in')
+    $(this).prev($('*[data-collapse]')).text('hide')
+
   $('form').on 'click', '.add_fields', (event) ->
     time = new Date().getTime()
     regexp = new RegExp($(this).data('id'), 'g')

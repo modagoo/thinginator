@@ -37,7 +37,7 @@ module ThingsHelper
 
   def render_text_field(f, p)
     ret = "<div class=\"field\">"
-    ret += f.label p.slug.to_sym, p.name
+    ret += f.label p.slug.to_sym, "#{p.name}#{' *' if p.validations.any?}"
     ret += f.text_field p.slug.to_sym
     ret += content_tag :p, p.help, class: "help"
     ret += "</div>"
@@ -46,7 +46,7 @@ module ThingsHelper
 
   def render_text_area(f, p)
     ret = "<div class=\"field\">"
-    ret += f.label p.slug.to_sym, p.name
+    ret += f.label p.slug.to_sym, "#{p.name}#{' *' if p.validations.any?}"
     ret += f.text_area p.slug.to_sym, rows: 4
     ret += content_tag :p, p.help, class: "help"
     ret += "</div>"
@@ -55,7 +55,7 @@ module ThingsHelper
 
   def render_boolean(f, p)
     ret = "<div class=\"field\">"
-    ret += f.label p.slug.to_sym, p.name
+    ret += f.label p.slug.to_sym, "#{p.name}#{' *' if p.validations.any?}"
     ret += f.select p.slug.to_sym, [['Yes', true], ['No', false]], prompt: true
     ret += content_tag :p, p.help, class: "help"
     ret += "</div>"
@@ -64,7 +64,7 @@ module ThingsHelper
 
   def render_datetime(f, p)
     ret = "<div class=\"field datetimepicker input-append date\" >"
-    ret += f.label p.slug.to_sym, p.name
+    ret += f.label p.slug.to_sym, "#{p.name}#{' *' if p.validations.any?}"
     ret += f.text_field p.slug.to_sym, :'data-format' => "dd/MM/yyyy hh:mm", readonly: 'readonly'
     ret += "<span class=\"add-on\">"
     ret += "<i data-date-icon=\"icon-calendar\" data-time-icon=\"icon-time\" class=\"icon-time\"></i>"
@@ -76,7 +76,7 @@ module ThingsHelper
 
   def render_date(f, p)
     ret = "<div class=\"field datepicker input-append date\" >"
-    ret += f.label p.slug.to_sym, p.name
+    ret += f.label p.slug.to_sym, "#{p.name}#{' *' if p.validations.any?}"
     ret += f.text_field p.slug.to_sym, :'data-format' => "dd/MM/yyyy", readonly: 'readonly'
     ret += "<span class=\"add-on\">"
     ret += "<i data-date-icon=\"icon-calendar\" data-time-icon=\"icon-time\" class=\"icon-time\"></i>"
@@ -88,7 +88,7 @@ module ThingsHelper
 
   def render_time(f, p)
     ret = "<div class=\"field timepicker input-append date\" >"
-    ret += f.label p.slug.to_sym, p.name
+    ret += f.label p.slug.to_sym, "#{p.name}#{' *' if p.validations.any?}"
     ret += f.text_field p.slug.to_sym, :'data-format' => "hh:mm", readonly: 'readonly'
     ret += "<span class=\"add-on\">"
     ret += "<i data-date-icon=\"icon-calendar\" data-time-icon=\"icon-time\" class=\"icon-time\"></i>"
@@ -100,7 +100,7 @@ module ThingsHelper
 
   def render_file_field(f, p)
     ret = "<div class=\"field\">"
-    ret += f.label p.slug.to_sym, p.name
+    ret += f.label p.slug.to_sym, "#{p.name}#{' *' if p.validations.any?}"
     ret += f.file_field p.slug.to_sym
     ret += content_tag :p, p.help, class: "help"
     ret += content_tag :p, (link_to "<i class=\"icon-download-alt\"></i> #{f.object.send(p.slug.to_sym).send(:original_filename)}".html_safe, f.object.send(p.slug.to_sym).to_s, class: 'btn btn-small'), class: "help" if f.object.send(p.slug.to_sym).present?
@@ -110,7 +110,7 @@ module ThingsHelper
 
   def render_markdown_field(f, p)
     ret = "<div class=\"field\">"
-    ret += f.label p.slug.to_sym, p.name
+    ret += f.label p.slug.to_sym, "#{p.name}#{' *' if p.validations.any?}"
     ret += f.text_area p.slug.to_sym
     ret += content_tag :p, p.help, class: "help"
     ret += "</div>"
@@ -119,7 +119,7 @@ module ThingsHelper
 
   def render_list_field(f, p)
     ret = "<div class=\"field\">"
-    ret += f.label p.slug.to_sym, p.name
+    ret += f.label p.slug.to_sym, "#{p.name}#{' *' if p.validations.any?}"
     if p.data_lists.first.multiple?
       ret += render_multi_checkboxes(f,p)
     else
@@ -146,7 +146,6 @@ module ThingsHelper
   def render_select(f,p)
     f.collection_select(p.slug.to_sym, ListValue.find(p.data_lists.first.list.list_values.collect{|v| v.id}), :id, :value, prompt: true)
   end
-
 
   def render_thing(thing, p)
     case p.data_type.name

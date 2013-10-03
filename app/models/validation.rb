@@ -3,7 +3,6 @@ class Validation < ActiveRecord::Base
   belongs_to :validation_type
   validates :validation_type_id, presence: true
   validate :value_present
-  # validate :suitable_for_datatype
 
   private
 
@@ -17,11 +16,5 @@ class Validation < ActiveRecord::Base
       end
     end
   end
-
-  # def suitable_for_datatype
-  #   unless self.property.data_type.validation_types.include?(self)
-  #     errors.add :base, "validation is not suitable for this data type"
-  #   end
-  # end
 
 end

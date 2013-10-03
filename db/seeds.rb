@@ -1,3 +1,5 @@
+system("curl -XDELETE 'http://localhost:9200/things/'")
+
 DataType.destroy_all
 unless DataType.any?
   DataType.create( friendly_name: 'Text', name: 'String', help: 'Max of 255 characters' )
@@ -84,3 +86,7 @@ Thing.create( user: u, collection: c, make: "Mongoose", description: "2010 SL Tr
 
 c = Collection.first
 c.save
+
+Thing.all.each do |t|
+  t.update_index
+end

@@ -15,7 +15,7 @@ class Property < ActiveRecord::Base
   validates :data_type, presence: true
   after_save :update_thing_accessors
   before_destroy :destroy_content!
-  after_destroy: update_thing_search_index
+  after_destroy :update_thing_search_index
   validate :thing_integrity
   validate :suitable_for_datatype
 

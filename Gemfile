@@ -36,8 +36,8 @@ end
 
 gem 'chronic'
 gem 'activeresource', require: 'active_resource'
-# gem 'iserfrontend-rails', github: 'paulgroves/iserfrontend-rails'
-gem 'iserfrontend-rails', path: '~/github/iserfrontend-rails'
+gem 'iserfrontend-rails', github: 'paulgroves/iserfrontend-rails'
+# gem 'iserfrontend-rails', path: '~/github/iserfrontend-rails'
 gem 'iser_auth', '0.1.7'
 gem 'tire', '~> 0.6.0'
 gem 'haml-rails'
@@ -46,4 +46,8 @@ gem 'redcarpet'
 gem 'albino'
 gem 'nokogiri'
 gem 'will_paginate', '~> 3.0'
+
+group :production do
+  gem 'passenger'
+end
 
