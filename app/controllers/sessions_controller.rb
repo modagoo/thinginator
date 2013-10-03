@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
   def create
     u = User.authenticate(session_params[:username], session_params[:password])
     if u
-      user = User.find_or_create_by_username(session_params[:username])
+      user = User.find_or_create_by(username: session_params[:username])
       session[:user_id] = user.id
       log("Successful sign in '#{user.username}'")
       redirect_back_or_default(root_url, "Logged in")
