@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/paulgroves/iserfrontend-rails.git
-  revision: 06703c797df89357e747e5654950ba9240a825cf
+  revision: 7cfc5b8337e6b20636cd54d57a1d5d80a09277ae
   specs:
-    iserfrontend-rails (0.0.3)
+    iserfrontend-rails (0.0.4)
       railties (~> 4.0)
 
 GEM
@@ -248,7 +248,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.0)
   haml-rails
   iser_auth (= 0.1.7)
-  iserfrontend-rails (= 0.0.3)!
+  iserfrontend-rails (= 0.0.4)!
   jbuilder (~> 1.2)
   jquery-rails
   nokogiri
