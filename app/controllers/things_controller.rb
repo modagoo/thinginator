@@ -112,6 +112,7 @@ class ThingsController < ApplicationController
     @thing.user = current_user
     respond_to do |format|
       if @thing.save
+        sleep 0.5 # TODO this stinks! need a way to check elasticsearch callback has run before redirecting
         log("Successfully created new thing ##{@thing.id}")
         format.html { redirect_to collection_index_path(@thing.collection.slug), notice: "#{@thing.collection.name} was successfully created." }
         format.json { render action: 'show', status: :created, location: @thing }
@@ -128,6 +129,7 @@ class ThingsController < ApplicationController
   def update
     respond_to do |format|
       if @thing.update(thing_params)
+        sleep 0.5 # TODO this stinks! need a way to check elasticsearch callback has run before redirecting
         log("Successfully updated thing ##{@thing.id}")
         format.html { redirect_to collection_index_path(@thing.collection.slug), notice: 'Thing was successfully updated.' }
         format.json { head :no_content }
@@ -144,7 +146,8 @@ class ThingsController < ApplicationController
   def destroy
     log("Destroying thing ##{@thing.id}")
     collection = @thing.collection
-    @thing.destroy
+    Thing.index.remove @thing
+    sleep 0.5 # TODO this stinks! need a way to check elasticsearch callback has run before redirecting
     respond_to do |format|
       format.html { redirect_to collection_index_path(collection.slug) }
       format.json { head :no_content }

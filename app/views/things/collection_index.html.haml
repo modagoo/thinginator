@@ -2,11 +2,13 @@
   %h1{class: 'inline'}
     = @collection.name
     %span
-      = "(#{@things.size})"
+      = "(#{@things.total})"
 
 = link_to "<i class=\"icon-plus\"></i> New #{@collection.name.singularize}".html_safe, new_thing_in_collection_path(@collection.slug.singularize), class: 'btn prime-action'
 
 = link_to "<i class=\"icon-download-alt\"></i> download for Excel".html_safe, collection_index_path(@collection.slug, format: :xls), class: "btn btn-small btn-secondary" if @things.present?
+
+= page_entries_info @things if @things.total > WillPaginate.per_page
 
 %table
   %tr
@@ -22,15 +24,15 @@
         %td
           - if i == 0
             - if property.data_type.name == "File"
-              = link_to "Edit", "/things/#{thing.to_hash.fetch(:id)}/edit"
-              = truncate(thing.to_hash.fetch(property.slug.to_sym), length: 255)
+              = link_to "Edit", edit_thing_path(thing.id)
+              = truncate("#{thing.send(property.slug.to_sym)}", length: 20)
             - else
-              = link_to thing.to_hash.fetch(property.slug.to_sym), "/things/#{thing.to_hash.fetch(:id)}/edit"
+              = link_to truncate("#{thing.send(property.slug.to_sym)}", length: 20), edit_thing_path(thing.id)
           - else
-            = thing.to_hash.fetch(property.slug.to_sym)
+            = truncate("#{thing.send(property.slug.to_sym)}", length: 20)
       %td
-        = thing.to_hash.fetch(:username)
+        = thing.username
       %td
-        = link_to "<i class=\"icon-remove\"></i>&nbsp;Delete".html_safe, "/things/#{thing.to_hash.fetch(:id)}", method: :delete, data: { confirm: 'Are you sure? There is no \'undo\'' }, class: 'btn btn-small btn-danger'
+        = link_to "<i class=\"icon-remove\"></i>&nbsp;Delete".html_safe, thing_path(thing.id), method: :delete, data: { confirm: 'Are you sure? There is no \'undo\'' }, class: 'btn btn-small btn-danger'
 
 = will_paginate @things
