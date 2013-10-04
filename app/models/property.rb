@@ -47,7 +47,7 @@ class Property < ActiveRecord::Base
 
   def destroy_content!
     Content.where(property_id: id).each do |content|
-      content.contentable.try(:destroy)
+      content.contentable.destroy
       content.delete
     end
   end

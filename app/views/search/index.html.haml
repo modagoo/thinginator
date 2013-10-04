@@ -1,4 +1,7 @@
-%h1 Search results
+%h1
+  Search results
+  %span.inline
+    = params[:q]
 
 - if @results.nil?
   %p.info
@@ -8,9 +11,7 @@
     = "- no results for your search for '#{params[:q]}'"
 - else
   %p.info
-    = @results.total_entries
-    = pluralize_without_count(@results.total_entries, 'result')
-    = "for your search for '#{params[:q]}'"
+    = content_tag :p, (page_entries_info @results), class: 'info' if @results.total > WillPaginate.per_page
   - @results.results.each do |thing|
     %article{class: 'result'}
       = link_to thing_path(thing.id) do
@@ -18,4 +19,4 @@
         / = content_tag :p, truncate(thing_attributes_list(thing).html_safe, length: 255)
         = content_tag :p, thing_attributes_list(thing).html_safe
 
-= paginate_search_results(@results, params[:q])
+= will_paginate(@results)

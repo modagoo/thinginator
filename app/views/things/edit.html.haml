@@ -9,3 +9,4 @@
   = render 'form'
   %p{class: 'info'}
     = "Created by #{@thing.user.fullname} - #{@thing.created_at.to_s(:display)}"
+    = "<br>Updated #{@thing.updated_at.to_s(:display)}".html_safe if @thing.updated_at.present?

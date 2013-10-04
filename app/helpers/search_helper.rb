@@ -4,10 +4,12 @@ module SearchHelper
     ignore_attributes = [:collection, :collection_name, :id, :_index, :_version, :_score, :sort, :highlight, :_type, :_explanation]
     ret = []
     thing.to_hash.each do |k,v|
-      if v.is_a?(String)
-        ret << "#{k}: <strong>#{truncate(v, length: 255)}</strong>" unless ignore_attributes.include?(k)
-      else
-        ret << "#{k}: <strong>#{v}</strong>" unless ignore_attributes.include?(k)
+      if v.present?
+        if v.is_a?(String)
+          ret << "#{k}: <strong>#{truncate(v, length: 255)}</strong>" unless ignore_attributes.include?(k)
+        else
+          ret << "#{k}: <strong>#{v}</strong>" unless ignore_attributes.include?(k)
+        end
       end
     end
     ret.join(", ").html_safe

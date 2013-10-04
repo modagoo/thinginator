@@ -15,7 +15,7 @@ class Thing < ActiveRecord::Base
   validate :thing_validations
 
   def to_indexed_json
-    result = {id: self.id, collection: self.collection_id, collection_name: self.collection.name, username: self.user.username, name: self.user.fullname}
+    result = {id: self.id, collection: self.collection_id, collection_name: self.collection.name, username: self.user.username, name: self.user.fullname, updated_at: self.updated_at}
     self.collection.properties.each do |p|
       if p.data_type.name == "File"
         if self.send(p.slug.to_sym).present?
@@ -67,6 +67,7 @@ class Thing < ActiveRecord::Base
         existing_content.contentable.update_attribute(:value, self.send(p.slug.to_sym))
       end
     end
+    self.touch
   end
 
   def get_value(property)
@@ -97,7 +98,7 @@ class Thing < ActiveRecord::Base
   def thing_validations
     self.collection.properties.each do |property|
 
-      if %w(__FILE__ __LINE__ BEGIN END alias and begin break case class def defined? do else elsif end ensure false for if in module next nil not or redo rescue retry return self super then true undef unless until when while yield).include?(get_value(property))
+      if %w(__FILE__ __LINE__ BEGIN END alias and begin break case class def defined? do else elsif end ensure for if in module next nil not or redo rescue retry return self super then undef unless until when while yield).include?(get_value(property))
         errors.add(property.slug.to_sym, "is reserved")
       end
 

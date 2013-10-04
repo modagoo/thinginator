@@ -78,6 +78,7 @@ class ThingsController < ApplicationController
         terms :type,
         size: 999
       end
+      sort { by  :updated_at, 'desc' }
       from offset
       size pagesize
     end
@@ -147,6 +148,7 @@ class ThingsController < ApplicationController
     log("Destroying thing ##{@thing.id}")
     collection = @thing.collection
     Thing.index.remove @thing
+    @thing.destroy
     sleep 0.5 # TODO this stinks! need a way to check elasticsearch callback has run before redirecting
     respond_to do |format|
       format.html { redirect_to collection_index_path(collection.slug) }

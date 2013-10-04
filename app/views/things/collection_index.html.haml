@@ -8,7 +8,7 @@
 
 = link_to "<i class=\"icon-download-alt\"></i> download for Excel".html_safe, collection_index_path(@collection.slug, format: :xls), class: "btn btn-small btn-secondary" if @things.present?
 
-= page_entries_info @things if @things.total > WillPaginate.per_page
+= content_tag :p, (page_entries_info @things), class: 'info' if @things.total > WillPaginate.per_page
 
 %table
   %tr
