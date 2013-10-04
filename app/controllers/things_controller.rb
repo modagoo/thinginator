@@ -59,6 +59,7 @@ class ThingsController < ApplicationController
     c = @collection.id
     pagesize = SEARCH_PAGE_SIZE
     u = current_user.username
+    a = true if admin?
     p = params[:page]
     t = params[:slug]
 
@@ -72,9 +73,12 @@ class ThingsController < ApplicationController
         string "*"
       end
       if t.present?
-        filter :term, :collection => c
+        filter :term, collection: c
       end
-      facet 'collection_name', :global => false do
+      unless a == true
+        filter :term, username: u
+      end
+      facet 'collection_name', global: false do
         terms :type,
         size: 999
       end
@@ -102,6 +106,7 @@ class ThingsController < ApplicationController
 
   # GET /things/1/edit
   def edit
+    redirect_to root_url, alert: "ERROR: you do not own this thing" unless admin? or (@thing.user == current_user)
     log("Rendered edit thing form for ##{@thing.id}")
   end
 
@@ -128,6 +133,7 @@ class ThingsController < ApplicationController
   # PATCH/PUT /things/1
   # PATCH/PUT /things/1.json
   def update
+    redirect_to root_url, alert: "ERROR: you do not own this thing" unless admin? or (@thing.user == current_user)
     respond_to do |format|
       if @thing.update(thing_params)
         sleep 0.5 # TODO this stinks! need a way to check elasticsearch callback has run before redirecting
@@ -145,6 +151,7 @@ class ThingsController < ApplicationController
   # DELETE /things/1
   # DELETE /things/1.json
   def destroy
+    redirect_to root_url, alert: "ERROR: you do not own this thing" unless admin? or (@thing.user == current_user)
     log("Destroying thing ##{@thing.id}")
     collection = @thing.collection
     Thing.index.remove @thing
