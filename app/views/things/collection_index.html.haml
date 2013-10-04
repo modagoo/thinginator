@@ -2,40 +2,33 @@
   %h1{class: 'inline'}
     = @collection.name
     %span
-      = "(#{@things.total_entries})"
+      = "(#{@things.size})"
 
-  = link_to "<i class=\"icon-plus\"></i> New #{@collection.name.singularize}".html_safe, new_thing_in_collection_path(@collection.slug.singularize), class: 'btn prime-action'
+= link_to "<i class=\"icon-plus\"></i> New #{@collection.name.singularize}".html_safe, new_thing_in_collection_path(@collection.slug.singularize), class: 'btn prime-action'
 
 = link_to "<i class=\"icon-download-alt\"></i> download for Excel".html_safe, collection_index_path(@collection.slug, format: :xls), class: "btn btn-small btn-secondary" if @things.present?
 
-- if @things.empty?
-  %p.info
-    \- no things yet
-    = link_to "create one", new_thing_in_collection_path(@collection.slug.singularize)
-- else
-  %table
+%table
+  %tr
+    - @collection.properties.visible[0..5].each do |property|
+      %th
+        = property.name
+    %th
+      Created by
+    %th
+  - @things.each do |thing|
     %tr
-      - @collection.properties.visible[0..5].each do |property|
-        %th
-          = property.name
-      %th
-        Created by
-      %th
-    - @things.each do |thing|
-      %tr
       - @collection.properties.visible[0..5].each_with_index do |property, i|
         %td
           - if i == 0
             - if property.data_type.name == "File"
-              = link_to "Edit", edit_thing_path(thing)
-              = truncate(render_thing(thing, property), length: 255)
+              = link_to "Edit", "/things/#{thing.to_hash.fetch(:id)}/edit"
+              = truncate(thing.to_hash.fetch(property.slug.to_sym), length: 255)
             - else
-              = link_to thing.send(property.slug.to_sym), edit_thing_path(thing)
+              = link_to thing.to_hash.fetch(property.slug.to_sym), "/things/#{thing.to_hash.fetch(:id)}/edit"
           - else
-            = truncate(render_thing(thing, property), length: 255)
+            = thing.to_hash.fetch(property.slug.to_sym)
       %td
-        = thing.user.username
+        = thing.to_hash.fetch(:username)
       %td
-        = link_to "<i class=\"icon-remove\"></i>&nbsp;Delete".html_safe, thing, method: :delete, data: { confirm: 'Are you sure? There is no \'undo\'' }, class: 'btn btn-small btn-danger'
-
-= will_paginate @things
+        = link_to "<i class=\"icon-remove\"></i>&nbsp;Delete".html_safe, "/things/#{thing.to_hash.fetch(:id)}", method: :delete, data: { confirm: 'Are you sure? There is no \'undo\'' }, class: 'btn btn-small btn-danger'

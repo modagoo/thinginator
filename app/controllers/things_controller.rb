@@ -26,31 +26,61 @@ class ThingsController < ApplicationController
     log("Viewed collections")
   end
 
+  # def collection_index
+  #   begin
+  #     @collection = Collection.find_by_slug(params[:slug])
+  #     if admin?
+  #       @things = @collection.things.paginate(:page => params[:page])
+  #       log("Admin viewed collection '#{@collection.name}'")
+  #     else
+  #       @things = @collection.things.where(user: current_user).paginate(:page => params[:page])
+  #       log("User viewed collection '#{@collection.name}'")
+  #     end
+  #   rescue
+  #     render text: 'no such collection', status: 404
+  #     log("Collection not found '#{params[:slug]}'")
+  #   end
+  #   respond_to do |format|
+  #     format.html { }
+  #     format.json { render json: @things }
+  #     format.xls  {
+  #       if admin?
+  #         @things = @collection.things
+  #       else
+  #         @things = @collection.things
+  #       end
+  #     }
+  #   end
+  # end
+
   def collection_index
-    begin
-      @collection = Collection.find_by_slug(params[:slug])
-      if admin?
-        @things = @collection.things.paginate(:page => params[:page])
-        log("Admin viewed collection '#{@collection.name}'")
-      else
-        @things = @collection.things.where(user: current_user).paginate(:page => params[:page])
-        log("User viewed collection '#{@collection.name}'")
+    @collection = Collection.find_by_slug(params[:slug].pluralize)
+    c = @collection.id
+    pagesize = SEARCH_PAGE_SIZE
+    u = current_user.username
+    p = params[:page]
+    t = params[:slug]
+
+    if p.blank?
+      offset = 0
+    else
+      offset = pagesize * (p.to_i - 1)
+    end
+    r = Thing.search do
+      query do
+        string "*"
       end
-    rescue
-      render text: 'no such collection', status: 404
-      log("Collection not found '#{params[:slug]}'")
+      if t.present?
+        filter :term, :collection => c
+      end
+      facet 'collection_name', :global => false do
+        terms :type,
+        size: 999
+      end
+      from offset
+      size pagesize
     end
-    respond_to do |format|
-      format.html { }
-      format.json { render json: @things }
-      format.xls  {
-        if admin?
-          @things = @collection.things
-        else
-          @things = @collection.things
-        end
-      }
-    end
+    @things = r
   end
 
   def show
