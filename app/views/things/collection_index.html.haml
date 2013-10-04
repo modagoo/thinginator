@@ -2,7 +2,7 @@
   %h1{class: 'inline'}
     = @collection.name
     %span
-      = "(#{@things.size})"
+      = "(#{@things.total_entries})"
 
   = link_to "<i class=\"icon-plus\"></i> New #{@collection.name.singularize}".html_safe, new_thing_in_collection_path(@collection.slug.singularize), class: 'btn prime-action'
 

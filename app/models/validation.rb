@@ -1,7 +1,7 @@
 class Validation < ActiveRecord::Base
   belongs_to :property
   belongs_to :validation_type
-  validates :validation_type_id, presence: true
+  validates :validation_type, presence: true
   validate :value_present
 
   private

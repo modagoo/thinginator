@@ -27,3 +27,10 @@
   .actions
     = btn("Save")
     = link_to 'Cancel', collections_path
+
+  .changed
+    = content_tag :button, "x", class: 'close', 'data-dismiss' => 'alert'
+    %p
+      Would you like to apply your changes?&nbsp;
+      = btn("Save")
+      = link_to 'Cancel', collections_path

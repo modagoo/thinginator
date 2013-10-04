@@ -1,5 +1,9 @@
 $(document).on 'ready page:change', ->
 
+  $('form').on 'change', 'input', (event) ->
+    $(".changed").fadeIn()
+
+
   $('div.field_with_errors').closest('div.collapse').each () ->
     $(this).removeClass('collapse').addClass('in')
     $(this).prev($('*[data-collapse]')).text('hide')
@@ -10,6 +14,7 @@ $(document).on 'ready page:change', ->
     $(this).before($(this).data('fields').replace(regexp, time))
     $(this).prev().find($('div.collapse')).removeClass('collapse').addClass('in')
     $(this).prev().find($('*[data-collapse]')).text('hide')
+    $(".changed").fadeIn()
     event.preventDefault()
 
   $('form').on 'change', '.data_type_select', (event) ->
@@ -35,11 +40,12 @@ $(document).on 'ready page:change', ->
     else
       $(this).prev("input[type=hidden]").val("1");
       $(this).closest("fieldset.property").hide();
+    $(".changed").fadeIn()
     event.preventDefault()
 
   $ ->
     $(".datepicker").datetimepicker pickTime: false, language: "EN"
-    $(".timepicker").datetimepicker pickDate: false, language: "EN"
+    $(".timepicker").datetimepicker pickDate: false, language: "EN", pickSeconds: false
     $(".datetimepicker").datetimepicker language: "EN"
 
   $("#properties").sortable
@@ -47,6 +53,7 @@ $(document).on 'ready page:change', ->
     update: (event, ui) ->
       $("input.sort").each (index) ->
         $(this).val index + 1
+      $(".changed").fadeIn()
 
   $('form').on 'click', '*[data-collapse]', (e) =>
     if $(e.target).next().hasClass("collapse")

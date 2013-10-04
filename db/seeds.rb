@@ -16,22 +16,22 @@ end
 
 ValidationType.destroy_all
 unless ValidationType.any?
-  ValidationType.create( friendly_name: 'Is present', name: 'presence', help: 'Checks that the value is present (i.e. mandatory)', requires_value: false, data_type_ids: [DataType.find_by_name('String').id, DataType.find_by_name('Text').id, DataType.find_by_name('Fixnum').id, DataType.find_by_name('Boolean').id, DataType.find_by_name('Datetime').id, DataType.find_by_name('Date').id, DataType.find_by_name('Time').id, DataType.find_by_name('Markdown').id, DataType.find_by_name('File').id, DataType.find_by_name('List').id] )
+  ValidationType.create( friendly_name: 'Is present', name: 'presence', help: 'Check that the value is present (i.e. mandatory)', requires_value: false, data_type_ids: [DataType.find_by_name('String').id, DataType.find_by_name('Text').id, DataType.find_by_name('Fixnum').id, DataType.find_by_name('Boolean').id, DataType.find_by_name('Datetime').id, DataType.find_by_name('Date').id, DataType.find_by_name('Time').id, DataType.find_by_name('Markdown').id, DataType.find_by_name('File').id, DataType.find_by_name('List').id] )
 
-  ValidationType.create( friendly_name: 'Is unique', name: 'uniqueness', help: 'Checks that value has not been used for this property in this collection before', requires_value: false, data_type_ids: [DataType.find_by_name('String').id, DataType.find_by_name('Text').id, DataType.find_by_name('Fixnum').id, DataType.find_by_name('Datetime').id, DataType.find_by_name('Date').id, DataType.find_by_name('Time').id, DataType.find_by_name('Markdown').id])
+  ValidationType.create( friendly_name: 'Is unique', name: 'uniqueness', help: 'Check that value has not been used for this property in this collection before', requires_value: false, data_type_ids: [DataType.find_by_name('String').id, DataType.find_by_name('Text').id, DataType.find_by_name('Fixnum').id, DataType.find_by_name('Datetime').id, DataType.find_by_name('Date').id, DataType.find_by_name('Time').id, DataType.find_by_name('Markdown').id])
 
-  ValidationType.create( friendly_name: 'Acceptance', name: 'acceptance', help: 'Checks that a \'true or false\' value is set to true.', requires_value: false, data_type_ids: [DataType.find_by_name('Boolean').id])
+  ValidationType.create( friendly_name: 'Acceptance', name: 'acceptance', help: 'Check that a \'true or false\' value is set to true.', requires_value: false, data_type_ids: [DataType.find_by_name('Boolean').id])
 
-  # ValidationType.create( friendly_name: 'Confirmation', name: 'confirmation', help: 'Checks that two text fields have exactly the same content.', requires_value: false )
-  ValidationType.create( friendly_name: 'Exclusion', name: 'exclusion', help: 'Checks that the value is EXCLUDED from the given set.', requires_value: true, data_type_ids: [DataType.find_by_name('String').id, DataType.find_by_name('Text').id] )
+  # ValidationType.create( friendly_name: 'Confirmation', name: 'confirmation', help: 'Check that two text fields have exactly the same content.', requires_value: false )
+  ValidationType.create( friendly_name: 'Exclusion', name: 'exclusion', help: 'Check that the value is EXCLUDED from the given set.', requires_value: true, data_type_ids: [DataType.find_by_name('String').id, DataType.find_by_name('Text').id] )
 
-  ValidationType.create( friendly_name: 'Inclusion', name: 'inclusion', help: 'Checks that the value is INCLUDED from the given set.', requires_value: true, data_type_ids: [DataType.find_by_name('String').id, DataType.find_by_name('Text').id] )
+  ValidationType.create( friendly_name: 'Inclusion', name: 'inclusion', help: 'Check that the value is INCLUDED from the given set.', requires_value: true, data_type_ids: [DataType.find_by_name('String').id, DataType.find_by_name('Text').id] )
 
-  ValidationType.create( friendly_name: 'Format with', name: 'format_with', help: 'Checks the value by testing whether it DOES match a given regular expression', requires_value: true, data_type_ids: [DataType.find_by_name('String').id, DataType.find_by_name('Text').id] )
+  ValidationType.create( friendly_name: 'Format with', name: 'format_with', help: 'Check the value by testing whether it DOES match a given regular expression', requires_value: true, data_type_ids: [DataType.find_by_name('String').id, DataType.find_by_name('Text').id] )
 
-  ValidationType.create( friendly_name: 'Format without', name: 'format_without', help: 'Checks the value by testing whether it DOES NOT match a given regular expression', requires_value: true, data_type_ids: [DataType.find_by_name('String').id, DataType.find_by_name('Text').id] )
+  ValidationType.create( friendly_name: 'Format without', name: 'format_without', help: 'Check the value by testing whether it DOES NOT match a given regular expression', requires_value: true, data_type_ids: [DataType.find_by_name('String').id, DataType.find_by_name('Text').id] )
 
-  ValidationType.create( friendly_name: 'Is a whole number', name: 'numericality', help: 'Checks that the value is a whole number', requires_value: false, data_type_ids: [DataType.find_by_name('Fixnum').id] )
+  ValidationType.create( friendly_name: 'Is a whole number', name: 'numericality', help: 'Check that the value is a whole number', requires_value: false, data_type_ids: [DataType.find_by_name('Fixnum').id] )
 end
 
 # User.delete_all
@@ -84,8 +84,13 @@ Thing.create( user: u, collection: c, make: "Cube", description: "2010 SL Trail"
 Thing.create( user: u, collection: c, make: "Marin", description: "2010 SL Trail", size: 18, )
 Thing.create( user: u, collection: c, make: "Mongoose", description: "2010 SL Trail", size: 18, )
 
+1000.times do
+  Thing.create( user: u, collection: c, make: (10...50).map{ ('a'..'z').to_a[rand(26)] }.join, description: (10...50).map{ ('a'..'z').to_a[rand(26)] }.join, size: 18, )
+end
+
 c = Collection.first
 c.save
+
 
 Thing.all.each do |t|
   t.update_index

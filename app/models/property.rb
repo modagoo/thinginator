@@ -8,7 +8,6 @@ class Property < ActiveRecord::Base
   has_many :data_lists
   has_many :lists, through: :data_lists
 
-
   accepts_nested_attributes_for :validations, allow_destroy: true
   accepts_nested_attributes_for :data_lists, allow_destroy: true
   validates :name, presence: true, uniqueness: { scope: :collection }
@@ -17,7 +16,7 @@ class Property < ActiveRecord::Base
   before_destroy :destroy_content!
   after_destroy :update_thing_search_index
   validate :thing_integrity
-  validate :suitable_for_datatype
+  validate :suitable_for_datatype, unless: 'data_type.blank?'
 
   scope :visible, -> { where('hide IS NOT true') }
 
@@ -53,7 +52,7 @@ class Property < ActiveRecord::Base
     end
   end
 
-  # TODO - this could get slow! PG 02-10-13
+  # TODO - this could get slow, make before destroy and only index things which have this software! PG 02-10-13
   def update_thing_search_index
     Thing.all.each do |t|
       t.update_index

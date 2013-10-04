@@ -72,7 +72,8 @@ class Thing < ActiveRecord::Base
   def get_value(property)
     existing_value = self.send(property.slug.to_sym)
     if existing_value.nil?
-      return self.content.where(property: property).take(1).first.try(:contentable).try(:value)
+      # return self.content.where(property: property).take(1).first.try(:contentable).try(:value)
+      return self.content.includes(:contentable).where(property: property).first.contentable.try(:value)
     else
       return existing_value
     end
