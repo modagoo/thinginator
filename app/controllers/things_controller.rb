@@ -53,6 +53,7 @@ class ThingsController < ApplicationController
   #   end
   # end
 
+  # Buckle your seatbelt Dorothy, 'cause SQL is going bye-bye! - PG 04-10-2013
   def collection_index
     @collection = Collection.find_by_slug(params[:slug].pluralize)
     c = @collection.id

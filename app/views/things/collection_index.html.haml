@@ -32,3 +32,5 @@
         = thing.to_hash.fetch(:username)
       %td
         = link_to "<i class=\"icon-remove\"></i>&nbsp;Delete".html_safe, "/things/#{thing.to_hash.fetch(:id)}", method: :delete, data: { confirm: 'Are you sure? There is no \'undo\'' }, class: 'btn btn-small btn-danger'
+
+= will_paginate @things
