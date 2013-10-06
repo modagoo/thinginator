@@ -84,7 +84,7 @@ Thing.create( user: u, collection: c, make: "Cube", description: "2010 SL Trail"
 Thing.create( user: u, collection: c, make: "Marin", description: "2010 SL Trail", size: 18, )
 Thing.create( user: u, collection: c, make: "Mongoose", description: "2010 SL Trail", size: 18, )
 
-60.times do
+10000.times do
   Thing.create( user: u, collection: c, make: (10...50).map{ ('a'..'z').to_a[rand(26)] }.join, description: (10...50).map{ ('a'..'z').to_a[rand(26)] }.join, size: 18, )
 end
 

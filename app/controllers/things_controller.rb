@@ -117,8 +117,7 @@ class ThingsController < ApplicationController
     @thing = Thing.new(thing_params)
     @thing.user = current_user
     respond_to do |format|
-      if @thing.save
-        sleep 0.5 # TODO this stinks! need a way to check elasticsearch callback has run before redirecting
+      if @thing.save && Tire.index('things').refresh.success?
         log("Successfully created new thing ##{@thing.id}")
         format.html { redirect_to collection_index_path(@thing.collection.slug), notice: "#{@thing.collection.name} was successfully created." }
         format.json { render action: 'show', status: :created, location: @thing }
@@ -135,8 +134,7 @@ class ThingsController < ApplicationController
   def update
     redirect_to root_url, alert: "ERROR: you do not own this thing" unless admin? or (@thing.user == current_user)
     respond_to do |format|
-      if @thing.update(thing_params)
-        sleep 0.5 # TODO this stinks! need a way to check elasticsearch callback has run before redirecting
+      if @thing.update(thing_params) && Tire.index('things').refresh.success?
         log("Successfully updated thing ##{@thing.id}")
         format.html { redirect_to collection_index_path(@thing.collection.slug), notice: 'Thing was successfully updated.' }
         format.json { head :no_content }
@@ -154,12 +152,16 @@ class ThingsController < ApplicationController
     redirect_to root_url, alert: "ERROR: you do not own this thing" unless admin? or (@thing.user == current_user)
     log("Destroying thing ##{@thing.id}")
     collection = @thing.collection
-    Thing.index.remove @thing
-    @thing.destroy
-    sleep 0.5 # TODO this stinks! need a way to check elasticsearch callback has run before redirecting
-    respond_to do |format|
-      format.html { redirect_to collection_index_path(collection.slug) }
-      format.json { head :no_content }
+    if @thing.destroy && Tire.index('things').refresh.success?
+      respond_to do |format|
+        format.html { redirect_to collection_index_path(collection.slug), notice: "Thing was successfully deleted"}
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to collection_index_path(collection.slug), alert: "ERROR: Thing could not be deleted" }
+        format.json { head :no_content }
+      end
     end
   end
 
