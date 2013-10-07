@@ -13,8 +13,8 @@
       </Row>
     <% @things.each do |thing| %>
       <Row>
-        <% thing.collection.properties.each do |property| %>
-          <Cell><Data ss:Type="String"><%= render_thing(thing, property) %></Data></Cell>
+        <% @collection.properties.visible.each do |property| %>
+          <Cell><Data ss:Type="String"><%= thing.send(property.slug.to_sym) %></Data></Cell>
         <% end %>
       </Row>
     <% end %>

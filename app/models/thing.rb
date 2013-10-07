@@ -17,16 +17,7 @@ class Thing < ActiveRecord::Base
   def to_indexed_json
     result = {id: self.id, collection: self.collection_id, collection_name: self.collection.name, username: self.user.username, name: self.user.fullname, updated_at: self.updated_at}
     self.collection.properties.each do |p|
-      if p.data_type.name == "File"
-        if self.send(p.slug.to_sym).present?
-          fname = self.send(p.slug.to_sym).send(:original_filename)
-        else
-          fname = ""
-        end
-        result.merge!(p.slug.to_sym => fname)
-      else
-        result.merge!(p.slug.to_sym => eval(p.slug))
-      end
+      result.merge!(p.slug.to_sym => render_thing(self, p))
     end
     result.to_json
   end
@@ -36,6 +27,30 @@ class Thing < ActiveRecord::Base
   end
 
   private
+
+  def render_thing(thing, p)
+    case p.data_type.name
+    when "File"
+      if thing.send(p.slug.to_sym).present?
+        thing.send(p.slug.to_sym).original_filename
+      else
+        "No file"
+      end
+    when "Markdown"
+      "Markdown"
+    when "List"
+      v = thing.send(p.slug.to_sym)
+      if v.present?
+        if v.is_a?(String)
+          ListValue.find(v).value
+        elsif v.is_a?(Array)
+          v.collect{ |l| ListValue.find(l).value }.join(", ")
+        end
+      end
+    else
+      thing.send(p.slug.to_sym).to_s
+    end
+  end
 
   def build_content_attributes
     if collection.present?

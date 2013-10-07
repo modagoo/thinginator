@@ -72,19 +72,18 @@ c.properties << lst1
 
 c.save
 
-
 Thing.destroy_all
-Thing.create( user: u, collection: c, make: "Cannondale", description: "2010 SL Trail", size: 18, )
-Thing.create( user: u, collection: c, make: "Trek", description: "2010 SL Trail", size: 18, )
-Thing.create( user: u, collection: c, make: "Kona", description: "2010 SL Trail", size: 18, )
-Thing.create( user: u, collection: c, make: "Specialized", description: "2010 SL Trail", size: 18, )
-Thing.create( user: u, collection: c, make: "Felt", description: "2010 SL Trail", size: 18, )
-Thing.create( user: u, collection: c, make: "Scott", description: "2010 SL Trail", size: 18, )
-Thing.create( user: u, collection: c, make: "Cube", description: "2010 SL Trail", size: 18, )
-Thing.create( user: u, collection: c, make: "Marin", description: "2010 SL Trail", size: 18, )
-Thing.create( user: u, collection: c, make: "Mongoose", description: "2010 SL Trail", size: 18, )
+Thing.create( user: u, collection: c, make: "Cannondale", description: "2010 SL Trail", size: 18 )
+Thing.create( user: u, collection: c, make: "Trek", description: "2010 SL Trail", size: 18 )
+Thing.create( user: u, collection: c, make: "Kona", description: "2010 SL Trail", size: 18 )
+Thing.create( user: u, collection: c, make: "Specialized", description: "2010 SL Trail", size: 18 )
+Thing.create( user: u, collection: c, make: "Felt", description: "2010 SL Trail", size: 18 )
+Thing.create( user: u, collection: c, make: "Scott", description: "2010 SL Trail", size: 18 )
+Thing.create( user: u, collection: c, make: "Cube", description: "2010 SL Trail", size: 18 )
+Thing.create( user: u, collection: c, make: "Marin", description: "2010 SL Trail", size: 18 )
+Thing.create( user: u, collection: c, make: "Mongoose", description: "2010 SL Trail", size: 18 )
 
-10000.times do
+5.times do
   Thing.create( user: u, collection: c, make: (10...50).map{ ('a'..'z').to_a[rand(26)] }.join, description: (10...50).map{ ('a'..'z').to_a[rand(26)] }.join, size: 18, )
 end
 

@@ -55,38 +55,50 @@ class ThingsController < ApplicationController
 
   # Buckle your seatbelt Dorothy, 'cause SQL is going bye-bye! - PG 04-10-2013
   def collection_index
-    @collection = Collection.find_by_slug(params[:slug].pluralize)
-    c = @collection.id
-    pagesize = SEARCH_PAGE_SIZE
-    u = current_user.username
-    a = true if admin?
-    p = params[:page]
-    t = params[:slug]
+    begin
+      @collection = Collection.find_by_slug(params[:slug].pluralize)
+      c = @collection.id
+      pagesize = SEARCH_PAGE_SIZE
+      u = current_user.username
+      a = true if admin?
+      p = params[:page]
+      t = params[:slug]
 
-    if p.blank?
-      offset = 0
-    else
-      offset = pagesize * (p.to_i - 1)
+      if p.blank?
+        offset = 0
+      else
+        offset = pagesize * (p.to_i - 1)
+      end
+      r = Thing.search do
+        query do
+          string "*"
+        end
+        if t.present?
+          filter :term, collection: c
+        end
+        unless a == true
+          filter :term, username: u
+        end
+        facet 'collection_name', global: false do
+          terms :type,
+          size: 999
+        end
+        sort { by  :updated_at, 'desc' }
+        from offset
+        size pagesize
+      end
+      @things = r
+      respond_to do |format|
+        format.html { log("User viewed collection '#{@collection.name}'") }
+        format.json { render json: @things }
+        format.xls  {
+          log("User downloaded collection '#{@collection.name}'")
+        }
+      end
+    rescue
+      render text: 'no such collection', status: 404
+      log("Collection not found '#{params[:slug]}'")
     end
-    r = Thing.search do
-      query do
-        string "*"
-      end
-      if t.present?
-        filter :term, collection: c
-      end
-      unless a == true
-        filter :term, username: u
-      end
-      facet 'collection_name', global: false do
-        terms :type,
-        size: 999
-      end
-      sort { by  :updated_at, 'desc' }
-      from offset
-      size pagesize
-    end
-    @things = r
   end
 
   def show
