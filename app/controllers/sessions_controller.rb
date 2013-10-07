@@ -7,17 +7,24 @@ class SessionsController < ApplicationController
   end
 
   def create
-    u = User.authenticate(session_params[:username], session_params[:password])
-    if u
-      user = User.find_or_create_by(username: session_params[:username])
+    if dev?
+      user = User.find_by(username: 'pmgroves')
       session[:user_id] = user.id
-      log("Successful sign in '#{user.username}'")
+      log("Successful dev sign in '#{user.username}'")
       redirect_back_or_default(root_url, "Logged in")
-      # redirect_to root_url
     else
-      log("Invalid sign in attempt from '#{params[:username]}'")
-      flash.now[:alert] = "Invalid email or password"
-      render "new"
+      u = User.authenticate(session_params[:username], session_params[:password])
+      if u
+        user = User.find_or_create_by(username: session_params[:username])
+        session[:user_id] = user.id
+        log("Successful sign in '#{user.username}'")
+        redirect_back_or_default(root_url, "Logged in")
+        # redirect_to root_url
+      else
+        log("Invalid sign in attempt from '#{params[:username]}'")
+        flash.now[:alert] = "Invalid email or password"
+        render "new"
+      end
     end
   end
 

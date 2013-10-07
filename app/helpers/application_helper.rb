@@ -45,11 +45,6 @@ module ApplicationHelper
     end
   end
 
-  def dev?
-    return true if Rails.env == "development"
-    return false
-  end
-
   # Returns HTML button element
   def btn(text="Submit",type="submit",id="",css_class="btn",icon="")
     ret =  "<button type=\"#{type}\" class=\"#{css_class}\""
