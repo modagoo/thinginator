@@ -14,9 +14,9 @@
           <Cell><Data ss:Type="String"><%= property.name %><%= " (HIDDEN)" if property.hide? %></Data></Cell>
         <% end %>
       </Row>
-    <% collection.things.each do |thing| %>
+    <% instance_variable_get("@#{collection.slug}_things").each do |thing| %>
       <Row>
-        <% collection.properties.visible.each do |property| %>
+        <% collection.properties.each do |property| %>
           <Cell><Data ss:Type="String"><%= thing.send(property.slug.to_sym) %></Data></Cell>
         <% end %>
       </Row>

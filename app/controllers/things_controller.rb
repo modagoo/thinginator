@@ -4,8 +4,12 @@ class ThingsController < ApplicationController
 
   def all_the_things
     @collections = Collection.all
+    @collections.each do |c|
+      instance_variable_set("@#{c.slug}_things", search_for_things(c, 1, c.slug))
+    end
     log("Downloaded all the things")
     respond_to do |format|
+      format.html {}
       format.xls  { }
     end
   end
@@ -57,37 +61,7 @@ class ThingsController < ApplicationController
   def collection_index
     begin
       @collection = Collection.find_by_slug(params[:slug].pluralize)
-      c = @collection.id
-      pagesize = SEARCH_PAGE_SIZE
-      u = current_user.username
-      a = true if admin?
-      p = params[:page]
-      t = params[:slug]
-
-      if p.blank?
-        offset = 0
-      else
-        offset = pagesize * (p.to_i - 1)
-      end
-      r = Thing.search do
-        query do
-          string "*"
-        end
-        if t.present?
-          filter :term, collection: c
-        end
-        unless a == true
-          filter :term, username: u
-        end
-        facet 'collection_name', global: false do
-          terms :type,
-          size: 999
-        end
-        sort { by  :updated_at, 'desc' }
-        from offset
-        size pagesize
-      end
-      @things = r
+      @things = search_for_things(@collection, params[:page], params[:slug])
       respond_to do |format|
         format.html { log("User viewed collection '#{@collection.name}'") }
         format.json { render json: @things }
@@ -178,6 +152,47 @@ class ThingsController < ApplicationController
   end
 
   private
+
+  def search_for_things(collection, page, term)
+    c = collection.id
+    pagesize = SEARCH_PAGE_SIZE
+    u = current_user.username
+    a = true if admin?
+    p = page
+    t = term
+    all = true if request.format == :xls
+
+    if p.blank?
+      offset = 0
+    else
+      offset = pagesize * (p.to_i - 1)
+    end
+    r = Thing.search do
+      query do
+        string "*"
+      end
+      if t.present?
+        filter :term, collection: c
+      end
+      unless a == true
+        filter :term, username: u
+      end
+      facet 'collection_name', global: false do
+        terms :type,
+        size: 999
+      end
+      sort { by  :updated_at, 'desc' }
+      unless all == true
+        from offset
+        size pagesize
+      else
+        from 0
+        size 100000
+      end
+    end
+    r
+  end
+
   def set_thing
     begin
       @thing = Thing.find(params[:id])

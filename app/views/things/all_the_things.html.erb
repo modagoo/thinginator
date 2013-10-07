@@ -1,0 +1,5 @@
+<%= debug(@collections) %>
+
+<% @collections.each do |collection| %>
+<%= debug(instance_variable_get("@#{collection.slug}_things")) %>
+<% end %>
