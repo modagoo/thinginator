@@ -31,7 +31,7 @@ class SessionsController < ApplicationController
   def destroy
     log("Sign out '#{current_user.username}'")
     session[:user_id] = nil
-    redirect_to new_session_url, :notice => "Logged out"
+    redirect_to sign_in_url, :notice => "Logged out"
   end
 
   private

@@ -1,0 +1,17 @@
+= form_for @setting do |f|
+  = errors_for(@setting)
+  %fieldset
+    .field
+      = f.label :name
+      = f.text_field :name
+    .field
+      = f.label :slug
+      = f.text_field :slug
+    .field
+      = f.label :value
+      = f.text_area :value, rows: 5
+      = content_tag :p, "accepts <a href=\"https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet\">Markdown</a>".html_safe, class: "help"
+
+  .actions
+    = btn('Save')
+    = link_to 'Cancel', settings_path

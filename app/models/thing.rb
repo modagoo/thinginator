@@ -11,7 +11,7 @@ class Thing < ActiveRecord::Base
   after_create :save_collection_attributes
   after_update :update_collection_attributes
   before_destroy :delete_content_and_contentable
-  validates_presence_of :user
+  validates :user, presence: true
   validate :thing_validations
 
   def to_indexed_json

@@ -1,5 +1,14 @@
 module ApplicationHelper
 
+  def setting(name)
+    if s = Setting.find_by(slug: name.to_s)
+      ret = s.value.present? ? s.value : ""
+    else
+      ret = ""
+    end
+    ret
+  end
+
   def active?(str)
     if controller.controller_name == str
       return { class: 'active'}

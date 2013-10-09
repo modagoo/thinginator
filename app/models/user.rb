@@ -2,8 +2,7 @@ class User < ActiveRecord::Base
 
   extend IserAuth
 
-  validates_presence_of :username
-  validates_uniqueness_of :username
+  validates :username, presence: true, uniqueness: true
   before_destroy :do_not_delete_superuser
   before_create :find_name_from_square
   validate :is_iser?

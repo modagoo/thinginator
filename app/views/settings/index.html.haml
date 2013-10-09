@@ -1,0 +1,23 @@
+%div{class: 'heading'}
+  %h1 Settings
+
+  = link_to "<i class=\"icon-plus\"></i> New setting".html_safe, new_setting_path, class: "btn prime-action"
+
+- if @settings.empty?
+  %p.info
+    \- no settings yet
+    = link_to "create one", new_setting_path
+- else
+  %table
+    %tr
+      %th Name
+      %th Slug
+      %th Value
+      %th
+
+    - @settings.each do |setting|
+      %tr
+        %td= link_to setting.name, edit_setting_path(setting)
+        %td= setting.slug
+        %td= setting.value
+        %td= link_to "<i class=\"icon-remove\"></i>&nbsp;Delete".html_safe, setting, method: :delete, validation: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'

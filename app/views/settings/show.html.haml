@@ -1,0 +1,13 @@
+%p
+  %b Name:
+  = @setting.name
+%p
+  %b Name:
+  = @setting.slug
+%p
+  %b Help:
+  = @setting.value
+
+= link_to 'Edit', edit_setting_path(@setting)
+\|
+= link_to 'Back', settings_path

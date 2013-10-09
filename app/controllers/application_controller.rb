@@ -31,8 +31,8 @@ class ApplicationController < ActionController::Base
     unless current_user
       store_location
       respond_to do |format|
-        format.html { redirect_to new_session_url, notice: "Please sign in" }
-        format.js   { render :text => "Your session has expired, please <a href='#{new_session_url}'>login again</a>" }
+        format.html { redirect_to sign_in_url, notice: "Please sign in" }
+        format.js   { render :text => "Your session has expired, please <a href='#{sign_in_url}'>login again</a>" }
       end
     end
   end

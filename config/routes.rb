@@ -5,8 +5,8 @@ Thinginator::Application.routes.draw do
   get '/file/:id' => 'things#download_file', :as => :download_file
 
   delete "sign-out" => "sessions#destroy", :as => "sign_out"
-  # post "sign-in" => "sessions#new", :as => "sign_in"
-  resources :sessions, only: [ :new, :create ]
+  get "sign-in" => "sessions#new", :as => "sign_in"
+  resources :sessions, only: [ :create ]
 
   resources :things do
     collection do
@@ -21,6 +21,7 @@ Thinginator::Application.routes.draw do
   resources :validation_types
   resources :users
   resources :lists
+  resources :settings
   get '/search' => 'search#index', :as => :search
   get ':slug' => 'things#collection_index', as: :collection_index
   get 'new/:slug' => 'things#new_thing', as: :new_thing_in_collection

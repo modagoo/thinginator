@@ -1,6 +1,6 @@
-%h1 Things
+= content_tag :h1, setting(:things_title)
 
-%p Select a type to view and create things:
+= markdown(setting(:things_introduction))
 
 - @collections.each do |collection|
   = content_tag :ol, class: 'tag-list' do
