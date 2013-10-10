@@ -15,22 +15,28 @@
       - if current_user
         %nav{role: "navigation"}
           %ol
-            = content_tag :li, (link_to "Things", things_path, active?('things'))
-            = content_tag :li, (link_to "Collections", collections_path, active?('collections')) if admin?
-            = content_tag :li, (link_to "Lists", lists_path, active?('lists')) if admin?
-            = content_tag :li, (link_to "Settings", settings_path) if admin?
-            = content_tag :li, (link_to "Log", logs_path) if admin?
-            = content_tag :li, (link_to "Download all", all_the_things_things_path(format: 'xls')) if admin?
-            = content_tag :li, (link_to "Data types", data_types_path, active?('data_types')) if superuser?
-            = content_tag :li, (link_to "Validation types", validation_types_path, active?('validation_types')) if superuser?
-            = content_tag :li, (link_to "Users", users_path, active?('users')) if superuser?
+            = content_tag :li, (link_to "<i class=\"icon-file\"></i>&nbsp;&nbsp;#{setting(:things_name)}".html_safe, things_path, active?('things'))
+            = content_tag :li, (link_to "<i class=\"icon-th\"></i>&nbsp;Collections".html_safe, collections_path, active?('collections')) if admin?
+            = content_tag :li, (link_to "<i class=\"icon-list\"></i>&nbsp;Lists".html_safe, lists_path, active?('lists')) if admin?
+            = content_tag :li, (link_to "<i class=\"icon-download-alt\"></i>&nbsp;Download all".html_safe, all_the_things_things_path(format: 'xls')) if admin?
+            - if admin?
+              %li.dropdown
+                %a{href: "#{}"}
+                  Admin&nbsp;
+                  %i.icon-caret-down
+                %ol
+                  = content_tag :li, (link_to "Settings", settings_path)
+                  = content_tag :li, (link_to "Log", logs_path)
+                  = content_tag :li, (link_to "Data types", data_types_path, active?('data_types')) if superuser?
+                  = content_tag :li, (link_to "Validation types", validation_types_path, active?('validation_types')) if superuser?
+                  = content_tag :li, (link_to "Users", users_path, active?('users')) if superuser?
             - if current_user
               = content_tag :li, class: "user" do
                 %div{'data-no-turbolink' => ''}
                   = link_to "<i class=\"icon-search\"></i>".html_safe, "/search", class: "search-toggle"
                 = content_tag :span, current_user.username
                 = link_to "sign out", sign_out_path, method: :delete
-    = render partial: 'shared/search_form' if current_user
+      = render partial: 'shared/search_form' if current_user
     %main
       = render_flash(flash)
       = yield

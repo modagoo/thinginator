@@ -36,7 +36,7 @@ end
 
 gem 'chronic'
 gem 'activeresource', require: 'active_resource'
-gem 'iserfrontend-rails', '0.0.7', github: 'paulgroves/iserfrontend-rails'
+gem 'iserfrontend-rails', '0.0.8', github: 'paulgroves/iserfrontend-rails'
 # gem 'iserfrontend-rails', path: '~/github/iserfrontend-rails'
 gem 'iser_auth', '0.1.7'
 gem 'tire', '~> 0.6.0'
