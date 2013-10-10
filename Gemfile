@@ -49,5 +49,6 @@ gem 'will_paginate', '~> 3.0'
 
 group :production do
   gem 'passenger'
+  gem 'exception_notification', "~> 4.0.0"
 end
 

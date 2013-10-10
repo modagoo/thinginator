@@ -77,4 +77,13 @@ Thinginator::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+
+  config.middleware.use ExceptionNotification::Rack,
+    :email => {
+      :email_prefix => "Thinginator Exception",
+      :sender_address => %{"notifier" <webmaster@isermail.essex.ac.uk>},
+      :exception_recipients => %w{pmgroves@essex.ac.uk}
+    }
+
 end
