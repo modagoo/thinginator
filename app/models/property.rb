@@ -14,7 +14,6 @@ class Property < ActiveRecord::Base
   validates :data_type, presence: true
   after_save :update_thing_accessors
   before_destroy :destroy_content!
-  after_destroy :update_thing_search_index
   validate :thing_integrity
   validate :suitable_for_datatype, unless: 'data_type.blank?'
 
@@ -49,13 +48,7 @@ class Property < ActiveRecord::Base
     Content.where(property_id: id).each do |content|
       content.contentable.destroy
       content.delete
-    end
-  end
-
-  # TODO - this could get slow, make before destroy and only index things which have this software! PG 02-10-13
-  def update_thing_search_index
-    Thing.all.each do |t|
-      t.update_index
+      content.thing.update_index
     end
   end
 
