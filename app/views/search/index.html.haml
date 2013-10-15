@@ -15,7 +15,7 @@
   - @results.results.each do |thing|
     %article{class: 'result'}
       = link_to thing_path(thing.id) do
-        = content_tag :h6, thing.collection_name.try(:singularize)
+        = content_tag :h6, thing.collection_name #.try(:singularize)
         / = content_tag :p, truncate(thing_attributes_list(thing).html_safe, length: 255)
         = content_tag :p, thing_attributes_list(thing).html_safe
 

@@ -60,7 +60,7 @@ class ThingsController < ApplicationController
   # Buckle your seatbelt Dorothy, 'cause SQL is going bye-bye! - PG 04-10-2013
   def collection_index
     begin
-      @collection = Collection.find_by_slug(params[:slug].pluralize)
+      @collection = Collection.find_by_slug(params[:slug])
       @things = search_for_things(@collection, params[:page], params[:slug])
       respond_to do |format|
         format.html { log("User viewed collection '#{@collection.name}'") }
@@ -81,7 +81,7 @@ class ThingsController < ApplicationController
 
   # GET /things/new
   def new_thing
-    if collection = Collection.find_by_slug(params[:slug].pluralize)
+    if collection = Collection.find_by_slug(params[:slug])
       @thing = Thing.new(collection: collection)
       log("Rendered new thing form for collection '#{collection.name}'")
     else

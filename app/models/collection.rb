@@ -10,12 +10,12 @@ class Collection < ActiveRecord::Base
   validates :name, uniqueness: true
   validates :user, presence: true
   validate :must_have_at_least_one_property
-  before_validation :pluralize_name
+  # before_validation :pluralize_name
   include Sluggable
 
-  def pluralize_name
-    self.name = name.pluralize
-  end
+  # def pluralize_name
+  #   self.name = name.pluralize
+  # end
 
   private
 

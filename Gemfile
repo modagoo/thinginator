@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 source 'http://iser-wdev.essex.ac.uk:8808'
 
 gem 'rails', '4.0.0'

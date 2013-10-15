@@ -7,7 +7,7 @@ GIT
       railties (~> 4.0)
 
 GEM
-  remote: https://rubygems.org/
+  remote: http://rubygems.org/
   remote: http://iser-wdev.essex.ac.uk:8808/
   specs:
     ZenTest (4.9.3)

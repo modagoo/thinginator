@@ -18,4 +18,4 @@
 %hr
 
 - if @collection
-  = link_to "<i class=\"icon-plus\"></i> New #{@collection.name.singularize}", new_thing_in_collection_path(@thing.collection.slug.singularize), class: 'btn'
+  = link_to "<i class=\"icon-plus\"></i> New #{@collection.name}", new_thing_in_collection_path(@thing.collection.slug), class: 'btn'

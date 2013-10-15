@@ -1,4 +1,4 @@
-= content_tag :h1, "Edit #{@thing.collection.name.singularize.downcase}"
+= content_tag :h1, "Edit #{@thing.collection.name}"
 
 - if @thing.collection.properties.visible.empty?
   %p.info
