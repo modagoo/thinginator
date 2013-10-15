@@ -13,9 +13,10 @@
   .field
     = f.label :admin
     = f.check_box :admin
-  .field
-    = f.label :superuser
-    = f.check_box :superuser
+  - if superuser?
+    .field
+      = f.label :superuser
+      = f.check_box :superuser
   .actions
     = btn('Save')
     = link_to 'Cancel',users_path

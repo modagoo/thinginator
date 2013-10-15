@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_superuser
+  before_action :require_admin
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
@@ -26,14 +26,18 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-
-    respond_to do |format|
-      if @useruser.save
-        format.html { redirect_to users_path, notice: 'User was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @user }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+    if params[:user][:superuser] == "1" && (superuser? != true)
+      format.html { redirect_to edit_user_path(@user), alert: "ERROR: You are not allowed to do that" and return }
+      format.json { head :no_content }
+    else
+      respond_to do |format|
+        if @useruser.save
+          format.html { redirect_to users_path, notice: 'User was successfully created.' }
+          format.json { render action: 'show', status: :created, location: @user }
+        else
+          format.html { render action: 'new' }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -42,15 +46,23 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
-      if superuser? && params[:user][:username] == current_user.username && params[:user][:superuser] != "1"
-        format.html { redirect_to @user, alert: "Cannot remove your own superuser status" }
-        format.json { head :no_content }
-      elsif @user.update(user_params)
-        format.html { redirect_to users_path, notice: 'User was successfully updated.' }
+      if params[:user][:superuser] == "1" && (superuser? != true)
+        format.html { redirect_to users_path, alert: "ERROR: You are not allowed to do that" and return }
         format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        if superuser? && params[:user][:username] == current_user.username && params[:user][:superuser] != "1"
+          format.html { redirect_to @user, alert: "Cannot remove your own superuser status" and return }
+          format.json { head :no_content }
+        elsif admin? && params[:user][:username] == current_user.username && params[:user][:admin] != "1"
+          format.html { redirect_to @user, alert: "Cannot remove your own admin status" and return }
+          format.json { head :no_content }
+        elsif @user.update(user_params)
+          format.html { redirect_to users_path, notice: 'User was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: 'edit' }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

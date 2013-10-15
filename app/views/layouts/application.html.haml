@@ -27,9 +27,9 @@
                 %ol
                   = content_tag :li, (link_to "Settings", settings_path)
                   = content_tag :li, (link_to "Log", logs_path)
+                  = content_tag :li, (link_to "Users", users_path, active?('users'))
                   = content_tag :li, (link_to "Data types", data_types_path, active?('data_types')) if superuser?
                   = content_tag :li, (link_to "Validation types", validation_types_path, active?('validation_types')) if superuser?
-                  = content_tag :li, (link_to "Users", users_path, active?('users')) if superuser?
             - if current_user
               = content_tag :li, class: "user" do
                 %div{'data-no-turbolink' => ''}
@@ -41,3 +41,4 @@
       = render_flash(flash)
       = yield
     #loading
+    //%script{type:"text/javascript", src:"https://iserswww.essex.ac.uk/includes/toolbar/init.js"}
