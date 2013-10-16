@@ -1,6 +1,5 @@
 class ThingsController < ApplicationController
   before_action :set_thing, only: [:show, :edit, :update, :destroy]
-  before_action :require_admin, only: [:all_the_things]
   before_action :require_superuser, only: [:rebuild_index]
 
   include Utilities
