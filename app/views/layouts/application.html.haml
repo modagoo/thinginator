@@ -18,7 +18,7 @@
             = content_tag :li, (link_to "<i class=\"icon-file\"></i>&nbsp;&nbsp;#{setting(:things_name)}".html_safe, things_path, active?('things'))
             = content_tag :li, (link_to "<i class=\"icon-th\"></i>&nbsp;Collections".html_safe, collections_path, active?('collections')) if admin?
             = content_tag :li, (link_to "<i class=\"icon-list\"></i>&nbsp;Lists".html_safe, lists_path, active?('lists')) if admin?
-            = content_tag :li, (link_to "<i class=\"icon-download-alt\"></i>&nbsp;Download all".html_safe, all_the_things_things_path(format: 'xls')) if admin?
+            = content_tag :li, (link_to "<i class=\"icon-download-alt\"></i>&nbsp;Download all".html_safe, all_the_things_things_path(format: 'xls'))
             - if admin?
               %li.dropdown
                 %a{href: "#{}"}
