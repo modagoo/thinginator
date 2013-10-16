@@ -12,6 +12,7 @@ Thinginator::Application.routes.draw do
     collection do
       get 'test'
       get 'all_the_things'
+      get 'rebuild_index'
     end
   end
   resources :collections
@@ -20,7 +21,11 @@ Thinginator::Application.routes.draw do
   resources :data_types
   resources :validation_types
   resources :users
-  resources :lists
+  resources :lists do
+    collection do
+      get 'sync_iser_list_from_square'
+    end
+  end
   resources :settings
   get '/search' => 'search#index', :as => :search
   get ':slug' => 'things#collection_index', as: :collection_index

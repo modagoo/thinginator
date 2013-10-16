@@ -16,6 +16,10 @@ module Square
       "#{firstname} #{lastname}"
     end
 
+    def self.find_all
+      all(from: :iser_current)
+    end
+
   end
 
 end

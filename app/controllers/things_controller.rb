@@ -1,6 +1,9 @@
 class ThingsController < ApplicationController
   before_action :set_thing, only: [:show, :edit, :update, :destroy]
   before_action :require_admin, only: [:all_the_things]
+  before_action :require_superuser, only: [:rebuild_index]
+
+  include Utilities
 
   def all_the_things
     @collections = Collection.all
@@ -12,6 +15,11 @@ class ThingsController < ApplicationController
       format.html {}
       format.xls  { }
     end
+  end
+
+  def rebuild_index
+    rebuild_thing_index
+    redirect_to things_path, notice: "Thing index rebuild"
   end
 
   def download_file

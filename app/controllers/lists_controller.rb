@@ -2,6 +2,8 @@ class ListsController < ApplicationController
   before_action :require_admin
   before_action :set_list, only: [:show, :edit, :update, :destroy]
 
+  include Utilities
+
   # GET /lists
   # GET /lists.json
   def index
@@ -63,6 +65,12 @@ class ListsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def sync_iser_list_from_square
+    sync_iser_list
+    redirect_to lists_path, notice: 'ISER list was successfully synced.'
+  end
+
 
   private
   def set_list
