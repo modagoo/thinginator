@@ -67,7 +67,7 @@ module ThingsHelper
     ret += f.label p.slug.to_sym, "#{p.name}#{' *' if p.validations.any?}"
     ret += f.text_field p.slug.to_sym, :'data-format' => "dd/MM/yyyy hh:mm", readonly: 'readonly'
     ret += "<span class=\"add-on\">"
-    ret += "<i data-date-icon=\"icon-calendar\" data-time-icon=\"icon-time\" class=\"icon-time\"></i>"
+    ret += "<i data-date-icon=\"fa fa-calendar\" data-time-icon=\"fa fa-clock-o\" class=\"fa fa-clock-o\"></i>"
     ret += "</span>"
     ret += content_tag :p, p.help, class: "help"
     ret += "</div>"
@@ -79,7 +79,7 @@ module ThingsHelper
     ret += f.label p.slug.to_sym, "#{p.name}#{' *' if p.validations.any?}"
     ret += f.text_field p.slug.to_sym, :'data-format' => "dd/MM/yyyy", readonly: 'readonly'
     ret += "<span class=\"add-on\">"
-    ret += "<i data-date-icon=\"icon-calendar\" data-time-icon=\"icon-time\" class=\"icon-time\"></i>"
+    ret += "<i data-date-icon=\"fa fa-calendar\" data-time-icon=\"fa fa-clock-o\" class=\"fa fa-clock-o\"></i>"
     ret += "</span>"
     ret += content_tag :p, p.help, class: "help"
     ret += "</div>"
@@ -91,7 +91,7 @@ module ThingsHelper
     ret += f.label p.slug.to_sym, "#{p.name}#{' *' if p.validations.any?}"
     ret += f.text_field p.slug.to_sym, :'data-format' => "hh:mm", readonly: 'readonly'
     ret += "<span class=\"add-on\">"
-    ret += "<i data-date-icon=\"icon-calendar\" data-time-icon=\"icon-time\" class=\"icon-time\"></i>"
+    ret += "<i data-date-icon=\"fa fa-calendar\" data-time-icon=\"fa fa-clock-o\" class=\"fa fa-clock-o\"></i>"
     ret += "</span>"
     ret += content_tag :p, p.help, class: "help"
     ret += "</div>"
