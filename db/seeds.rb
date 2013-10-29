@@ -32,6 +32,8 @@ unless ValidationType.any?
   ValidationType.create( friendly_name: 'Format without', name: 'format_without', help: 'Check the value by testing whether it DOES NOT match a given regular expression', requires_value: true, data_type_ids: [DataType.find_by_name('String').id, DataType.find_by_name('Text').id] )
 
   ValidationType.create( friendly_name: 'Is a whole number', name: 'numericality', help: 'Check that the value is a whole number', requires_value: false, data_type_ids: [DataType.find_by_name('Fixnum').id] )
+
+  ValidationType.create( friendly_name: 'Maximum word count', name: 'max_word', help: 'Check that the value does not exceed given number of words', requires_value: true, data_type_ids: [DataType.find_by_name('Text').id] )
 end
 
 # User.delete_all

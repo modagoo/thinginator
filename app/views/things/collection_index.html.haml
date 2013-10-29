@@ -3,8 +3,7 @@
     = @collection.name
     %span
       = "(#{@things.total})"
-
-= link_to "<i class=\"icon-plus\"></i> New #{@collection.name}".html_safe, new_thing_in_collection_path(@collection.slug), class: 'btn prime-action'
+  = link_to "<i class=\"icon-plus\"></i> New #{@collection.name}".html_safe, new_thing_in_collection_path(@collection.slug), class: 'btn prime-action'
 
 = link_to "<i class=\"icon-download-alt\"></i> download for Excel".html_safe, collection_index_path(@collection.slug, format: :xls), class: "btn btn-small btn-secondary" if @things.present?
 

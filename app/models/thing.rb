@@ -188,7 +188,12 @@ class Thing < ActiveRecord::Base
       else
           errors.add(property.slug.to_sym, "is not a number")
       end
+    when "max_word"
+      if get_value(property).split.size > validation.value.to_i
+        errors.add(property.slug.to_sym, "is too long")
+      end
     end
+
   end
 
 end
