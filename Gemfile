@@ -31,7 +31,7 @@ group :development, :test do
   gem "better_errors"
   gem "binding_of_caller"
   gem 'railroady'
-  gem 'capistrano'
+  gem 'capistrano', '~> 2.15.5'
 end
 
 gem 'chronic'
