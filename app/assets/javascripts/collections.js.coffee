@@ -22,6 +22,16 @@ $(document).on 'ready page:change', ->
     if data_type == "List"
       if $(this).parent().next('.list-fields').length > 0
         $(this).parent().next('.list-fields').show()
+        $(this).parent().next('.list-fields').children('.list-fields-multi').show()
+        $(this).parent().next(".list-fields input[type=hidden]:first-of-type").val(false)
+      else
+        time = new Date().getTime()
+        regexp = new RegExp($(this).data('id'), 'g')
+        $(this).closest(".field").after($(this).data('fields').replace(regexp, time))
+    else if data_type == "List prompted text"
+      if $(this).parent().next('.list-fields').length > 0
+        $(this).parent().next('.list-fields').show()
+        $(this).parent().next('.list-fields').children('.list-fields-multi').hide()
         $(this).parent().next(".list-fields input[type=hidden]:first-of-type").val(false)
       else
         time = new Date().getTime()
@@ -30,6 +40,7 @@ $(document).on 'ready page:change', ->
     else
       $(this).parent().next(".list-fields input[type=hidden]:first-of-type").val("1")
       $(this).parent().next(".list-fields").hide()
+      $(this).parent().next('.list-fields').children('.list-fields-multi').hide()
     event.preventDefault()
 
   $('form').on 'click', '.remove_fields', (event) ->

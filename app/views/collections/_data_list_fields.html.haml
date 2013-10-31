@@ -4,6 +4,6 @@
     = f.label :list_id
     = f.collection_select :list_id, List.all, :id, :name, { prompt: true }
 
-  .field
+  .field{class: 'list-fields-multi'}
     = f.label :multiple, "Allow multiple?"
     = f.check_box :multiple

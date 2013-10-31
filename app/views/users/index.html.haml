@@ -18,4 +18,4 @@
         %td= user.firstname
         %td= user.lastname
         %td= user.things.size
-        %td= link_to "<i class=\"icon-remove\"></i>&nbsp;Delete".html_safe, user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'
+        %td= link_to "<i class=\"fa fa-times\"></i>&nbsp;Delete".html_safe, user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'

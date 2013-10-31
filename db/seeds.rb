@@ -12,6 +12,7 @@ unless DataType.any?
   DataType.create( friendly_name: 'Markdown', name: 'Markdown' )
   DataType.create( friendly_name: 'File', name: 'File', help: 'attach a file' )
   DataType.create( friendly_name: 'List', name: 'List', help: 'select from a predefined list of choices' )
+  DataType.create( friendly_name: 'List prompted text', name: 'Prompted', help: 'select from a predefined list of choices or specify other' )
 end
 
 ValidationType.destroy_all

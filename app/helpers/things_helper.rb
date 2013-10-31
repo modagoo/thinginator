@@ -30,6 +30,8 @@ module ThingsHelper
       render_markdown_field(f, p)
     when "List"
       render_list_field(f, p)
+    when "Prompted"
+      render_prompted_field(f, p)
     else
       return "ERROR: field could not be rendered #{p.slug} #{p.data_type.name}"
     end
@@ -103,7 +105,7 @@ module ThingsHelper
     ret += f.label p.slug.to_sym, "#{p.name}#{' *' if p.validations.any?}"
     ret += f.file_field p.slug.to_sym
     ret += content_tag :p, p.help, class: "help"
-    ret += content_tag :p, (link_to "<i class=\"icon-download-alt\"></i> #{f.object.send(p.slug.to_sym).send(:original_filename)}".html_safe, f.object.send(p.slug.to_sym).to_s, class: 'btn btn-small'), class: "help" if f.object.send(p.slug.to_sym).present?
+    ret += content_tag :p, (link_to "<i class=\"fa fa-download\"></i> #{f.object.send(p.slug.to_sym).send(:original_filename)}".html_safe, f.object.send(p.slug.to_sym).to_s, class: 'btn btn-small'), class: "help" if f.object.send(p.slug.to_sym).present?
     ret += "</div>"
     return ret
   end
@@ -125,6 +127,18 @@ module ThingsHelper
     else
       ret += render_select(f,p)
     end
+    ret += content_tag :p, p.help, class: "help"
+    ret += "</div>"
+    return ret
+  end
+
+  def render_prompted_field(f, p)
+    ret = "<div class=\"field\">"
+    ret += f.label p.slug.to_sym, "#{p.name}#{' *' if p.validations.any?}"
+    ret += render_unlinked_select(f,p)
+    ret += f.hidden_field p.slug.to_sym
+    ret += text_field_tag "prompted_other_#{p.id}", f.object.send(p.slug.to_sym), class: 'prompted_other'
+    ret += content_tag :p, p.help, class: "help"
     ret += "</div>"
     return ret
   end
@@ -147,6 +161,13 @@ module ThingsHelper
     f.collection_select(p.slug.to_sym, ListValue.find(p.data_lists.first.list.list_values.collect{|v| v.id}), :id, :value, prompt: true)
   end
 
+  def render_unlinked_select(f,p)
+    list_value_array = ListValue.where(['id IN (?)', p.data_lists.first.list.list_values.collect{|v| v.id}]).collect{ |l| [l.value, l.value] }
+    list_value_array << "Other, please specify"
+    list_value_array.unshift("Please select")
+    select_tag "unlinked_list_#{p.id}", options_for_select(list_value_array, selected: f.object.send(p.slug.to_sym)), class: 'unlinked_list'
+  end
+
   def render_thing(thing, p)
     case p.data_type.name
     when "File"
@@ -156,7 +177,7 @@ module ThingsHelper
         fprint = fpath.send(:fingerprint)
         unless fpath.blank?
           content_tag :p, class: 'no-margin' do
-            concat(link_to "<i class=\"icon-download-alt\"></i> #{oname}".html_safe, fpath.to_s, class: 'btn btn-small')
+            concat(link_to "<i class=\"fa fa-download\"></i> #{oname}".html_safe, fpath.to_s, class: 'btn btn-small')
             concat(content_tag :span, "md5: #{fprint}", class: 'info no-margin')
           end
         end

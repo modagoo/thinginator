@@ -20,4 +20,4 @@
         %td= link_to setting.name, edit_setting_path(setting)
         %td= setting.slug
         %td= setting.value
-        %td= link_to "<i class=\"icon-remove\"></i>&nbsp;Delete".html_safe, setting, method: :delete, validation: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'
+        %td= link_to "<i class=\"fa fa-times\"></i>&nbsp;Delete".html_safe, setting, method: :delete, validation: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'

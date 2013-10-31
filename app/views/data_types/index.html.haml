@@ -20,4 +20,4 @@
         %td= link_to data_type.friendly_name, edit_data_type_path(data_type)
         %td= data_type.name
         %td= data_type.help
-        %td= link_to "<i class=\"icon-remove\"></i>&nbsp;Delete".html_safe, data_type, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'
+        %td= link_to "<i class=\"fa fa-times\"></i>&nbsp;Delete".html_safe, data_type, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'

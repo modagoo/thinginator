@@ -22,6 +22,6 @@
         %td= collection.slug
         %td= collection.properties.size
         %td= link_to collection.things.size, collection_index_path(collection.slug)
-        %td= link_to "<i class=\"icon-remove\"></i>&nbsp;Delete".html_safe, collection, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'
+        %td= link_to "<i class=\"fa fa-times\"></i>&nbsp;Delete".html_safe, collection, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger'
 
 = will_paginate @collections
