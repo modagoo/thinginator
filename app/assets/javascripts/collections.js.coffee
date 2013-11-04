@@ -3,7 +3,6 @@ $(document).on 'ready page:change', ->
   $('form').on 'change', 'input', (event) ->
     $(".changed").fadeIn()
 
-
   $('div.field_with_errors').closest('div.collapse').each () ->
     $(this).removeClass('collapse').addClass('in')
     $(this).prev($('*[data-collapse]')).text('hide')
@@ -37,6 +36,7 @@ $(document).on 'ready page:change', ->
         time = new Date().getTime()
         regexp = new RegExp($(this).data('id'), 'g')
         $(this).closest(".field").after($(this).data('fields').replace(regexp, time))
+        $(this).parent().next('.list-fields').children('.list-fields-multi').hide()
     else
       $(this).parent().next(".list-fields input[type=hidden]:first-of-type").val("1")
       $(this).parent().next(".list-fields").hide()
@@ -78,7 +78,3 @@ $(document).on 'ready page:change', ->
       $(e.target).next().addClass("collapse")
       $(e.target).text("show")
     e.preventDefault()
-
-
-
-
