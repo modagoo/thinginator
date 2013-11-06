@@ -1,5 +1,6 @@
-PATH
-  remote: ~/github/iserfrontend-rails
+GIT
+  remote: git://github.com/paulgroves/iserfrontend-rails.git
+  revision: 034384ea176fbef6a08b02c2b7200cdc10f5f087
   specs:
     iserfrontend-rails (0.0.9)
       font-awesome-rails
@@ -254,7 +255,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.0)
   haml-rails
   iser_auth (= 0.1.7)
-  iserfrontend-rails!
+  iserfrontend-rails (= 0.0.9)!
   jbuilder (~> 1.2)
   jquery-rails
   nokogiri
