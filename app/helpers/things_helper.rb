@@ -137,7 +137,7 @@ module ThingsHelper
     ret += f.label p.slug.to_sym, "#{p.name}#{' *' if p.validations.any?}"
     ret += render_unlinked_select(f,p)
     ret += f.hidden_field p.slug.to_sym
-    ret += text_field_tag "prompted_other_#{p.id}", f.object.send(p.slug.to_sym), class: 'prompted_other'
+    ret += text_field_tag "prompted_other_#{p.id}", f.object.send(p.slug.to_sym), class: "prompted_other#{ ' field_with_errors' if f.object.errors.include?(p.slug.to_sym)}"
     ret += content_tag :p, p.help, class: "help"
     ret += "</div>"
     return ret
@@ -165,7 +165,7 @@ module ThingsHelper
     list_value_array = ListValue.where(['id IN (?)', p.data_lists.first.list.list_values.collect{|v| v.id}]).collect{ |l| [l.value, l.value] }
     list_value_array << "Other, please specify"
     list_value_array.unshift("Please select")
-    select_tag "unlinked_list_#{p.id}", options_for_select(list_value_array, selected: f.object.send(p.slug.to_sym)), class: 'unlinked_list'
+    select_tag "unlinked_list_#{p.id}", options_for_select(list_value_array, selected: f.object.send(p.slug.to_sym)), class: "unlinked_list #{ ' field_with_errors' if f.object.errors.include?(p.slug.to_sym)}"
   end
 
   def render_thing(thing, p)
