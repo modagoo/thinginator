@@ -105,7 +105,12 @@ module ThingsHelper
     ret += f.label p.slug.to_sym, "#{p.name}#{' *' if p.validations.any?}"
     ret += f.file_field p.slug.to_sym
     ret += content_tag :p, p.help, class: "help"
-    ret += content_tag :p, (link_to "<i class=\"fa fa-download\"></i> #{f.object.send(p.slug.to_sym).send(:original_filename)}".html_safe, f.object.send(p.slug.to_sym).to_s, class: 'btn btn-small'), class: "help" if f.object.send(p.slug.to_sym).present?
+    if f.object.send(p.slug.to_sym).present?
+      ret += "<p class=\"help\">"
+      ret += link_to "<i class=\"fa fa-download\"></i> #{f.object.send(p.slug.to_sym).send(:original_filename)}".html_safe, f.object.send(p.slug.to_sym).to_s, class: 'btn btn-small'
+      ret += content_tag :span, "md5: #{f.object.send(p.slug.to_sym).send(:fingerprint)}", class: 'info no-margin'
+      ret += "</p>"
+    end
     ret += "</div>"
     return ret
   end

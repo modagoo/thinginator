@@ -32,7 +32,7 @@ class Thing < ActiveRecord::Base
     case p.data_type.name
     when "File"
       if thing.send(p.slug.to_sym).present?
-        thing.send(p.slug.to_sym).original_filename
+        "#{thing.send(p.slug.to_sym).original_filename} https://tufnell.essex.ac.uk#{thing.send(p.slug.to_sym).to_s} md5: #{thing.send(p.slug.to_sym).fingerprint}"
       else
         "No file"
       end
